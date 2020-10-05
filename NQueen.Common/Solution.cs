@@ -22,15 +22,21 @@ namespace NQueen.Common
 
 		#region PublicProperties
 		public List<Position> Positions;
+
 		public int Id { get; }
+
 		public string Name { get; set; }
+
 		public string Details { get; set; }
+
 		public sealed override string ToString() => $"No. {Id}";
+
 		public int[] QueenList { get; }
 		#endregion PublicProperties
 
 		#region PrivateMembers
 		private int BoardSize { get; }
+
 		private string GetDetails()
 		{
 			//const int noOfQueensPerLine = 20;

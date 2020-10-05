@@ -25,10 +25,15 @@ namespace NQueen.Presentation
 
 		#region PublicMembers
 		public ObservableCollection<Solution> Solutions { get; }
+
 		public double ElapsedTimeInSec { get; set; }
+
 		internal int NoOfSolutions { get; }
+
 		public int MaxNoOfSolutionsInOutput { get; }
+
 		internal int BoardSize { get; set; }
+
 		internal int NoOfSolutionsInOutput { get; }
 
 		public StringBuilder FormatSingleSolution(Solution solution) =>

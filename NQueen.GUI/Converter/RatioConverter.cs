@@ -8,8 +8,6 @@ namespace NQueen.GUI.Converter
 	[ValueConversion(typeof(string), typeof(string))]
 	public class RatioConverter : MarkupExtension, IValueConverter
 	{
-		private static RatioConverter _instance;
-
 		public RatioConverter() { }
 
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -28,5 +26,6 @@ namespace NQueen.GUI.Converter
 			return _instance ?? (_instance = new RatioConverter());
 		}
 
+		private static RatioConverter _instance;
 	}
 }

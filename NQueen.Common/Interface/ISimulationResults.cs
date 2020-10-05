@@ -4,9 +4,12 @@ namespace NQueen.Common.Interface
 {
 	public interface ISimulationResults
 	{
-		int BoardSize { get; set; }
-		IEnumerable<Solution> Solutions { get; set; }
-		int NoOfSolutions { get; set; }
-		double ElapsedTimeInSec { get; set; }
+		int BoardSize { get; }
+
+		IEnumerable<Solution> Solutions { get; }
+
+		int NoOfSolutions { get; }
+
+		double ElapsedTimeInSec { get; }
 	}
 }

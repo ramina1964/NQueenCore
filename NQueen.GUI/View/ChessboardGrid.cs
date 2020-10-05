@@ -11,11 +11,17 @@ namespace NQueen.GUI.View
 		public ChessboardGrid(int size) => Size = size;
 
 		public int WindowHeight => 500;
+
 		public int WindowWidth => 500;
+
 		public int Size { get; set; }
+
 		public int Column { get; set; }
+
 		public int Row { get; set; }
+
 		public int WidthBorder => (WindowWidth - 50) / Size;
+
 		public int HeightBorder => (WindowHeight - 50) / Size;
 
 		// Test of dynamic grid written in code - no Xaml

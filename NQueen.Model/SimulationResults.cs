@@ -30,9 +30,13 @@ namespace NQueen.Model
 
 		#region PublicProperties
 		public int BoardSize { get; set; }
+
 		public IEnumerable<Solution> Solutions { get; set; }
+
 		public int NoOfSolutions { get; set; }
+
 		public double ElapsedTimeInSec { get; set; }
+
 		#endregion PublicProperties
 	}
 }

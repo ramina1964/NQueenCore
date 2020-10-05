@@ -2,9 +2,12 @@
 {
 	public interface ISolution
 	{
-		string Details { get; set; }
+		string Details { get; }
+
 		int Id { get; }
-		string Name { get; set; }
+
+		string Name { get; }
+
 		int[] QueenList { get; }
 
 		string ToString();

@@ -23,7 +23,7 @@ namespace NQueen.GUI.ViewModel
 		{
 			Initialize(solver);
 			Solver.QueenPlaced += Queens_QueenPlaced;
-			Solver.ShowSolution += Queens_ShowSolution;
+			Solver.SolutionFound += Queens_ShowSolution;
 		}
 		#endregion Constructor
 
@@ -317,7 +317,7 @@ namespace NQueen.GUI.ViewModel
 		#region PrivateMethods
 		private void Initialize(ISolver solver)
 		{
-			_validation = new InputViewModel { CascadeMode = CascadeMode.StopOnFirstFailure };
+			_validation = new InputViewModel { CascadeMode = CascadeMode.Stop };
 
 			SimulateCommand = new RelayCommand(SimulateAsync, CanSimulate);
 			CancelCommand = new RelayCommand(Cancel, CanCancel);
@@ -347,10 +347,10 @@ namespace NQueen.GUI.ViewModel
 			Chessboard?.CreateSquares(BoardSize, new List<SquareViewModel>());
 		}
 
-		private void Queens_ShowSolution(object sender, sbyte[] e)
+		private void Queens_ShowSolution(object sender, SolutionFoundEventArgs e)
 		{
 			var id = Solutions.Count + 1;
-			var sol = new Solution(e, id);
+			var sol = new Solution(e.Solution, id);
 
 			Application
 				.Current
@@ -360,9 +360,9 @@ namespace NQueen.GUI.ViewModel
 			SelectedSolution = sol;
 		}
 
-		private void Queens_QueenPlaced(object sender, sbyte[] e)
+		private void Queens_QueenPlaced(object sender, QueenPlacedEventArgs e)
 		{
-			var sol = new Solution(e, 1);
+			var sol = new Solution(e.QueenList, 1);
 			var positions = sol
 							.QueenList.Where(el => el > -1)
 							.Select((item, index) => new Position(index, item)).ToList();

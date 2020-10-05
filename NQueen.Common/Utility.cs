@@ -53,107 +53,64 @@ namespace NQueen.Common
 
 		public static int FindSolutionSizeUnique(sbyte boardSize)
 		{
-			switch (boardSize)
-			{
-				case 1:
-					return 1;
-				case 2:
-					return 1;
-				case 3:
-					return 1;
-				case 4:
-					return 1;
-				case 5:
-					return 2;
-				case 6:
-					return 1;
-				case 7:
-					return 6;
-				case 8:
-					return 12;
-				case 9:
-					return 46;
-				case 10:
-					return 92;
-				case 11:
-					return 341;
-				case 12:
-					return 1787;
-				case 13:
-					return 9233;
-				case 14:
-					return 45752;
-				case 15:
-					return 285053;
-				case 16:
-					return 1846955;
-				case 17:
-					return 11977939;
-				default:
-					throw new ArgumentOutOfRangeException();
-			}
-		}
+            return boardSize switch
+            {
+                1 => 1,
+                2 => 1,
+                3 => 1,
+                4 => 1,
+                5 => 2,
+                6 => 1,
+                7 => 6,
+                8 => 12,
+                9 => 46,
+                10 => 92,
+                11 => 341,
+                12 => 1787,
+                13 => 9233,
+                14 => 45752,
+                15 => 285053,
+                16 => 1846955,
+                17 => 11977939,
+                _ => throw new ArgumentOutOfRangeException(),
+            };
+        }
 
 		public static int FindSolutionSizeAll(sbyte boardSize)
 		{
-			switch (boardSize)
-			{
-				case 1:
-					return 1;
-				case 2:
-					return 1;
-				case 3:
-					return 1;
-				case 4:
-					return 2;
-				case 5:
-					return 10;
-				case 6:
-					return 4;
-				case 7:
-					return 40;
-				case 8:
-					return 92;
-				case 9:
-					return 352;
-				case 10:
-					return 724;
-				case 11:
-					return 2680;
-				case 12:
-					return 14200;
-				case 13:
-					return 73712;
-				case 14:
-					return 365596;
-				case 15:
-					return 2279184;
-				case 16:
-					return 14772512;
-				case 17:
-					return 95815104;
-				default:
-					throw new ArgumentOutOfRangeException();
-			}
-		}
+            return boardSize switch
+            {
+                1 => 1,
+                2 => 1,
+                3 => 1,
+                4 => 2,
+                5 => 10,
+                6 => 4,
+                7 => 40,
+                8 => 92,
+                9 => 352,
+                10 => 724,
+                11 => 2680,
+                12 => 14200,
+                13 => 73712,
+                14 => 365596,
+                15 => 2279184,
+                16 => 14772512,
+                17 => 95815104,
+                _ => throw new ArgumentOutOfRangeException(),
+            };
+        }
 
 		public static string SolutionTitle(SolutionMode solutionMode)
 		{
-			switch (solutionMode)
-			{
-				case SolutionMode.Single:
-					return "No. of Solutions";
-
-				case SolutionMode.Unique:
-					return $"No. of Unique Solutions";
-
-				case SolutionMode.All:
-					return $"No. of All Solutions";
-
-				default:
-					throw new MissingFieldException("Non-Existent Enum Value!");
-			}
-		}
+            return solutionMode switch
+            {
+                SolutionMode.Single => "No. of Solutions",
+                SolutionMode.Unique => $"No. of Unique Solutions",
+                SolutionMode.All => $"No. of All Solutions",
+                _ => throw new MissingFieldException("Non-Existent Enum Value!"),
+            };
+        }
 
 		public static string SolutionTitle(SolutionMode solutionMode, int noOfSolutions)
 		{

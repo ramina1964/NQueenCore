@@ -6,6 +6,26 @@ namespace NQueen.Test
 {
 	public partial class NQueenSolverTests
 	{
+		#region PrivateMethods
+		private static int GetNoOfSingleSol()
+		{ return 1; }
+
+		private static int GetNoOfUniqueSols(sbyte boardSize)
+		{ return noOfUniqueSols[boardSize]; }
+
+		private static int GetNoOfAllSols(sbyte boardSize)
+		{ return noOfAllSols[boardSize]; }
+
+		private static List<Solution> GetSingleSol(sbyte boardSize)
+		{ return singleSol[boardSize]; }
+
+		private static List<Solution> GetUniqueSols(sbyte boardSize)
+		{ return uniqueSol[boardSize]; }
+
+		private static List<Solution> GetAllSols(sbyte boardSize)
+		{ return allSol[boardSize]; }
+		#endregion PrivateMethods
+
 		#region PrivateFields
 		private static Dictionary<sbyte, int> noOfUniqueSols = new Dictionary<sbyte, int>
 		{
@@ -352,25 +372,5 @@ namespace NQueen.Test
 			},
 		};
 		#endregion PrivateFields
-
-		#region PrivateMethods
-		private static int GetNoOfSingleSol()
-		{ return 1; }
-
-		private static int GetNoOfUniqueSols(sbyte boardSize)
-		{ return noOfUniqueSols[boardSize]; }
-
-		private static int GetNoOfAllSols(sbyte boardSize)
-		{ return noOfAllSols[boardSize]; }
-
-		private static List<Solution> GetSingleSol(sbyte boardSize)
-		{ return singleSol[boardSize]; }
-
-		private static List<Solution> GetUniqueSols(sbyte boardSize)
-		{ return uniqueSol[boardSize]; }
-
-		private static List<Solution> GetAllSols(sbyte boardSize)
-		{ return allSol[boardSize]; }
-		#endregion PrivateMethods
 	}
 }
