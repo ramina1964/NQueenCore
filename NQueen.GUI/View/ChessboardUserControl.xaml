@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="NQueen.GUI.View.ChessboardUserControl"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:local="clr-namespace:NQueen.GUI.Converter"
+			 mc:Ignorable="d">
+
+	<UserControl.Resources>
+		<local:NullImageConverter x:Key="nullImageConverter" />
+	</UserControl.Resources>
+
+	<Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+		<ItemsControl ItemsSource="{Binding Chessboard.Squares}">
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<UniformGrid Rows="{Binding view.BoardSize}" />
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+			<ItemsControl.ItemTemplate>
+				<DataTemplate>
+					<Border Background="{Binding Color}" Height="{Binding Height}" Width="{Binding Width}">
+						<Image Source="{Binding ImagePath, Converter={StaticResource nullImageConverter}}"
+							   Width="{Binding Width}" Height="{Binding Height}" />
+					</Border>
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+		</ItemsControl>
+	</Grid>
+</UserControl>

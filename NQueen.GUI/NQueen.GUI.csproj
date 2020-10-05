@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\WhiteQueen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MvvmLight" Version="5.4.1.1" />
+    <PackageReference Include="FluentValidation" Version="8.5.1" />
+    <PackageReference Include="MvvmLightLibsStd10" Version="5.4.1.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NQueen.Common\NQueen.Common.csproj" />
+    <ProjectReference Include="..\NQueen.Model\NQueen.Model.csproj" />
+    <ProjectReference Include="..\NQueen.Presentation\NQueen.Presentation.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\WhiteQueen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+</Project>

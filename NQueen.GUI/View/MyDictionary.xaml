@@ -1,0 +1,110 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:local="clr-namespace:NQueen.GUI.View">
+
+	<!-- ************************* Based on Label ************************* -->
+	<Style x:Key="LabelStyle" TargetType="Label">
+		<Setter Property="Width" Value="Auto" />
+		<Setter Property="Height" Value="Auto" />
+		<Setter Property="HorizontalAlignment" Value="Stretch" />
+		<Setter Property="VerticalAlignment" Value="Center" />
+		<Setter Property="HorizontalContentAlignment" Value="Center" />
+		<Setter Property="VerticalContentAlignment" Value="Center" />
+	</Style>
+
+	<Style x:Key="LabelErrorStyle" TargetType="{x:Type Label}">
+		<Setter Property="BorderBrush" Value="#FFF08A73" />
+		<Setter Property="BorderThickness" Value="1" />
+		<Setter Property="Foreground" Value="Red" />
+		<Setter Property="Background" Value="#FFFFE3DF" />
+		<Setter Property="FontWeight" Value="Bold" />
+		<Setter Property="Padding" Value="5" />
+		<Setter Property="HorizontalContentAlignment" Value="Left" />
+		<Setter Property="VerticalContentAlignment" Value="Top" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type Label}">
+					<Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+							Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"
+							SnapsToDevicePixels="true" CornerRadius="5" HorizontalAlignment="Stretch">
+
+						<TextBlock TextWrapping="Wrap" Text="{TemplateBinding Content}" />
+					</Border>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- ************************ Based on TextBox ************************ -->
+	<Style x:Key="TextBoxStyle" TargetType="TextBox">
+		<Setter Property="Width" Value="Auto" />
+		<Setter Property="Height" Value="Auto" />
+		<Setter Property="HorizontalAlignment" Value="Right" />
+		<Setter Property="VerticalAlignment" Value="Center" />
+		<Setter Property="HorizontalContentAlignment" Value="Right" />
+		<Setter Property="VerticalContentAlignment" Value="Stretch" />
+	</Style>
+
+	<Style x:Key="TextBoxNumericalStyle" TargetType="{x:Type TextBox}">
+		<Setter Property="HorizontalAlignment" Value="Stretch" />
+		<Setter Property="VerticalAlignment" Value="Center" />
+		<Setter Property="HorizontalContentAlignment" Value="Right" />
+		<Setter Property="VerticalContentAlignment" Value="Center" />
+		<Setter Property="Validation.ErrorTemplate">
+			<Setter.Value>
+				<ControlTemplate x:Name="TextErrorTemplate">
+					<StackPanel Orientation="Horizontal">
+						<AdornedElementPlaceholder />
+						<Label Margin="10, 0, 0, 0" Content="{Binding [0].ErrorContent}" Foreground="Red"
+							   HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
+							   HorizontalAlignment="Left" VerticalAlignment="Center" />
+					</StackPanel>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+		<Style.Triggers>
+			<Trigger Property="Validation.HasError" Value="True">
+				<Setter Property="ToolTip"
+						Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+						Path=(Validation.Errors).CurrentItem.ErrorContent}">
+				</Setter>
+			</Trigger>
+		</Style.Triggers>
+	</Style>
+
+	<!-- ************************ Based on Buttomn ************************ -->
+	<Style x:Key="ButtonStyle" TargetType="Button">
+		<Setter Property="Background" Value="#95E3E2" />
+		<Setter Property="FontStyle" Value="Italic" />
+		<Setter Property="Width" Value="80" />
+		<Setter Property="Height" Value="Auto" />
+		<Setter Property="HorizontalAlignment" Value="Stretch" />
+		<Setter Property="VerticalAlignment" Value="Stretch" />
+		<Setter Property="HorizontalContentAlignment" Value="Center" />
+		<Setter Property="VerticalContentAlignment" Value="Center" />
+	</Style>
+
+	<!-- ************************ Based on ProgressBar ************************ -->
+	<Style x:Key="ProgressBarStyle" TargetType="ProgressBar">
+		<Setter Property="Width" Value="300" />
+		<Setter Property="Height" Value="15" />
+		<Setter Property="Margin" Value="5, 5, 5, 5" />
+		<Setter Property="HorizontalAlignment" Value="Center" />
+		<Setter Property="VerticalAlignment" Value="Center" />
+		<Setter Property="HorizontalContentAlignment" Value="Center" />
+		<Setter Property="VerticalContentAlignment" Value="Center" />
+		<Setter Property="Minimum" Value ="0" />
+		<Setter Property="Maximum" Value ="100" />
+	</Style>
+
+	<!-- *********************** Based on Containers ********************** -->
+	<Style x:Key="GroupBoxStyle" TargetType="GroupBox">
+		<Setter Property="Width" Value="Auto" />
+		<Setter Property="Height" Value="Auto" />
+		<Setter Property="Margin" Value="5, 0, 0, 0" />
+		<Setter Property="HorizontalAlignment" Value="Left" />
+		<Setter Property="VerticalAlignment" Value="Top" />
+		<Setter Property="HorizontalContentAlignment" Value="Right" />
+		<Setter Property="VerticalContentAlignment" Value="Center" />
+	</Style>
+</ResourceDictionary>
