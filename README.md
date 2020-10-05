@@ -1,5 +1,5 @@
 # NQueen
-A Desktop Application for Creating, Saving and Visualizing Solutions of NQueen Problem Using Backtracking Algorithm
+A WPF Desktop Application Using the Latest .NET Core for Solving N-Queen Problem with Aid of Backtracking Algorithm
 
 A PowerPoint presentation is now added. This must be download with the figures, all in pdf format. It gives a good picture
 of the following themes among other things:
