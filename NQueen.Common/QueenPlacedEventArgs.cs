@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NQueen.Common.Interface
+namespace NQueen.Common
 {
     public class QueenPlacedEventArgs : EventArgs
     {
