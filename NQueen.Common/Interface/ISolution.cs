@@ -1,15 +1,15 @@
 ﻿namespace NQueen.Common.Interface
 {
-	public interface ISolution
-	{
-		string Details { get; }
+    public interface ISolution
+    {
+        string Details { get; }
 
-		int Id { get; }
+        int Id { get; }
 
-		string Name { get; }
+        string Name { get; }
 
-		int[] QueenList { get; }
+        int[] QueenList { get; }
 
-		string ToString();
-	}
+        string ToString();
+    }
 }

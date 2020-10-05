@@ -1,10 +1,10 @@
 ﻿namespace NQueen.GUI.View
 {
-	public partial class ChessboardUserControl
-	{
-		public ChessboardUserControl()
-		{
-			InitializeComponent();
-		}
-	}
+    public partial class ChessboardUserControl
+    {
+        public ChessboardUserControl()
+        {
+            InitializeComponent();
+        }
+    }
 }

@@ -2,14 +2,14 @@
 
 namespace NQueen.Common.Interface
 {
-	public interface ISimulationResults
-	{
-		int BoardSize { get; }
+    public interface ISimulationResults
+    {
+        int BoardSize { get; }
 
-		IEnumerable<Solution> Solutions { get; }
+        IEnumerable<Solution> Solutions { get; }
 
-		int NoOfSolutions { get; }
+        int NoOfSolutions { get; }
 
-		double ElapsedTimeInSec { get; }
-	}
+        double ElapsedTimeInSec { get; }
+    }
 }

@@ -4,55 +4,55 @@ using System.Collections.Generic;
 
 namespace NQueen.Common
 {
-	public static class Utility
-	{
-		public static int MaxNoOfSolutionsInOutput = 50;
+    public static class Utility
+    {
+        public static int MaxNoOfSolutionsInOutput = 50;
 
-		public static IEnumerable<sbyte[]> GetSymmSols(IReadOnlyList<sbyte> solution)
-		{
-			var boardSize = solution.Count;
-			var midLineHorizontal = new sbyte[boardSize];
-			var midLineVertical = new sbyte[boardSize];
-			var diagonalToUpperRight = new sbyte[boardSize];
-			var diagonalToUpperLeft = new sbyte[boardSize];
-			var counter90 = new sbyte[boardSize];
-			var counter180 = new sbyte[boardSize];
-			var counter270 = new sbyte[boardSize];
+        public static IEnumerable<sbyte[]> GetSymmSols(IReadOnlyList<sbyte> solution)
+        {
+            var boardSize = solution.Count;
+            var midLineHorizontal = new sbyte[boardSize];
+            var midLineVertical = new sbyte[boardSize];
+            var diagonalToUpperRight = new sbyte[boardSize];
+            var diagonalToUpperLeft = new sbyte[boardSize];
+            var counter90 = new sbyte[boardSize];
+            var counter180 = new sbyte[boardSize];
+            var counter270 = new sbyte[boardSize];
 
-			for (sbyte j = 0; j < boardSize; j++)
-			{
-				var index1 = (sbyte)(boardSize - j - 1);
-				var index2 = (sbyte)(boardSize - solution[j] - 1);
+            for (sbyte j = 0; j < boardSize; j++)
+            {
+                var index1 = (sbyte)(boardSize - j - 1);
+                var index2 = (sbyte)(boardSize - solution[j] - 1);
 
-				midLineHorizontal[index1] = solution[j];
-				counter180[index1] = midLineVertical[j] = index2;
-				counter270[solution[j]] = diagonalToUpperRight[index2] = index1;
-				counter90[index2] = diagonalToUpperLeft[solution[j]] = j;
-			}
+                midLineHorizontal[index1] = solution[j];
+                counter180[index1] = midLineVertical[j] = index2;
+                counter270[solution[j]] = diagonalToUpperRight[index2] = index1;
+                counter90[index2] = diagonalToUpperLeft[solution[j]] = j;
+            }
 
-			return new HashSet<sbyte[]>
-			{
-				midLineVertical,
-				diagonalToUpperRight,
-				diagonalToUpperLeft,
-				counter90,
-				counter180,
-				counter270,
-				midLineHorizontal
-			};
-		}
+            return new HashSet<sbyte[]>
+            {
+                midLineVertical,
+                diagonalToUpperRight,
+                diagonalToUpperLeft,
+                counter90,
+                counter180,
+                counter270,
+                midLineHorizontal
+            };
+        }
 
-		public static int FindSolutionSize(sbyte boardSize, SolutionMode solutionMode)
-		{
-			return (solutionMode == SolutionMode.Single)
-				? 1
-				: (solutionMode == SolutionMode.Unique)
-				? FindSolutionSizeUnique(boardSize)
-				: FindSolutionSizeAll(boardSize);
-		}
+        public static int FindSolutionSize(sbyte boardSize, SolutionMode solutionMode)
+        {
+            return (solutionMode == SolutionMode.Single)
+                ? 1
+                : (solutionMode == SolutionMode.Unique)
+                ? FindSolutionSizeUnique(boardSize)
+                : FindSolutionSizeAll(boardSize);
+        }
 
-		public static int FindSolutionSizeUnique(sbyte boardSize)
-		{
+        public static int FindSolutionSizeUnique(sbyte boardSize)
+        {
             return boardSize switch
             {
                 1 => 1,
@@ -76,8 +76,8 @@ namespace NQueen.Common
             };
         }
 
-		public static int FindSolutionSizeAll(sbyte boardSize)
-		{
+        public static int FindSolutionSizeAll(sbyte boardSize)
+        {
             return boardSize switch
             {
                 1 => 1,
@@ -101,8 +101,8 @@ namespace NQueen.Common
             };
         }
 
-		public static string SolutionTitle(SolutionMode solutionMode)
-		{
+        public static string SolutionTitle(SolutionMode solutionMode)
+        {
             return solutionMode switch
             {
                 SolutionMode.Single => "No. of Solutions",
@@ -112,22 +112,22 @@ namespace NQueen.Common
             };
         }
 
-		public static string SolutionTitle(SolutionMode solutionMode, int noOfSolutions)
-		{
-			if (solutionMode == SolutionMode.Single)
-			{ return "Solution:"; }
+        public static string SolutionTitle(SolutionMode solutionMode, int noOfSolutions)
+        {
+            if (solutionMode == SolutionMode.Single)
+            { return "Solution:"; }
 
-			if (noOfSolutions <= MaxNoOfSolutionsInOutput)
-			{
-				return (solutionMode == SolutionMode.All)
-				 ? $"List of All Solution(s), Included Symmetrical Ones:"
-				 : $"List of Unique Solution(s), Excluded Symmetrical Ones:";
-			}
+            if (noOfSolutions <= MaxNoOfSolutionsInOutput)
+            {
+                return (solutionMode == SolutionMode.All)
+                 ? $"List of All Solution(s), Included Symmetrical Ones:"
+                 : $"List of Unique Solution(s), Excluded Symmetrical Ones:";
+            }
 
-			// Here is: NoOfSolutions > MaxNoOfSolutionsInOutput
-			return (solutionMode == SolutionMode.All)
-				? $"List of First {MaxNoOfSolutionsInOutput} Solution(s), May Include Symmetrical Ones:"
-				: $"List of First {MaxNoOfSolutionsInOutput} Unique Solution(s), Excluded Symmetrical Ones:";
-		}
-	}
+            // Here is: NoOfSolutions > MaxNoOfSolutionsInOutput
+            return (solutionMode == SolutionMode.All)
+                ? $"List of First {MaxNoOfSolutionsInOutput} Solution(s), May Include Symmetrical Ones:"
+                : $"List of First {MaxNoOfSolutionsInOutput} Unique Solution(s), Excluded Symmetrical Ones:";
+        }
+    }
 }

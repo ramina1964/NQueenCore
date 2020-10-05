@@ -1,8 +1,8 @@
 ﻿namespace NQueen.Common.Enum
 {
-	public enum DisplayMode
-	{
-		Visualize,
-		Hide
-	}
+    public enum DisplayMode
+    {
+        Visualize,
+        Hide
+    }
 }
