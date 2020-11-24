@@ -1,5 +1,4 @@
-﻿
-using NQueen.Common;
+﻿using NQueen.Common;
 using NQueen.Common.Enum;
 using NQueen.Common.Interface;
 using System;
@@ -9,7 +8,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace NQueen.Model
 {
@@ -231,8 +229,8 @@ namespace NQueen.Model
         #endregion PrivateMethods
 
         #region PrivateFields
-        private double _progressValue;
-        private string _progressLabel;
+        //private double _progressValue;
+        //private string _progressLabel;
         //private Visibility _progressBarVisibility;
         #endregion PrivateFields
     }
