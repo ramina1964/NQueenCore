@@ -4,11 +4,11 @@
     {
         string Details { get; }
 
-        int Id { get; }
+        int? Id { get; }
 
         string Name { get; }
 
-        int[] QueenList { get; }
+        sbyte[] QueenList { get; }
 
         string ToString();
     }

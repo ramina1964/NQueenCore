@@ -4,7 +4,7 @@ namespace NQueen.Common.Interface
 {
     public interface ISimulationResults
     {
-        int BoardSize { get; }
+        sbyte BoardSize { get; }
 
         IEnumerable<Solution> Solutions { get; }
 

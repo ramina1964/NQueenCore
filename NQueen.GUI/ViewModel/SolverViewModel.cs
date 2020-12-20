@@ -365,7 +365,7 @@ namespace NQueen.GUI.ViewModel
             var sol = new Solution(e.QueenList, 1);
             var positions = sol
                             .QueenList.Where(el => el > -1)
-                            .Select((item, index) => new Position(index, item)).ToList();
+                            .Select((item, index) => new Position((sbyte)index, item)).ToList();
 
             Chessboard.PlaceQueens(positions);
         }

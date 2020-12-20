@@ -8,7 +8,6 @@ namespace NQueen.Model
 {
     public class SimulationResults : ISimulationResults
     {
-        #region Constructor
         public SimulationResults(IEnumerable<Solution> allSolutions)
         {
             Debug.Assert(allSolutions != null, "allSolutions != null");
@@ -21,15 +20,15 @@ namespace NQueen.Model
             }
             else
             {
-                BoardSize = sol.Positions.Count;
-                NoOfSolutions = enumerable.Count();
+                BoardSize = (sbyte)sol.Positions.Count;
+                NoOfSolutions = enumerable.Count;
                 Solutions = new List<Solution>(enumerable);
             }
         }
-        #endregion Constructor
 
-        #region PublicProperties
-        public int BoardSize { get; set; }
+        #region ISimulationResult
+
+        public sbyte BoardSize { get; set; }
 
         public IEnumerable<Solution> Solutions { get; set; }
 
@@ -37,6 +36,6 @@ namespace NQueen.Model
 
         public double ElapsedTimeInSec { get; set; }
 
-        #endregion PublicProperties
+        #endregion ISimulationResult
     }
 }

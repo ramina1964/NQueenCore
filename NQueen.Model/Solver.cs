@@ -13,9 +13,7 @@ namespace NQueen.Model
 {
     public class Solver : ISolver
     {
-        #region Constructor
         public Solver(sbyte boardSize, DisplayMode DisplayMode = DisplayMode.Hide) => Initialize(boardSize, DisplayMode);
-        #endregion Constructor
 
         #region ISolverInterface
         public int DelayInMilliseconds { get; set; }

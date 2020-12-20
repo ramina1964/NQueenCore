@@ -35,7 +35,7 @@ namespace NQueen.GUI.ViewModel
             positions
                 .ToList()
                 .ForEach(pos =>
-                    Squares.First(sq => pos.Row == sq.Position.Row && pos.Column == sq.Position.Column)
+                    Squares.First(sq => pos.RowNo == sq.Position.RowNo && pos.ColumnNo == sq.Position.ColumnNo)
                     .ImagePath = QueenImagePath);
         }
 
@@ -45,9 +45,9 @@ namespace NQueen.GUI.ViewModel
             var height = width;
 
             var sqList = squares.ToList();
-            for (var i = 0; i < boardSize; i++)
+            for (sbyte i = 0; i < boardSize; i++)
             {
-                for (var j = 0; j < boardSize; j++)
+                for (sbyte j = 0; j < boardSize; j++)
                 {
                     var pos = new Position(i, j);
                     var square = new SquareViewModel(pos, FindColor(pos))
@@ -62,8 +62,8 @@ namespace NQueen.GUI.ViewModel
             }
 
             sqList
-                .OrderByDescending(sq => sq.Position.Column)
-                .ThenBy(sq => sq.Position.Row).ToList()
+                .OrderByDescending(sq => sq.Position.ColumnNo)
+                .ThenBy(sq => sq.Position.RowNo).ToList()
                 .ForEach(sq => Squares.Add(sq));
         }
         #endregion PublicMethods
@@ -76,7 +76,7 @@ namespace NQueen.GUI.ViewModel
 
         private Brush FindColor(Position pos)
         {
-            var col = (pos.Row + pos.Column) % 2 == 1 ? Colors.Wheat : Colors.Brown;
+            var col = (pos.RowNo + pos.ColumnNo) % 2 == 1 ? Colors.Wheat : Colors.Brown;
             return new SolidColorBrush(col);
         }
         #endregion PrivateMethods

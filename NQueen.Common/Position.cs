@@ -2,14 +2,14 @@
 {
     public class Position
     {
-        public Position(int row, int column)
+        public Position(sbyte rowNo, sbyte columnNo)
         {
-            Row = row;
-            Column = column;
+            RowNo = rowNo;
+            ColumnNo = columnNo;
         }
 
-        public int Row { get; set; }
+        public sbyte RowNo { get; set; }
 
-        public int Column { get; set; }
+        public sbyte ColumnNo { get; set; }
     }
 }
