@@ -1,5 +1,4 @@
 ﻿using NQueen.Common;
-using System;
 using System.Collections.Generic;
 
 namespace NQueen.Test
@@ -27,7 +26,7 @@ namespace NQueen.Test
         #endregion PrivateMethods
 
         #region PrivateFields
-        private static Dictionary<sbyte, int> noOfUniqueSols = new Dictionary<sbyte, int>
+        private static readonly Dictionary<sbyte, int> noOfUniqueSols = new Dictionary<sbyte, int>
         {
             { 6, 1 },
             { 7, 6 },
@@ -40,7 +39,7 @@ namespace NQueen.Test
             { 14, 45752 }
         };
 
-        private static Dictionary<sbyte, int> noOfAllSols = new Dictionary<sbyte, int>
+        private static readonly Dictionary<sbyte, int> noOfAllSols = new Dictionary<sbyte, int>
         {
             { 6, 4 },
             { 7, 40 },
@@ -53,7 +52,7 @@ namespace NQueen.Test
             { 14, 365596 }
         };
 
-        private static Dictionary<sbyte, List<Solution>> singleSol = new Dictionary<sbyte, List<Solution>>
+        private static readonly Dictionary<sbyte, List<Solution>> singleSol = new Dictionary<sbyte, List<Solution>>
         {
             { 1, new List<Solution> { new Solution(new sbyte[] { 0 }, 1) } },
             { 2, new List<Solution>() { } },
@@ -99,7 +98,7 @@ namespace NQueen.Test
                     11, 15, 17, 7, 9, 13, 19, 5, 20, 18}, 28) } },
         };
 
-        private static Dictionary<sbyte, List<Solution>> uniqueSol = new Dictionary<sbyte, List<Solution>>
+        private static readonly Dictionary<sbyte, List<Solution>> uniqueSol = new Dictionary<sbyte, List<Solution>>
         {
             {1, new List<Solution> { new Solution(new sbyte[] { 0 }, 1) } },
             {2, new List<Solution>() },
@@ -193,7 +192,7 @@ namespace NQueen.Test
             },
         };
 
-        private static Dictionary<sbyte, List<Solution>> allSol = new Dictionary<sbyte, List<Solution>>
+        private static readonly Dictionary<sbyte, List<Solution>> allSol = new Dictionary<sbyte, List<Solution>>
         {
             { 1, new List<Solution> { new Solution(new sbyte[] { 0 }, 1) } },
             { 2, new List<Solution>() { } },

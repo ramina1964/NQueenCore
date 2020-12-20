@@ -15,7 +15,7 @@ namespace NQueen.GUI
 
         private void MainView_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            var view = e.OriginalSource as MainView;
+            //var view = e.OriginalSource as MainView;
             var board = chessboard;
             var size = (int)System.Math.Min(board.ActualWidth, board.ActualHeight);
             board.Width = size;

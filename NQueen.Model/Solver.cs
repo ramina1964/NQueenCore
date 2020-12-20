@@ -80,7 +80,7 @@ namespace NQueen.Model
         public ISimulationResults Results { get; set; }
         public sbyte BoardSize { get; set; }
         public string BoardSizeText { get; set; }
-        public int NoOfSolutions => Solutions.Count();
+        public int NoOfSolutions => Solutions.Count;
         public sbyte HalfSize { get; set; }
         public sbyte[] QueenList { get; set; }
 
@@ -114,7 +114,7 @@ namespace NQueen.Model
             CancelSolver = false;
         }
 
-        private bool UpdateSols(IEnumerable<sbyte> solution, HashSet<sbyte[]> solutions, SolutionMode solutionMode)
+        private static bool UpdateSols(IEnumerable<sbyte> solution, HashSet<sbyte[]> solutions, SolutionMode solutionMode)
         {
             var queens = solution.ToArray();
 

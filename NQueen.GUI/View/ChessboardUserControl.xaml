@@ -17,7 +17,7 @@
 		<ItemsControl ItemsSource="{Binding Chessboard.Squares}">
 			<ItemsControl.ItemsPanel>
 				<ItemsPanelTemplate>
-					<UniformGrid Rows="{Binding view.BoardSize}" />
+					<UniformGrid Rows="{Binding BoardSize}" />
 				</ItemsPanelTemplate>
 			</ItemsControl.ItemsPanel>
 			<ItemsControl.ItemTemplate>
