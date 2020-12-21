@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
-using NQueen.Model;
-using NQueen.Common.Enum;
 using NQueen.Common;
+using NQueen.Common.Enum;
+using NQueen.Model;
 using NUnit.Framework;
 using System.Linq;
 

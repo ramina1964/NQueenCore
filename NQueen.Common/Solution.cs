@@ -64,7 +64,7 @@ namespace NQueen.Common
             return sb.ToString();
         }
 
-        private List<Position> SetPositions(IEnumerable<sbyte> queenList)
+        private static List<Position> SetPositions(IEnumerable<sbyte> queenList)
         {
             return queenList.Select((item, index) =>
                 new Position((sbyte)index, item)).ToList();

@@ -59,7 +59,6 @@ namespace NQueen.GUI.ViewModel
 
         public RelayCommand SaveCommand { get; set; }
 
-        //public int MaxNoOfSolutionsInOutput => Settings.Default.MaxNoOfSolutionsInOutput;
         public static int MaxNoOfSolutionsInOutput => 50;
 
         public IEnumerable<SolutionMode> EnumSolutionToItem

@@ -4,9 +4,8 @@ using System.Threading.Tasks;
 
 namespace NQueen.Common.Interface
 {
-    public delegate void SolutionFoundHandler(object sender, sbyte[] e);
-
     public delegate void QueenPlacedHandler(object sender, sbyte[] e);
+    public delegate void SolutionFoundHandler(object sender, sbyte[] e);
 
     public interface ISolver
     {

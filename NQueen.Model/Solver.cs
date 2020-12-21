@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
+
 namespace NQueen.Model
 {
     public class Solver : ISolver
@@ -29,10 +30,9 @@ namespace NQueen.Model
 
         public ObservableCollection<Solution> ObservableSolutions { get; set; }
 
+        public event QueenPlacedHandler QueenPlaced;
 
         public event SolutionFoundHandler SolutionFound;
-
-        public event QueenPlacedHandler QueenPlaced;
 
         public Task<ISimulationResults> GetSimulationResultsAsync(sbyte boardSize, SolutionMode solutionMode)
         {

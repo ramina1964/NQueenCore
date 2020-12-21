@@ -7,7 +7,7 @@ namespace NQueen.Common
 {
     public static class Utility
     {
-        public static int MaxNoOfSolutionsInOutput = 50;
+        public const int MaxNoOfSolutionsInOutput = 50;
 
         public static IEnumerable<sbyte[]> GetSymmetricalSolutions(IReadOnlyList<sbyte> solution)
         {
@@ -72,7 +72,7 @@ namespace NQueen.Common
             15 => 285053,
             16 => 1846955,
             17 => 11977939,
-            _ => throw new ArgumentOutOfRangeException(),
+            _ => throw new ArgumentOutOfRangeException("BoardSize must be a positive integer less than 18.", nameof(boardSize)),
         };
 
         private static int GetSolutionSizeAll(sbyte boardSize) => boardSize switch
@@ -94,7 +94,7 @@ namespace NQueen.Common
             15 => 2279184,
             16 => 14772512,
             17 => 95815104,
-            _ => throw new ArgumentOutOfRangeException(),
+            _ => throw new ArgumentOutOfRangeException("BoardSize must be a positive integer less than 18.", nameof(boardSize)),
         };
 
         public static string SolutionTitle(SolutionMode solutionMode)
