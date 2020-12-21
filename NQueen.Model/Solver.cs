@@ -24,7 +24,7 @@ namespace NQueen.Model
 
         public DisplayMode DisplayMode { get; set; }
 
-        public ObservableCollection<Solution> Solutions { get; set; }
+        public ObservableCollection<Solution> ObservableSolutions { get; set; }
 
         public event QueenPlacedHandler QueenPlaced;
 
@@ -78,7 +78,7 @@ namespace NQueen.Model
         public ISimulationResults Results { get; set; }
         public sbyte BoardSize { get; set; }
         public string BoardSizeText { get; set; }
-        public int NoOfSolutions => Solutions.Count;
+        public int NoOfSolutions => ObservableSolutions.Count;
         public sbyte HalfSize { get; set; }
         public sbyte[] QueenList { get; set; }
 
@@ -108,7 +108,7 @@ namespace NQueen.Model
 
             var solutionSize = Utility.FindSolutionSize(BoardSize, SolutionMode);
 
-            Solutions = new ObservableCollection<Solution>(new List<Solution>(solutionSize));
+            ObservableSolutions = new ObservableCollection<Solution>(new List<Solution>(solutionSize));
             CancelSolver = false;
         }
 
@@ -123,7 +123,7 @@ namespace NQueen.Model
                 return true;
             }
 
-            var symmSols = Utility.GetSymmSols(queens).ToList();
+            var symmSols = Utility.GetSymmetricalSolutions(queens).ToList();
 
             // If solutionMode == SolutionMode.All, add this solution and all of the symmetrical counterparts to All Solutions.
             if (solutionMode == SolutionMode.All)

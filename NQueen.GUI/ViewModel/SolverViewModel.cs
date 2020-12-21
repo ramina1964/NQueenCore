@@ -328,7 +328,7 @@ namespace NQueen.GUI.ViewModel
             IsMultipleRunning = false;
             //Solver.ProgressVisibility = Visibility.Collapsed;
             //Solver.ProgressValue = 0;
-            Solutions = Solver.Solutions;
+            Solutions = Solver.ObservableSolutions;
             NoOfSolutions = $"{Solutions.Count,0:N0}";
             //DelayInMilliseconds = Settings.Default.DefaultDelayInMilliseconds;
             DelayInMilliseconds = 150;
@@ -336,7 +336,7 @@ namespace NQueen.GUI.ViewModel
 
         private void UpdateGui()
         {
-            Solver.Solutions.Clear();
+            Solver.ObservableSolutions.Clear();
             BoardSize = sbyte.Parse(BoardSizeText);
             NoOfSolutions = "0";
             ElapsedTimeInSec = $"{0,0:N1}";

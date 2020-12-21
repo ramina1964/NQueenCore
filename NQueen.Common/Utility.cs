@@ -1,6 +1,7 @@
 ﻿using NQueen.Common.Enum;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NQueen.Common
 {
@@ -8,98 +9,93 @@ namespace NQueen.Common
     {
         public static int MaxNoOfSolutionsInOutput = 50;
 
-        public static IEnumerable<sbyte[]> GetSymmSols(IReadOnlyList<sbyte> solution)
+        public static IEnumerable<sbyte[]> GetSymmetricalSolutions(IReadOnlyList<sbyte> solution)
         {
-            var boardSize = solution.Count;
-            var midLineHorizontal = new sbyte[boardSize];
-            var midLineVertical = new sbyte[boardSize];
-            var diagonalToUpperRight = new sbyte[boardSize];
-            var diagonalToUpperLeft = new sbyte[boardSize];
-            var counter90 = new sbyte[boardSize];
-            var counter180 = new sbyte[boardSize];
-            var counter270 = new sbyte[boardSize];
+            sbyte boardSize = (sbyte)solution.Count;
+            var symmToMidHorizontal = new sbyte[boardSize];
+            var symmToMidVertical = new sbyte[boardSize];
+            var symmToMainDiag = new sbyte[boardSize];
+            var symmToBiDiag = new sbyte[boardSize];
+            var rotCounter90 = new sbyte[boardSize];
+            var rotCounter180 = new sbyte[boardSize];
+            var rotCounter270 = new sbyte[boardSize];
 
             for (sbyte j = 0; j < boardSize; j++)
             {
-                var index1 = (sbyte)(boardSize - j - 1);
-                var index2 = (sbyte)(boardSize - solution[j] - 1);
+                sbyte index1 = (sbyte)(boardSize - j - 1);
+                sbyte index2 = (sbyte)(boardSize - solution[j] - 1);
 
-                midLineHorizontal[index1] = solution[j];
-                counter180[index1] = midLineVertical[j] = index2;
-                counter270[solution[j]] = diagonalToUpperRight[index2] = index1;
-                counter90[index2] = diagonalToUpperLeft[solution[j]] = j;
+                symmToMidHorizontal[index1] = solution[j];
+                rotCounter90[index2] = symmToMainDiag[solution[j]] = j;
+                rotCounter180[index1] = symmToMidVertical[j] = index2;
+                rotCounter270[solution[j]] = symmToBiDiag[index2] = index1;
             }
 
-            return new HashSet<sbyte[]>
+            return new HashSet<sbyte[]>(new SequenceEquality<sbyte>())
             {
-                midLineVertical,
-                diagonalToUpperRight,
-                diagonalToUpperLeft,
-                counter90,
-                counter180,
-                counter270,
-                midLineHorizontal
+                symmToMidVertical,
+                symmToMidHorizontal,
+                symmToMainDiag,
+                symmToBiDiag,
+                rotCounter90,
+                rotCounter180,
+                rotCounter270,
             };
         }
 
-        public static int FindSolutionSize(sbyte boardSize, SolutionMode solutionMode)
-        {
-            return (solutionMode == SolutionMode.Single)
+        public static List<sbyte[]> GetSymmetricalSolutions(List<sbyte[]> solution) =>
+            solution.SelectMany(s => GetSymmetricalSolutions(s)).ToList();
+
+        public static int FindSolutionSize(sbyte boardSize, SolutionMode solutionMode) =>
+            (solutionMode == SolutionMode.Single)
                 ? 1
                 : (solutionMode == SolutionMode.Unique)
-                ? FindSolutionSizeUnique(boardSize)
-                : FindSolutionSizeAll(boardSize);
-        }
+                ? GetSolutionSizeUnique(boardSize)
+                : GetSolutionSizeAll(boardSize);
 
-        public static int FindSolutionSizeUnique(sbyte boardSize)
+        private static int GetSolutionSizeUnique(sbyte boardSize) => boardSize switch
         {
-            return boardSize switch
-            {
-                1 => 1,
-                2 => 1,
-                3 => 1,
-                4 => 1,
-                5 => 2,
-                6 => 1,
-                7 => 6,
-                8 => 12,
-                9 => 46,
-                10 => 92,
-                11 => 341,
-                12 => 1787,
-                13 => 9233,
-                14 => 45752,
-                15 => 285053,
-                16 => 1846955,
-                17 => 11977939,
-                _ => throw new ArgumentOutOfRangeException(),
-            };
-        }
+            1 => 1,
+            2 => 0,
+            3 => 0,
+            4 => 1,
+            5 => 2,
+            6 => 1,
+            7 => 6,
+            8 => 12,
+            9 => 46,
+            10 => 92,
+            11 => 341,
+            12 => 1787,
+            13 => 9233,
+            14 => 45752,
+            15 => 285053,
+            16 => 1846955,
+            17 => 11977939,
+            _ => throw new ArgumentOutOfRangeException(),
+        };
 
-        public static int FindSolutionSizeAll(sbyte boardSize)
+        private static int GetSolutionSizeAll(sbyte boardSize) => boardSize switch
         {
-            return boardSize switch
-            {
-                1 => 1,
-                2 => 1,
-                3 => 1,
-                4 => 2,
-                5 => 10,
-                6 => 4,
-                7 => 40,
-                8 => 92,
-                9 => 352,
-                10 => 724,
-                11 => 2680,
-                12 => 14200,
-                13 => 73712,
-                14 => 365596,
-                15 => 2279184,
-                16 => 14772512,
-                17 => 95815104,
-                _ => throw new ArgumentOutOfRangeException(),
-            };
-        }
+            1 => 1,
+            2 => 0,
+            3 => 0,
+            4 => 2,
+            5 => 10,
+            6 => 4,
+            7 => 40,
+            8 => 92,
+            9 => 352,
+            10 => 724,
+            11 => 2680,
+            12 => 14200,
+            13 => 73712,
+            14 => 365596,
+            15 => 2279184,
+            16 => 14772512,
+            17 => 95815104,
+            _ => throw new ArgumentOutOfRangeException(),
+        };
 
         public static string SolutionTitle(SolutionMode solutionMode)
         {

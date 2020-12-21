@@ -10,10 +10,6 @@ namespace NQueen.Common.Interface
 
     public interface ISolver
     {
-        event QueenPlacedHandler QueenPlaced;
-
-        event SolutionFoundHandler SolutionFound;
-
         int DelayInMilliseconds { get; set; }
 
         bool CancelSolver { get; set; }
@@ -26,8 +22,12 @@ namespace NQueen.Common.Interface
 
         //double ProgressValue { get; set; }
 
-        ObservableCollection<Solution> Solutions { get; set; }
+        ObservableCollection<Solution> ObservableSolutions { get; set; }
 
         Task<ISimulationResults> GetSimulationResultsAsync(sbyte boardSize, SolutionMode solutionMode);
+
+        event QueenPlacedHandler QueenPlaced;
+
+        event SolutionFoundHandler SolutionFound;
     }
 }
