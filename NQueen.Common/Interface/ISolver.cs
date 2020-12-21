@@ -1,11 +1,12 @@
 ﻿using NQueen.Common.Enum;
+using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace NQueen.Common.Interface
 {
-    public delegate void QueenPlacedHandler(object sender, sbyte[] e);
-    public delegate void SolutionFoundHandler(object sender, sbyte[] e);
+    public delegate void QueenPlacedHandler(object sender, QueenPlacedEventArgs e);
+    public delegate void SolutionFoundHandler(object sender, SolutionFoundEventArgs e);
 
     public interface ISolver
     {

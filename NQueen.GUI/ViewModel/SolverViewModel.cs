@@ -347,9 +347,9 @@ namespace NQueen.GUI.ViewModel
             Chessboard?.CreateSquares(BoardSize, new List<SquareViewModel>());
         }
 
-        private void Queens_QueenPlaced(object sender, sbyte[] e)
+        private void Queens_QueenPlaced(object sender, QueenPlacedEventArgs e)
         {
-            var sol = new Solution(e, 1);
+            var sol = new Solution(e.QueenList, 1);
             var positions = sol
                             .QueenList.Where(q => q > -1)
                             .Select((item, index) => new Position((sbyte)index, item)).ToList();
@@ -357,10 +357,10 @@ namespace NQueen.GUI.ViewModel
             Chessboard.PlaceQueens(positions);
         }
 
-        private void Queens_SolutionFound(object sender, sbyte[] e)
+        private void Queens_SolutionFound(object sender, SolutionFoundEventArgs e)
         {
             var id = Solutions.Count + 1;
-            var sol = new Solution(e, id);
+            var sol = new Solution(e.Solution, id);
 
             Application
                 .Current

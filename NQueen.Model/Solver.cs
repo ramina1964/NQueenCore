@@ -67,9 +67,9 @@ namespace NQueen.Model
 
         #region VirtualMethods
 
-        protected virtual void OnQueenPlaced(sbyte[] e) => QueenPlaced?.Invoke(this, e);
+        protected virtual void OnQueenPlaced(QueenPlacedEventArgs e) => QueenPlaced?.Invoke(this, e);
 
-        protected virtual void OnSolutionFound(sbyte[] e) => SolutionFound?.Invoke(this, e);
+        protected virtual void OnSolutionFound(SolutionFoundEventArgs e) => SolutionFound?.Invoke(this, e);
         #endregion VirtualMethods
 
         public ISimulationResults GetResults(SolutionMode solutionMode)
@@ -153,7 +153,7 @@ namespace NQueen.Model
 
             if (DisplayMode == DisplayMode.Visualize)
             {
-                OnQueenPlaced(QueenList);
+                OnQueenPlaced(new QueenPlacedEventArgs(QueenList));
                 Thread.Sleep(DelayInMilliseconds);
             }
 
@@ -170,7 +170,7 @@ namespace NQueen.Model
 
                 // Activate this code in case of IsVisulaized == true.
                 if (isUpdated && DisplayMode == DisplayMode.Visualize)
-                { SolutionFound(this, QueenList); }
+                { SolutionFound(this, new SolutionFoundEventArgs(QueenList)); }
 
                 //ProgressValue = Math.Round(100.0 * QueenList[0] / BoardSize);
                 return false;
