@@ -18,14 +18,12 @@ namespace NQueen.GUI.ViewModel
 {
     public sealed class SolverViewModel : ViewModelBase, IDataErrorInfo
     {
-        #region Constructor
         public SolverViewModel(ISolver solver)
         {
             Initialize(solver);
             Solver.QueenPlaced += Queens_QueenPlaced;
-            Solver.SolutionFound += Queens_ShowSolution;
+            Solver.SolutionFound += Queens_SolutionFound;
         }
-        #endregion Constructor
 
         #region IDataErrorInfo
         public string this[string columnName]
@@ -347,10 +345,20 @@ namespace NQueen.GUI.ViewModel
             Chessboard?.CreateSquares(BoardSize, new List<SquareViewModel>());
         }
 
-        private void Queens_ShowSolution(object sender, SolutionFoundEventArgs e)
+        private void Queens_QueenPlaced(object sender, sbyte[] e)
+        {
+            var sol = new Solution(e, 1);
+            var positions = sol
+                            .QueenList.Where(q => q > -1)
+                            .Select((item, index) => new Position((sbyte)index, item)).ToList();
+
+            Chessboard.PlaceQueens(positions);
+        }
+
+        private void Queens_SolutionFound(object sender, sbyte[] e)
         {
             var id = Solutions.Count + 1;
-            var sol = new Solution(e.Solution, id);
+            var sol = new Solution(e, id);
 
             Application
                 .Current
@@ -358,16 +366,6 @@ namespace NQueen.GUI.ViewModel
                 .BeginInvoke(DispatcherPriority.Background, new Action(() => Solutions.Add(sol)));
 
             SelectedSolution = sol;
-        }
-
-        private void Queens_QueenPlaced(object sender, QueenPlacedEventArgs e)
-        {
-            var sol = new Solution(e.QueenList, 1);
-            var positions = sol
-                            .QueenList.Where(el => el > -1)
-                            .Select((item, index) => new Position((sbyte)index, item)).ToList();
-
-            Chessboard.PlaceQueens(positions);
         }
 
         private async void SimulateAsync()
