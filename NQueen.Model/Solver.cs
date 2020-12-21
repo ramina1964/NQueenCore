@@ -188,7 +188,7 @@ namespace NQueen.Model
 
         private sbyte LocateQueen(sbyte colNo, SolutionMode solutionMode)
         {
-            bool isHalfSizeReachedMultSol = colNo == HalfSize && Solutions.Count > 0 &&
+            var isHalfSizeReachedMultSol = colNo == HalfSize && Solutions.Count > 0 &&
                 Array.IndexOf<sbyte>(QueenList, 0, 0, HalfSize) == -1 && solutionMode != SolutionMode.Single;
 
             if (isHalfSizeReachedMultSol)
@@ -196,7 +196,7 @@ namespace NQueen.Model
 
             for (sbyte pos = (sbyte)(QueenList[colNo] + 1); pos < BoardSize; pos++)
             {
-                bool isValid = true;
+                var isValid = true;
                 for (int j = 0; j < colNo; j++)
                 {
                     int lhs = Math.Abs(pos - QueenList[j]);

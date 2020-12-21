@@ -54,10 +54,13 @@ namespace NQueen.GUI.ViewModel
 
         #region PublicProperties
         public RelayCommand SimulateCommand { get; set; }
+
         public RelayCommand CancelCommand { get; set; }
+
         public RelayCommand SaveCommand { get; set; }
+
         //public int MaxNoOfSolutionsInOutput => Settings.Default.MaxNoOfSolutionsInOutput;
-        public int MaxNoOfSolutionsInOutput => 50;
+        public static int MaxNoOfSolutionsInOutput => 50;
 
         public IEnumerable<SolutionMode> EnumSolutionToItem
         {
@@ -459,8 +462,8 @@ namespace NQueen.GUI.ViewModel
 
         private void Save()
         {
-            var results = new TextFilePresentation(SimulationResults);
-            var filePath = results.Write2File(SolutionMode);
+            // var results = new TextFilePresentation(SimulationResults);
+            //var filePath = results.Write2File(SolutionMode);
 
             //var caption = Resources.TitleSaveResultsMessage;
             //var msg = String.Format(Resources.SaveResultsMessage, filePath);
