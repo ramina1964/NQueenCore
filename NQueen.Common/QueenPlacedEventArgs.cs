@@ -4,8 +4,8 @@ namespace NQueen.Common
 {
     public class QueenPlacedEventArgs : EventArgs
     {
-        public QueenPlacedEventArgs(sbyte[] solution) => QueenList = solution;
+        public QueenPlacedEventArgs(sbyte[] solution) => Solution = solution;
 
-        public sbyte[] QueenList { get; }
+        public sbyte[] Solution { get; }
     }
 }

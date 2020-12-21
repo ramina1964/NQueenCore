@@ -349,7 +349,7 @@ namespace NQueen.GUI.ViewModel
 
         private void Queens_QueenPlaced(object sender, QueenPlacedEventArgs e)
         {
-            var sol = new Solution(e.QueenList, 1);
+            var sol = new Solution(e.Solution, 1);
             var positions = sol
                             .QueenList.Where(q => q > -1)
                             .Select((item, index) => new Position((sbyte)index, item)).ToList();
