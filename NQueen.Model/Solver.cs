@@ -52,7 +52,7 @@ namespace NQueen.Model
 
         public string BoardSizeText { get; set; }
 
-        public int NoOfSolutions => ObservableSolutions.Count;
+        public int NoOfSolutions => Solutions.Count;
 
         public sbyte HalfSize { get; set; }
 

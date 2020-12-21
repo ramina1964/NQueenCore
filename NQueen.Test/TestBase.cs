@@ -1,13 +1,12 @@
 ﻿using NQueen.Common.Enum;
 using NQueen.Model;
-using System;
+using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NQueen.Test
 {
+    [TestFixture]
     public class TestBase
     {
         public Solver Sut { get; set; }

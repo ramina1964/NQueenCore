@@ -259,11 +259,10 @@
 								 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
 								 Visibility="{Binding Solver.ProgressVisibility}" />-->
 
-					<Label Style="{StaticResource LabelStyle}" Grid.Row="0" Width="45" Height="Auto" Background="Aqua"
+					<!--<Label Style="{StaticResource LabelStyle}" Grid.Row="0" Width="45" Height="Auto" Background="Aqua"
 						   Content="{Binding Solver.ProgressLabel}" Visibility="{Binding Solver.ProgressVisibility}" 
 						   HorizontalAlignment="Center" VerticalAlignment="Center"
-						   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-						   />
+						   HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />-->
 
 				</Grid>
 				<!-- End of Status Panel -->
