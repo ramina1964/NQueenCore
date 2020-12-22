@@ -1,10 +1,7 @@
 ﻿using FluentAssertions;
-using NQueen.Common;
 using NQueen.Common.Enum;
 using NQueen.Model;
 using NUnit.Framework;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace NQueen.Test
 {
@@ -23,8 +20,8 @@ namespace NQueen.Test
             ActualSolutions = GetActualSolutions(boardSize, solutionMode);
 
             // Assert
-            Assert.AreEqual(ActualSolutions.Count, ExpectedSolutions.Count);
-            ActualSolutions.Should().Equals(ExpectedSolutions);
+            Assert.AreEqual(ExpectedSolutions.Count, ActualSolutions.Count);
+            ExpectedSolutions.Should().Equals(ActualSolutions);
         }
 
         [TestCase(1, SolutionMode.Single), TestCase(1, SolutionMode.Unique), TestCase(1, SolutionMode.All)]
@@ -56,18 +53,15 @@ namespace NQueen.Test
         {
             // Arrange
             Sut = new Solver(boardSize);
-            List<sbyte[]> uniqueSol = GetExpectedSolutions(boardSize, solutionMode);
+
             ExpectedSolutions = GetExpectedSolutions(boardSize, solutionMode);
-            List<sbyte[]> allSymmSol = uniqueSol
-                          .SelectMany(s => Utility.GetSymmetricalSolutions(s))
-                          .ToList();
 
             // Act
             ActualSolutions = GetActualSolutions(boardSize, solutionMode);
 
             // Assert
-            Assert.AreEqual(ActualSolutions.Count, ExpectedSolutions.Count);
-            ActualSolutions.Should().Equals(ExpectedSolutions);
+            Assert.AreEqual(ExpectedSolutions.Count, ActualSolutions.Count);
+            ExpectedSolutions.Should().Equals(ActualSolutions);
             //ActualSolutions.Should().BeEquivalentTo(ExpectedSolutions);
         }
 
@@ -77,14 +71,15 @@ namespace NQueen.Test
         {
             // Arrange
             Sut = new Solver(boardSize);
+
             ExpectedSolutions = GetExpectedSolutions(boardSize, solutionMode);
 
             // Act
             ActualSolutions = GetActualSolutions(boardSize, solutionMode);
 
             // Assert
-            Assert.AreEqual(ActualSolutions.Count, ExpectedSolutions.Count);
-            ActualSolutions.Should().Equals(ExpectedSolutions);
+            Assert.AreEqual(ExpectedSolutions.Count, ActualSolutions.Count);
+            ExpectedSolutions.Should().Equals(ActualSolutions);
             //ActualSolutions.Should().BeEquivalentTo(ExpectedSolutions);
         }
     }

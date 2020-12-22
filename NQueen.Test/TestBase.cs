@@ -30,13 +30,13 @@ namespace NQueen.Test
                 .Select(s => s.QueenList)
                 .ToList();
 
-        public static List<sbyte[]> GetSingleSolution(sbyte boardSize) => singleSolution[boardSize];
-
-        public static List<sbyte[]> GetUniqueSolutions(sbyte boardSize) => uniqueSolutions[boardSize];
-
-        public static List<sbyte[]> GetAllSolutions(sbyte boardSize) => allSolutions[boardSize];
-
         #region PrivateAttributes
+        private static List<sbyte[]> GetSingleSolution(sbyte boardSize) => singleSolution[boardSize];
+
+        private static List<sbyte[]> GetUniqueSolutions(sbyte boardSize) => uniqueSolutions[boardSize];
+
+        private static List<sbyte[]> GetAllSolutions(sbyte boardSize) => allSolutions[boardSize];
+
         private static readonly Dictionary<sbyte, List<sbyte[]>> singleSolution = new Dictionary<sbyte, List<sbyte[]>>
         {
             { 1, new List<sbyte[]> { new sbyte[]  { 0 } } },
