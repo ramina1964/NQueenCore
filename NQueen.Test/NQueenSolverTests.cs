@@ -3,6 +3,7 @@ using NQueen.Common;
 using NQueen.Common.Enum;
 using NQueen.Model;
 using NUnit.Framework;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace NQueen.Test
@@ -55,9 +56,9 @@ namespace NQueen.Test
         {
             // Arrange
             Sut = new Solver(boardSize);
-            System.Collections.Generic.List<sbyte[]> uniqueSol = GetExpectedSolutions(boardSize, solutionMode);
+            List<sbyte[]> uniqueSol = GetExpectedSolutions(boardSize, solutionMode);
             ExpectedSolutions = GetExpectedSolutions(boardSize, solutionMode);
-            System.Collections.Generic.List<sbyte[]> allSymmSol = uniqueSol
+            List<sbyte[]> allSymmSol = uniqueSol
                           .SelectMany(s => Utility.GetSymmetricalSolutions(s))
                           .ToList();
 

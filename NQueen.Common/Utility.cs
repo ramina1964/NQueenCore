@@ -9,9 +9,9 @@ namespace NQueen.Common
     {
         public const int MaxNoOfSolutionsInOutput = 50;
 
-        public static IEnumerable<sbyte[]> GetSymmetricalSolutions(IReadOnlyList<sbyte> solution)
+        public static List<sbyte[]> GetSymmetricalSolutions(sbyte[] solution)
         {
-            sbyte boardSize = (sbyte)solution.Count;
+            sbyte boardSize = (sbyte)solution.Length;
             var symmToMidHorizontal = new sbyte[boardSize];
             var symmToMidVertical = new sbyte[boardSize];
             var symmToMainDiag = new sbyte[boardSize];
@@ -40,7 +40,7 @@ namespace NQueen.Common
                 rotCounter90,
                 rotCounter180,
                 rotCounter270,
-            };
+            }.ToList();
         }
 
         public static List<sbyte[]> GetSymmetricalSolutions(List<sbyte[]> solution) =>
