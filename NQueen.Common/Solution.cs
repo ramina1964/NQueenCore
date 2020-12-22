@@ -37,20 +37,20 @@ namespace NQueen.Common
         private string GetDetails()
         {
             const int noOfQueensPerLine = 40;
-            int noOfLines = (BoardSize % noOfQueensPerLine == 0) ?
+            var noOfLines = (BoardSize % noOfQueensPerLine == 0) ?
                 BoardSize / noOfQueensPerLine :
                 BoardSize / noOfQueensPerLine + 1;
 
             StringBuilder sb = new StringBuilder();
-            for (int lineNo = 0; lineNo < noOfLines; lineNo++)
+            for (var lineNo = 0; lineNo < noOfLines; lineNo++)
             {
-                int maxQueensInLastLine = (lineNo < noOfLines - 1 || BoardSize % noOfQueensPerLine == 0) ?
+                var maxQueensInLastLine = (lineNo < noOfLines - 1 || BoardSize % noOfQueensPerLine == 0) ?
                     noOfQueensPerLine :
                     Math.Min(BoardSize % noOfQueensPerLine, noOfQueensPerLine);
 
-                for (int posInLine = 0; posInLine < maxQueensInLastLine; posInLine++)
+                for (var posInLine = 0; posInLine < maxQueensInLastLine; posInLine++)
                 {
-                    int posNo = noOfQueensPerLine * lineNo + posInLine;
+                    var posNo = noOfQueensPerLine * lineNo + posInLine;
                     sb.Append($"({Positions[posNo].RowNo + 1,0:N0}, {Positions[posNo].ColumnNo + 1,0:N0})");
 
                     if (posNo < BoardSize - 1)

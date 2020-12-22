@@ -14,7 +14,7 @@ namespace NQueen.Model
 {
     public class Solver : ISolver
     {
-        public Solver(sbyte boardSize, DisplayMode DisplayMode = DisplayMode.Hide) => Initialize(boardSize, DisplayMode);
+        public Solver(sbyte boardSize, DisplayMode DisplayMode = DisplayMode.Hide) => Initialize(boardSize, SolutionMode, DisplayMode);
 
         #region ISolverInterface
 
@@ -34,18 +34,21 @@ namespace NQueen.Model
 
         public event SolutionFoundHandler SolutionFound;
 
-        public Task<ISimulationResults> GetSimulationResultsAsync(sbyte boardSize, SolutionMode solutionMode)
+        public Task<ISimulationResults> GetSimulationResultsAsync(sbyte boardSize,
+                                        SolutionMode solutionMode = SolutionMode.Unique, DisplayMode displayMode = DisplayMode.Hide)
         {
             return Task.Factory.StartNew(() =>
             {
-                Initialize(boardSize, DisplayMode);
-                return GetResults(solutionMode);
+                Initialize(boardSize, solutionMode, displayMode);
+                //return GetResults(solutionMode);
+                return GetResults();
             });
         }
 
         #endregion ISolverInterface
 
         #region PublicProperties
+
         public ISimulationResults Results { get; set; }
 
         public sbyte BoardSize { get; set; }
@@ -72,10 +75,10 @@ namespace NQueen.Model
         protected virtual void OnSolutionFound(SolutionFoundEventArgs e) => SolutionFound?.Invoke(this, e);
         #endregion VirtualMethods
 
-        public ISimulationResults GetResults(SolutionMode solutionMode)
+        public ISimulationResults GetResults()
         {
             var stopwatch = Stopwatch.StartNew();
-            var solutions = MainSolve(solutionMode).ToList();
+            var solutions = MainSolve().ToList();
             stopwatch.Stop();
             var timeInSec = (double)stopwatch.ElapsedMilliseconds / 1000;
             var elapsedTimeInSec = Math.Round(timeInSec, 1);
@@ -90,13 +93,15 @@ namespace NQueen.Model
         }
 
         #region PrivateMethods
-        private void Initialize(sbyte boardSize, DisplayMode displayMode)
+        private void Initialize(sbyte boardSize, SolutionMode solutionMode, DisplayMode displayMode)
         {
             BoardSize = boardSize;
             HalfSize = (sbyte)(BoardSize % 2 == 0 ?
                 BoardSize / 2 :
                 BoardSize / 2 + 1);
             CancelSolver = false;
+
+            SolutionMode = solutionMode;
             DisplayMode = displayMode;
 
             QueenList = Enumerable.Repeat((sbyte)-1, BoardSize).ToArray();
@@ -106,12 +111,13 @@ namespace NQueen.Model
             var solutionSize = Utility.FindSolutionSize(BoardSize, SolutionMode);
             ObservableSolutions = new ObservableCollection<Solution>(new List<Solution>(solutionSize));
         }
-        private bool UpdateSolutions(IEnumerable<sbyte> solution, SolutionMode solutionMode)
+
+        private bool UpdateSolutions(IEnumerable<sbyte> solution)
         {
             var queens = solution.ToArray();
 
             // If solutionMode == SolutionMode.Single, then we are done.
-            if (solutionMode == SolutionMode.Single)
+            if (SolutionMode == SolutionMode.Single)
             {
                 Solutions.Add(queens);
                 return true;
@@ -120,7 +126,7 @@ namespace NQueen.Model
             var symmetricalSolutions = Utility.GetSymmetricalSolutions(queens).ToList();
 
             // If solutionMode == SolutionMode.All, add this solution and all of the symmetrical counterparts to All Solutions.
-            if (solutionMode == SolutionMode.All)
+            if (SolutionMode == SolutionMode.All)
             {
                 Solutions.Add(queens);
                 symmetricalSolutions.ForEach(s => Solutions.Add(s));
@@ -137,16 +143,16 @@ namespace NQueen.Model
             return true;
         }
 
-        private IEnumerable<Solution> MainSolve(SolutionMode solutionMode)
+        private IEnumerable<Solution> MainSolve()
         {
             // Recursive call to start the simulation
-            SolveRec(solutionMode);
+            SolveRec();
 
             return Solutions
                     .Select((s, index) => new Solution(s, index + 1));
         }
 
-        private bool SolveRec(SolutionMode solutionMode, sbyte colNo = 0)
+        private bool SolveRec(sbyte colNo = 0)
         {
             if (CancelSolver)
             { return false; }
@@ -157,7 +163,7 @@ namespace NQueen.Model
                 Thread.Sleep(DelayInMilliseconds);
             }
 
-            if (solutionMode == SolutionMode.Single && NoOfSolutions == 1)
+            if (SolutionMode == SolutionMode.Single && NoOfSolutions == 1)
             { return true; }
 
             if (colNo == -1)
@@ -166,7 +172,7 @@ namespace NQueen.Model
             // Here a new solution is found.
             if (colNo == BoardSize)
             {
-                bool isUpdated = UpdateSolutions(QueenList, solutionMode);
+                bool isUpdated = UpdateSolutions(QueenList);
 
                 // Activate this code in case of IsVisulaized == true.
                 if (isUpdated && DisplayMode == DisplayMode.Visualize)
@@ -176,20 +182,20 @@ namespace NQueen.Model
                 return false;
             }
 
-            QueenList[colNo] = LocateQueen(colNo, solutionMode);
+            QueenList[colNo] = LocateQueen(colNo);
             if (QueenList[colNo] == -1)
             {
                 return false;
             }
 
             var nextCol = (sbyte)(colNo + 1);
-            return SolveRec(solutionMode, nextCol) || SolveRec(solutionMode, colNo);
+            return SolveRec(nextCol) || SolveRec(colNo);
         }
 
-        private sbyte LocateQueen(sbyte colNo, SolutionMode solutionMode)
+        private sbyte LocateQueen(sbyte colNo)
         {
             var isHalfSizeReachedMultSol = colNo == HalfSize && Solutions.Count > 0 &&
-                Array.IndexOf<sbyte>(QueenList, 0, 0, HalfSize) == -1 && solutionMode != SolutionMode.Single;
+                Array.IndexOf<sbyte>(QueenList, 0, 0, HalfSize) == -1 && SolutionMode != SolutionMode.Single;
 
             if (isHalfSizeReachedMultSol)
             { return -1; }

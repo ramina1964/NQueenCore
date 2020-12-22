@@ -6,6 +6,7 @@
 		
 		xmlns:view="clr-namespace:NQueen.GUI.View"
 		xmlns:converter="clr-namespace:NQueen.GUI.Converter"
+		xmlns:viewmodel="clr-namespace:NQueen.GUI.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel}"
 		mc:Ignorable="d" FontSize="14"
 
 		MinWidth="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth},
@@ -14,264 +15,264 @@
 		MinHeight="{Binding Source={x:Static SystemParameters.PrimaryScreenHeight},
 				Converter={converter:RatioConverter}, ConverterParameter='0.96'}"
 
-        Title="Solutions of NQueen-Problem with Backtracking - .Net Core 5"
-		WindowStartupLocation="CenterScreen" ResizeMode="CanResize" WindowState="Normal">
+		Title="Solutions of NQueen-Problem with Backtracking - .Net5"
+		WindowStartupLocation="CenterScreen" ResizeMode="CanResize" WindowState="Normal" >
 
-    <!-- Start of Outer Grid -->
-    <Grid HorizontalAlignment = "Stretch" VerticalAlignment = "Stretch" Margin = "5.0">
-        <Grid.RowDefinitions>
-            <RowDefinition MinHeight="40" Height= "Auto" />
-            <RowDefinition Height= "*" />
-        </Grid.RowDefinitions>
+	<!-- Start of Outer Grid -->
+	<Grid HorizontalAlignment = "Stretch" VerticalAlignment = "Stretch" Margin = "5.0">
+		<Grid.RowDefinitions>
+			<RowDefinition MinHeight="40" Height= "Auto" />
+			<RowDefinition Height= "*" />
+		</Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition MinWidth="140" Width="Auto" />
-            <ColumnDefinition MaxWidth="1000" Width="*" />
-            <ColumnDefinition Width= "Auto" />
-        </Grid.ColumnDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition MinWidth="140" Width="Auto" />
+			<ColumnDefinition MaxWidth="1000" Width="*" />
+			<ColumnDefinition Width= "Auto" />
+		</Grid.ColumnDefinitions>
 
-        <!-- Start of Selected Solution -->
-        <GroupBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="Bisque" Header="Selected Solution" Margin = "5"
+		<!-- Start of Selected Solution -->
+		<GroupBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="Bisque" Header="Selected Solution" Margin = "5"
 				  BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
-            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+			<Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
 
-                <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource LabelStyle}" Foreground="Purple" Content="Locations"
+				<Label Grid.Row="0" Grid.Column="0" Style="{StaticResource LabelStyle}" Foreground="Purple" Content="Locations"
 					   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
 					   HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
 
-                <ScrollViewer Grid.Row="0" Grid.Column="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
-                    <Label Style="{StaticResource LabelStyle}" Foreground="Purple" Content="{Binding SelectedSolution.Details}"
+				<ScrollViewer Grid.Row="0" Grid.Column="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+					<Label Style="{StaticResource LabelStyle}" Foreground="Purple" Content="{Binding SelectedSolution.Details}"
 						   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
 						   HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
-                </ScrollViewer>
-            </Grid>
-        </GroupBox>
-        <!-- End of Selected Solution -->
+				</ScrollViewer>
+			</Grid>
+		</GroupBox>
+		<!-- End of Selected Solution -->
 
-        <!-- Start of Solution List -->
-        <Grid Grid.Row="1" Grid.Column="0" Background="Bisque" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin = "5">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
+		<!-- Start of Solution List -->
+		<Grid Grid.Row="1" Grid.Column="0" Background="Bisque" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin = "5">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="30" />
+					<RowDefinition Height="*" />
+				</Grid.RowDefinitions>
 
-                <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource LabelStyle}"
+				<Label Grid.Row="0" Grid.Column="0" Style="{StaticResource LabelStyle}"
 					   Content="{Binding SolutionTitle}" HorizontalAlignment="Stretch" Foreground="Purple"
 					   VerticalAlignment="Stretch" HorizontalContentAlignment="Left" />
 
-                <ListBox Grid.Row="1" Grid.Column="0" Foreground="Black"
+				<ListBox Grid.Row="1" Grid.Column="0" Foreground="Black"
 						 ItemsSource="{Binding Solutions}" SelectedItem="{Binding SelectedSolution}">
-                    <ListBox.ItemContainerStyle>
-                        <Style TargetType="ListBoxItem">
-                            <Style.Triggers>
-                                <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="FontWeight" Value="Bold" />
-                                    <Setter Property="Background" Value="Transparent" />
-                                    <Setter Property="Foreground" Value="Crimson" />
-                                </Trigger>
-                            </Style.Triggers>
-                            <Style.Resources>
-                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
-                            </Style.Resources>
-                        </Style>
-                    </ListBox.ItemContainerStyle>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <TextBlock Text="{Binding Name}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </Grid>
-        </Grid>
-        <!-- End of Solution List -->
+					<ListBox.ItemContainerStyle>
+						<Style TargetType="ListBoxItem">
+							<Style.Triggers>
+								<Trigger Property="IsSelected" Value="True">
+									<Setter Property="FontWeight" Value="Bold" />
+									<Setter Property="Background" Value="Transparent" />
+									<Setter Property="Foreground" Value="Crimson" />
+								</Trigger>
+							</Style.Triggers>
+							<Style.Resources>
+								<SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
+							</Style.Resources>
+						</Style>
+					</ListBox.ItemContainerStyle>
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<StackPanel>
+								<TextBlock Text="{Binding Name}" />
+							</StackPanel>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+			</Grid>
+		</Grid>
+		<!-- End of Solution List -->
 
-        <!-- Start of Chessboard -->
-        <Grid Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin = "5">
-            <view:ChessboardUserControl x:Name="chessboard" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-        </Grid>
-        <!-- End of Chessboard -->
+		<!-- Start of Chessboard -->
+		<Grid Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin = "5">
+			<view:ChessboardUserControl x:Name="chessboard" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+		</Grid>
+		<!-- End of Chessboard -->
 
-        <!-- Start of Input / Output Panel -->
-        <Grid Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5, 0, 5, 0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="80" />
-            </Grid.RowDefinitions>
+		<!-- Start of Input / Output Panel -->
+		<Grid Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5, 0, 5, 0">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="80" />
+			</Grid.RowDefinitions>
 
-            <!-- Start of Input Panel -->
-            <GroupBox Grid.Row="0" Background="Bisque" Header="Input" BorderThickness="1" BorderBrush="Black"
+			<!-- Start of Input Panel -->
+			<GroupBox Grid.Row="0" Background="Bisque" Header="Input" BorderThickness="1" BorderBrush="Black"
 					  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
 					  HorizontalContentAlignment="Left" VerticalContentAlignment="Stretch">
 
-                <Grid Margin="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
+				<Grid Margin="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+					</Grid.RowDefinitions>
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition />
+						<ColumnDefinition />
+					</Grid.ColumnDefinitions>
 
-                    <Label Style="{StaticResource LabelStyle}" Grid.Row="0" Grid.Column="0" Content="Board Size" Margin="5, 2"
+					<Label Style="{StaticResource LabelStyle}" Grid.Row="0" Grid.Column="0" Content="Board Size" Margin="5, 2"
 						   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
 						   HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
 
-                    <TextBox Style="{StaticResource TextBoxNumericalStyle}" Grid.Row="0" Grid.Column="1" Margin= "5, 2"
+					<TextBox Style="{StaticResource TextBoxNumericalStyle}" Grid.Row="0" Grid.Column="1" Margin= "5, 2"
 							 Text="{Binding BoardSizeText, UpdateSourceTrigger=LostFocus, Mode=TwoWay,
 									ValidatesOnDataErrors=True, ValidatesOnExceptions=True}"
 							 IsEnabled="{Binding CanEditBoardSize}" />
 
-                    <Label Style="{StaticResource LabelStyle}" Grid.Row="1" Grid.Column="0" Content="Solution Mode" Margin="5, 2"
+					<Label Style="{StaticResource LabelStyle}" Grid.Row="1" Grid.Column="0" Content="Solution Mode" Margin="5, 2"
 						   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
 						   HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
 
-                    <ComboBox Grid.Row="1" Grid.Column="1" Margin="5, 2" ItemsSource="{Binding EnumSolutionToItem, Mode=TwoWay}"
+					<ComboBox Grid.Row="1" Grid.Column="1" Margin="5, 2" ItemsSource="{Binding EnumSolutionToItem, Mode=TwoWay}"
 							  SelectedItem="{Binding SolutionMode}" IsEnabled="{Binding CanEditSolutionMode}"
 							  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
 							  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
 
-                    <Label Style="{StaticResource LabelStyle}" Grid.Row="2" Grid.Column="0" Content="Display Mode" Margin="5, 2"
+					<Label Style="{StaticResource LabelStyle}" Grid.Row="2" Grid.Column="0" Content="Display Mode" Margin="5, 2"
 						   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
 						   HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" />
 
-                    <ComboBox Grid.Row="2" Grid.Column="1" x:Name="CmbDisplayMode" Margin="5, 2"
+					<ComboBox Grid.Row="2" Grid.Column="1" x:Name="CmbDisplayMode" Margin="5, 2"
 							  ItemsSource="{Binding EnumDisplayToItem, Mode=TwoWay}" SelectedItem="{Binding DisplayMode}"
 							  IsEnabled="{Binding IsFinished}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
 							  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
 
-                    <Label Style="{StaticResource LabelStyle}" Grid.Row="3" Grid.Column="0" Content="Delay" Margin="5, 2"
+					<Label Style="{StaticResource LabelStyle}" Grid.Row="3" Grid.Column="0" Content="Delay" Margin="5, 2"
 						   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
 						   HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
 
-                    <Slider Grid.Row="3" Grid.Column="1" Margin="5" Minimum="10" Maximum="3000"
+					<Slider Grid.Row="3" Grid.Column="1" Margin="5" Minimum="10" Maximum="3000"
 							Background="DarkOrchid" Value="{Binding DelayInMilliseconds}" BorderThickness="1" BorderBrush="Black"
 							IsEnabled="{Binding IsVisualized}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
 							HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
-                </Grid>
-            </GroupBox>
-            <!-- End of Input Panel -->
+				</Grid>
+			</GroupBox>
+			<!-- End of Input Panel -->
 
-            <!-- Start of Solution Summary Panel -->
-            <GroupBox Grid.Row="1" Background="Bisque" Header="Solution Summary" Margin="0, 2, 0, 0"
+			<!-- Start of Solution Summary Panel -->
+			<GroupBox Grid.Row="1" Background="Bisque" Header="Solution Summary" Margin="0, 2, 0, 0"
 					  BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
-                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 5, 5, 2">
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
+				<Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 5, 5, 2">
+					<Grid.RowDefinitions>
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+					</Grid.RowDefinitions>
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
 
-                    <Label Grid.Row="0" Grid.Column="0" Content="Board Size" Style="{StaticResource LabelStyle}" Margin="1"
+					<Label Grid.Row="0" Grid.Column="0" Content="Board Size" Style="{StaticResource LabelStyle}" Margin="1"
 						   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
 						   HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
 
-                    <Label Grid.Row="0" Grid.Column="1" Style="{StaticResource LabelStyle}" Margin="1"
+					<Label Grid.Row="0" Grid.Column="1" Style="{StaticResource LabelStyle}" Margin="1"
 							 Content="{Binding BoardSize}"
 							 HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Right" />
 
-                    <Label Grid.Row="1" Grid.Column="0" Content="{Binding ResultTitle}" Style="{StaticResource LabelStyle}" Margin="1"
+					<Label Grid.Row="1" Grid.Column="0" Content="{Binding ResultTitle}" Style="{StaticResource LabelStyle}" Margin="1"
 						   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
 						   HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
 
-                    <Label Grid.Row="1" Grid.Column="1" Style="{StaticResource LabelStyle}" Margin="1" Content="{Binding NoOfSolutions}"
+					<Label Grid.Row="1" Grid.Column="1" Style="{StaticResource LabelStyle}" Margin="1" Content="{Binding NoOfSolutions}"
 							 HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
 						   HorizontalContentAlignment="Right" VerticalContentAlignment="Stretch" />
 
-                    <Label Grid.Row="2" Grid.Column="0" Content="Elapsed Time (sec)" Style="{StaticResource LabelStyle}" Margin="1"
+					<Label Grid.Row="2" Grid.Column="0" Content="Elapsed Time (sec)" Style="{StaticResource LabelStyle}" Margin="1"
 						   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
 						   HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
 
-                    <Label Grid.Row="2" Grid.Column="1" Style="{StaticResource LabelStyle}" Content="{Binding ElapsedTimeInSec}" Margin="1"
+					<Label Grid.Row="2" Grid.Column="1" Style="{StaticResource LabelStyle}" Content="{Binding ElapsedTimeInSec}" Margin="1"
 						   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
 						   HorizontalContentAlignment="Right" VerticalContentAlignment="Stretch" />
 
-                    <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Content="Save To File" Margin="5" Command="{Binding SaveCommand}"
+					<Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Content="Save To File" Margin="5" Command="{Binding SaveCommand}"
 							HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
 							HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
-                </Grid>
-            </GroupBox>
-            <!-- End of Solution Summary Panel -->
+				</Grid>
+			</GroupBox>
+			<!-- End of Solution Summary Panel -->
 
-            <!-- Start of Simulation Panel -->
-            <GroupBox Grid.Row="2" Background="Bisque" Header="Simulation" Margin="0, 2, 0, 0"
+			<!-- Start of Simulation Panel -->
+			<GroupBox Grid.Row="2" Background="Bisque" Header="Simulation" Margin="0, 2, 0, 0"
 					  BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
-                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="30, 3, 30, 3">
+				<Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="30, 3, 30, 3">
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition />
+						<ColumnDefinition />
+					</Grid.ColumnDefinitions>
 
-                    <Button Grid.Row="0" Grid.Column="0" Style="{StaticResource ButtonStyle}" Content="Cancel" Margin="3"
+					<Button Grid.Row="0" Grid.Column="0" Style="{StaticResource ButtonStyle}" Content="Cancel" Margin="3"
 							Command="{Binding CancelCommand, UpdateSourceTrigger=PropertyChanged}" 
 							HorizontalAlignment="Center" VerticalAlignment="Stretch"
 							HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
 
-                    <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource ButtonStyle}" Content="Simulate" Margin="3"
+					<Button Grid.Row="0" Grid.Column="1" Style="{StaticResource ButtonStyle}" Content="Simulate" Margin="3"
 							Command="{Binding SimulateCommand, UpdateSourceTrigger=PropertyChanged}" IsDefault="True"
 							HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
 							HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
-                </Grid>
-            </GroupBox>
-            <!-- End of Simulation Panel -->
+				</Grid>
+			</GroupBox>
+			<!-- End of Simulation Panel -->
 
-            <!-- Start of Status Panel -->
-            <GroupBox Grid.Row="3" Background="Bisque" Header="Progress Status" Margin="0, 2, 0, 0"
+			<!-- Start of Status Panel -->
+			<GroupBox Grid.Row="3" Background="Bisque" Header="Progress Status" Margin="0, 2, 0, 0"
 					  BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
-                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5">
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
+				<Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5">
+					<Grid.RowDefinitions>
+						<RowDefinition />
+					</Grid.RowDefinitions>
 
-                    <!--<xctk:BusyIndicator Grid.Row="0" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+					<!--<xctk:BusyIndicator Grid.Row="0" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
 										IsBusy="{Binding IsSingleRunning}" />-->
 
-                    <!--<ProgressBar Grid.Row="0" Width="Auto" Height="35" Foreground="Green"
+					<!--<ProgressBar Grid.Row="0" Width="Auto" Height="35" Foreground="Green"
 								 Value="{Binding Solver.ProgressValue, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="100"
 								 HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
 								 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
 								 Visibility="{Binding Solver.ProgressVisibility}" />-->
 
-                    <!--<Label Style="{StaticResource LabelStyle}" Grid.Row="0" Width="45" Height="Auto" Background="Aqua"
+					<!--<Label Style="{StaticResource LabelStyle}" Grid.Row="0" Width="45" Height="Auto" Background="Aqua"
 						   Content="{Binding Solver.ProgressLabel}" Visibility="{Binding Solver.ProgressVisibility}" 
 						   HorizontalAlignment="Center" VerticalAlignment="Center"
 						   HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />-->
 
-                </Grid>
-                <!-- End of Status Panel -->
-            </GroupBox>
+				</Grid>
+				<!-- End of Status Panel -->
+			</GroupBox>
 
-        </Grid>
-        <!-- End of Input / Output Panel -->
+		</Grid>
+		<!-- End of Input / Output Panel -->
 
-    </Grid>
-    <!-- End of Outer Grid -->
+	</Grid>
+	<!-- End of Outer Grid -->
 </Window>
 	
