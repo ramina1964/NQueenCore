@@ -95,7 +95,7 @@ namespace NQueen.GUI.ViewModel
             set => Set(ref _simulationResults, value);
         }
 
-        public ObservableCollection<Solution> Solutions { get; set; }
+        public ObservableCollection<Solution> ObservableSolutions { get; set; }
 
         public Solution SelectedSolution
         {
@@ -328,8 +328,8 @@ namespace NQueen.GUI.ViewModel
             IsMultipleRunning = false;
             //Solver.ProgressVisibility = Visibility.Collapsed;
             //Solver.ProgressValue = 0;
-            Solutions = Solver.ObservableSolutions;
-            NoOfSolutions = $"{Solutions.Count,0:N0}";
+            ObservableSolutions = Solver.ObservableSolutions;
+            NoOfSolutions = $"{ObservableSolutions.Count,0:N0}";
             //DelayInMilliseconds = Settings.Default.DefaultDelayInMilliseconds;
             DelayInMilliseconds = 150;
         }
@@ -342,7 +342,7 @@ namespace NQueen.GUI.ViewModel
             ElapsedTimeInSec = $"{0,0:N1}";
             RaisePropertyChanged(nameof(ResultTitle));
 
-            Solutions?.Clear();
+            ObservableSolutions?.Clear();
             Chessboard?.Squares.Clear();
             Chessboard?.CreateSquares(BoardSize, new List<SquareViewModel>());
         }
@@ -359,13 +359,13 @@ namespace NQueen.GUI.ViewModel
 
         private void Queens_SolutionFound(object sender, SolutionFoundEventArgs e)
         {
-            var id = Solutions.Count + 1;
+            var id = ObservableSolutions.Count + 1;
             var sol = new Solution(e.Solution, id);
 
             Application
                 .Current
                 .Dispatcher
-                .BeginInvoke(DispatcherPriority.Background, new Action(() => Solutions.Add(sol)));
+                .BeginInvoke(DispatcherPriority.Background, new Action(() => ObservableSolutions.Add(sol)));
 
             SelectedSolution = sol;
         }
@@ -388,7 +388,7 @@ namespace NQueen.GUI.ViewModel
 
             NoOfSolutions = $"{SimulationResults.NoOfSolutions,0:N0}";
             ElapsedTimeInSec = $"{SimulationResults.ElapsedTimeInSec,0:N1}";
-            SelectedSolution = Solutions.FirstOrDefault();
+            SelectedSolution = ObservableSolutions.FirstOrDefault();
             //Solver.ProgressVisibility = Visibility.Collapsed;
         }
 
@@ -436,20 +436,22 @@ namespace NQueen.GUI.ViewModel
                         .Take(MaxNoOfSolutionsInOutput)
                         .ToList();
 
+            sols.ForEach(s => ObservableSolutions.Add(s));
+
             // In case of activated visualization, clear all solutions before adding a no. of MaxNoOfSolutionsInOutput to the solutions.
             if (DisplayMode == DisplayMode.Visualize)
             {
-                Solutions.Clear();
+                ObservableSolutions.Clear();
 
                 sols
-                .ForEach(sol => Solutions.Add(sol));
+                .ForEach(sol => ObservableSolutions.Add(sol));
             }
 
             // In case of activated visualization, just add a no. of MaxNoOfSolutionsInOutput to the solutions.
             else
             {
                 sols
-                    .ForEach(sol => Solutions.Add(sol));
+                    .ForEach(sol => ObservableSolutions.Add(sol));
             }
         }
 
