@@ -1,5 +1,4 @@
-﻿
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 using NQueen.Common;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,22 +9,20 @@ namespace NQueen.GUI.ViewModel
 {
     public class Chessboard : ViewModelBase
     {
-        #region Constructor
         public Chessboard()
         {
             Squares = new ObservableCollection<SquareViewModel>();
             QueenImagePath = @"..\..\Images\WhiteQueen.png";
         }
-        #endregion Constructor
 
-        #region PublicProperties
         public string QueenImagePath { get; }
-        public ObservableCollection<SquareViewModel> Squares { get; set; }
-        public double WindowWidth { get; set; }
-        public double WindowHeight { get; set; }
-        #endregion PublicProperties
 
-        #region PublicMethods
+        public ObservableCollection<SquareViewModel> Squares { get; set; }
+
+        public double WindowWidth { get; set; }
+
+        public double WindowHeight { get; set; }
+
         public void PlaceQueens(IEnumerable<Position> positions)
         {
             // Clear board
@@ -66,19 +63,16 @@ namespace NQueen.GUI.ViewModel
                 .ThenBy(sq => sq.Position.RowNo).ToList()
                 .ForEach(sq => Squares.Add(sq));
         }
-        #endregion PublicMethods
 
-        #region PrivateMethods
         private void ClearImages() =>
             Squares
                 .ToList()
                 .ForEach(sq => sq.ImagePath = null);
 
-        private Brush FindColor(Position pos)
+        private static Brush FindColor(Position pos)
         {
             var col = (pos.RowNo + pos.ColumnNo) % 2 == 1 ? Colors.Wheat : Colors.Brown;
             return new SolidColorBrush(col);
         }
-        #endregion PrivateMethods
     }
 }
