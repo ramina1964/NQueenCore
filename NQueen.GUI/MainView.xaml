@@ -6,15 +6,11 @@
 		
 		xmlns:view="clr-namespace:NQueen.GUI.View"
 		xmlns:converter="clr-namespace:NQueen.GUI.Converter"
-		xmlns:viewmodel="clr-namespace:NQueen.GUI.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel}"
 		mc:Ignorable="d" FontSize="14"
-
 		MinWidth="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth},
 				Converter={converter:RatioConverter}, ConverterParameter='0.90'}"
-
 		MinHeight="{Binding Source={x:Static SystemParameters.PrimaryScreenHeight},
 				Converter={converter:RatioConverter}, ConverterParameter='0.96'}"
-
 		Title="Solutions of NQueen-Problem with Backtracking - .Net5"
 		WindowStartupLocation="CenterScreen" ResizeMode="CanResize" WindowState="Normal" >
 
