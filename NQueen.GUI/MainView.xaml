@@ -71,7 +71,7 @@
 					   VerticalAlignment="Stretch" HorizontalContentAlignment="Left" />
 
 				<ListBox Grid.Row="1" Grid.Column="0" Foreground="Black"
-						 ItemsSource="{Binding Solutions}" SelectedItem="{Binding SelectedSolution}">
+						 ItemsSource="{Binding ObservableSolutions}" SelectedItem="{Binding SelectedSolution}">
 					<ListBox.ItemContainerStyle>
 						<Style TargetType="ListBoxItem">
 							<Style.Triggers>

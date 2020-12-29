@@ -1,4 +1,5 @@
-﻿using NQueen.Common;
+﻿//using GalaSoft.MvvmLight;
+using NQueen.Common;
 using NQueen.Common.Enum;
 using NQueen.Common.Interface;
 using System;
@@ -8,7 +9,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-
 
 namespace NQueen.Model
 {
@@ -47,34 +47,6 @@ namespace NQueen.Model
 
         #endregion ISolverInterface
 
-        #region PublicProperties
-
-        public ISimulationResults Results { get; set; }
-
-        public sbyte BoardSize { get; set; }
-
-        public string BoardSizeText { get; set; }
-
-        public int NoOfSolutions => Solutions.Count;
-
-        public sbyte HalfSize { get; set; }
-
-        public sbyte[] QueenList { get; set; }
-
-        //public string ProgressLabel
-        //{
-        //	get => _progressLabel;
-        //	set => Set(ref _progressLabel, value);
-        //}
-        #endregion PublicProperties
-
-        #region VirtualMethods
-
-        protected virtual void OnQueenPlaced(QueenPlacedEventArgs e) => QueenPlaced?.Invoke(this, e);
-
-        protected virtual void OnSolutionFound(SolutionFoundEventArgs e) => SolutionFound?.Invoke(this, e);
-        #endregion VirtualMethods
-
         public ISimulationResults GetResults()
         {
             var stopwatch = Stopwatch.StartNew();
@@ -91,6 +63,47 @@ namespace NQueen.Model
                 ElapsedTimeInSec = elapsedTimeInSec
             };
         }
+
+        #region PublicProperties
+
+        //public Visibility ProgressVisibility
+        //{
+        //    get => _progressBarVisibility;
+        //    set => Set(ref _progressBarVisibility, value);
+        //}
+
+        //public double ProgressValue
+        //{
+        //    get => _progressValue;
+        //    set
+        //    {
+        //        Set(ref _progressValue, value);
+        //        Set(ref _progressLabel, $"{value}%");
+        //        RaisePropertyChanged(nameof(ProgressLabel));
+        //    }
+        //}
+
+        //public string ProgressLabel
+        //{
+        //    get => _progressLabel;
+        //    set => Set(ref _progressLabel, value);
+        //}
+
+        public sbyte BoardSize { get; set; }
+
+        public string BoardSizeText { get; set; }
+
+        public int NoOfSolutions => Solutions.Count;
+
+        public sbyte HalfSize { get; set; }
+
+        public sbyte[] QueenList { get; set; }
+
+        #endregion PublicProperties
+
+        protected virtual void OnQueenPlaced(object sender, QueenPlacedEventArgs e) => QueenPlaced?.Invoke(this, e);
+
+        protected virtual void OnSolutionFound(object sender, SolutionFoundEventArgs e) => SolutionFound?.Invoke(this, e);
 
         #region PrivateMethods
         private void Initialize(sbyte boardSize)
@@ -109,54 +122,58 @@ namespace NQueen.Model
             ObservableSolutions = new ObservableCollection<Solution>(new List<Solution>(solutionSize));
         }
 
-        private bool UpdateSolutions(IEnumerable<sbyte> solution)
+        private void UpdateSolutions(IEnumerable<sbyte> queens)
         {
-            var queens = solution.ToArray();
+            var solution = queens.ToArray();
 
             // If solutionMode == SolutionMode.Single, then we are done.
             if (SolutionMode == SolutionMode.Single)
             {
-                Solutions.Add(queens);
-                return true;
+                Solutions.Add(solution);
+                return;
             }
 
-            var symmetricalSolutions = Utility.GetSymmetricalSolutions(queens).ToList();
+            var symmetricalSolutions = Utility.GetSymmetricalSolutions(solution).ToList();
 
             // If solutionMode == SolutionMode.All, add this solution and all of the symmetrical counterparts to All Solutions.
             if (SolutionMode == SolutionMode.All)
             {
-                Solutions.Add(queens);
+                Solutions.Add(solution);
                 symmetricalSolutions.ForEach(s => Solutions.Add(s));
 
-                return true;
+                return;
             }
 
-            // One of symmetrical solutions is already in the solutions list, nothing to add.
+            // There is nothing to add, if the symmetrical solutions and solutions list has any overlap.
             if (Solutions.Overlaps(symmetricalSolutions))
-            { return false; }
+            { return; }
 
             // None of the symmetrical solutions exists in the solutions list, add the new solution to the Unique Solutions.
-            Solutions.Add(queens);
-            return true;
+            Solutions.Add(solution);
+            return;
         }
 
         private IEnumerable<Solution> MainSolve()
         {
             // Recursive call to start the simulation
-            SolveRec();
+            RecSolve(0);
 
             return Solutions
                     .Select((s, index) => new Solution(s, index + 1));
         }
 
-        private bool SolveRec(sbyte colNo = 0)
+        private bool RecSolve(sbyte colNo)
         {
             if (CancelSolver)
             { return false; }
 
+            // All Symmetrical solutions are found and registered. Quit the recursion.
+            if (QueenList[0] == HalfSize)
+            { return false; }
+
             if (DisplayMode == DisplayMode.Visualize)
             {
-                OnQueenPlaced(new QueenPlacedEventArgs(QueenList));
+                OnQueenPlaced(this, new QueenPlacedEventArgs(QueenList));
                 Thread.Sleep(DelayInMilliseconds);
             }
 
@@ -169,13 +186,13 @@ namespace NQueen.Model
             // Here a new solution is found.
             if (colNo == BoardSize)
             {
-                bool isUpdated = UpdateSolutions(QueenList);
+                UpdateSolutions(QueenList);
 
                 // Activate this code in case of IsVisulaized == true.
-                if (isUpdated && DisplayMode == DisplayMode.Visualize)
+                if (DisplayMode == DisplayMode.Visualize)
                 { SolutionFound(this, new SolutionFoundEventArgs(QueenList)); }
 
-                //ProgressValue = Math.Round(100.0 * QueenList[0] / BoardSize);
+                //ProgressValue = Math.Round(100.0 * QueenList[0] / HalfSize, 1);
                 return false;
             }
 
@@ -186,17 +203,12 @@ namespace NQueen.Model
             }
 
             var nextCol = (sbyte)(colNo + 1);
-            return SolveRec(nextCol) || SolveRec(colNo);
+            return RecSolve(nextCol) || RecSolve(colNo);
         }
 
+        // Locate Queen
         private sbyte LocateQueen(sbyte colNo)
         {
-            var isHalfSizeReachedMultSol = colNo == HalfSize && Solutions.Count > 0 &&
-                Array.IndexOf<sbyte>(QueenList, 0, 0, HalfSize) == -1 && SolutionMode != SolutionMode.Single;
-
-            if (isHalfSizeReachedMultSol)
-            { return -1; }
-
             for (sbyte pos = (sbyte)(QueenList[colNo] + 1); pos < BoardSize; pos++)
             {
                 var isValid = true;
@@ -220,10 +232,8 @@ namespace NQueen.Model
 
         #endregion PrivateMethods
 
-        #region PrivateFields
+        //private Visibility _progressBarVisibility;
         //private double _progressValue;
         //private string _progressLabel;
-        //private Visibility _progressBarVisibility;
-        #endregion PrivateFields
     }
 }
