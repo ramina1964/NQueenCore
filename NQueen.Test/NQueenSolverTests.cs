@@ -1,5 +1,5 @@
-﻿using FluentAssertions;
-using NQueen.Common.Enum;
+﻿using NQueen.Common;
+using FluentAssertions;
 using NQueen.Model;
 using NUnit.Framework;
 

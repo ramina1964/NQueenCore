@@ -4,4 +4,10 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Enum\**" />
+    <EmbeddedResource Remove="Enum\**" />
+    <None Remove="Enum\**" />
+  </ItemGroup>
+
 </Project>

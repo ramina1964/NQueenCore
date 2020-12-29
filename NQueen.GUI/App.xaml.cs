@@ -1,5 +1,4 @@
-﻿using NQueen.Common.Enum;
-using NQueen.GUI.ViewModel;
+﻿using NQueen.GUI.ViewModel;
 using NQueen.Model;
 using System.Windows;
 

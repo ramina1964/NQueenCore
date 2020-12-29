@@ -3,7 +3,6 @@ using FluentValidation.Results;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using NQueen.Common;
-using NQueen.Common.Enum;
 using NQueen.Model;
 using NQueen.Presentation;
 using System;

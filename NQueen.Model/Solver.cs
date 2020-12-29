@@ -1,6 +1,5 @@
 ﻿//using GalaSoft.MvvmLight;
 using NQueen.Common;
-using NQueen.Common.Enum;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

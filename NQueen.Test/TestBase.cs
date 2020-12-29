@@ -1,4 +1,4 @@
-﻿using NQueen.Common.Enum;
+﻿using NQueen.Common;
 using NQueen.Model;
 using NUnit.Framework;
 using System.Collections.Generic;

@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using NQueen.Common.Enum;
 
 namespace NQueen.GUI.ViewModel
 {

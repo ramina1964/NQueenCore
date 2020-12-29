@@ -1,5 +1,4 @@
 ﻿using NQueen.Common;
-using NQueen.Common.Enum;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
