@@ -14,7 +14,7 @@ namespace NQueen.Model
 {
     public class Solver : ISolver
     {
-        public Solver(sbyte boardSize, DisplayMode DisplayMode = DisplayMode.Hide) => Initialize(boardSize, SolutionMode, DisplayMode);
+        public Solver(sbyte boardSize) => Initialize(boardSize);
 
         #region ISolverInterface
 
@@ -34,13 +34,13 @@ namespace NQueen.Model
 
         public event SolutionFoundHandler SolutionFound;
 
-        public Task<ISimulationResults> GetSimulationResultsAsync(sbyte boardSize,
-                                        SolutionMode solutionMode = SolutionMode.Unique, DisplayMode displayMode = DisplayMode.Hide)
+        public Task<ISimulationResults> GetSimulationResultsAsync(sbyte boardSize, SolutionMode solutionMode, DisplayMode displayMode)
         {
             return Task.Factory.StartNew(() =>
             {
-                Initialize(boardSize, solutionMode, displayMode);
-                //return GetResults(solutionMode);
+                SolutionMode = solutionMode;
+                DisplayMode = displayMode;
+                Initialize(boardSize);
                 return GetResults();
             });
         }
@@ -93,17 +93,14 @@ namespace NQueen.Model
         }
 
         #region PrivateMethods
-        private void Initialize(sbyte boardSize, SolutionMode solutionMode, DisplayMode displayMode)
+        private void Initialize(sbyte boardSize)
         {
             BoardSize = boardSize;
+            CancelSolver = false;
+
             HalfSize = (sbyte)(BoardSize % 2 == 0 ?
                 BoardSize / 2 :
                 BoardSize / 2 + 1);
-            CancelSolver = false;
-
-            SolutionMode = solutionMode;
-            DisplayMode = displayMode;
-
             QueenList = Enumerable.Repeat((sbyte)-1, BoardSize).ToArray();
             Solutions = new HashSet<sbyte[]>(new SequenceEquality<sbyte>());
 

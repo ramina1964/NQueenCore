@@ -17,11 +17,11 @@ namespace NQueen.Test
             ExpectedSolutions = GetExpectedSolutions(boardSize, solutionMode);
 
             // Act
-            ActualSolutions = GetActualSolutions(boardSize, solutionMode);
+            ActualSolutions = GetActualSolutions(boardSize, solutionMode, DisplayMode.Hide);
 
             // Assert
             Assert.AreEqual(ExpectedSolutions.Count, ActualSolutions.Count);
-            ExpectedSolutions.Should().Equals(ActualSolutions);
+            ActualSolutions.Should().Equals(ExpectedSolutions);
         }
 
         [TestCase(1, SolutionMode.Single), TestCase(1, SolutionMode.Unique), TestCase(1, SolutionMode.All)]
@@ -39,12 +39,11 @@ namespace NQueen.Test
             ExpectedSolutions = GetExpectedSolutions(boardSize, solutionMode);
 
             // Act
-            ActualSolutions = GetActualSolutions(boardSize, solutionMode);
+            ActualSolutions = GetActualSolutions(boardSize, solutionMode, DisplayMode.Hide);
 
             // Assert
-            Assert.AreEqual(ActualSolutions.Count, ExpectedSolutions.Count);
+            Assert.AreEqual(ExpectedSolutions.Count, ActualSolutions.Count);
             ActualSolutions.Should().Equals(ExpectedSolutions);
-            //ActualSolutions.Should().BeEquivalentTo(ExpectedSolutions);
         }
 
         [TestCase(4, SolutionMode.Unique), TestCase(5, SolutionMode.Unique), TestCase(6, SolutionMode.Unique)]
@@ -53,16 +52,14 @@ namespace NQueen.Test
         {
             // Arrange
             Sut = new Solver(boardSize);
-
             ExpectedSolutions = GetExpectedSolutions(boardSize, solutionMode);
 
             // Act
-            ActualSolutions = GetActualSolutions(boardSize, solutionMode);
+            ActualSolutions = GetActualSolutions(boardSize, solutionMode, DisplayMode.Hide);
 
             // Assert
             Assert.AreEqual(ExpectedSolutions.Count, ActualSolutions.Count);
-            ExpectedSolutions.Should().Equals(ActualSolutions);
-            //ActualSolutions.Should().BeEquivalentTo(ExpectedSolutions);
+            ActualSolutions.Should().Equals(ExpectedSolutions);
         }
 
         [TestCase(1, SolutionMode.All), TestCase(4, SolutionMode.All), TestCase(5, SolutionMode.All)]
@@ -71,16 +68,14 @@ namespace NQueen.Test
         {
             // Arrange
             Sut = new Solver(boardSize);
-
             ExpectedSolutions = GetExpectedSolutions(boardSize, solutionMode);
 
             // Act
-            ActualSolutions = GetActualSolutions(boardSize, solutionMode);
+            ActualSolutions = GetActualSolutions(boardSize, solutionMode, DisplayMode.Hide);
 
             // Assert
             Assert.AreEqual(ExpectedSolutions.Count, ActualSolutions.Count);
-            ExpectedSolutions.Should().Equals(ActualSolutions);
-            //ActualSolutions.Should().BeEquivalentTo(ExpectedSolutions);
+            ActualSolutions.Should().Equals(ExpectedSolutions);
         }
     }
 }

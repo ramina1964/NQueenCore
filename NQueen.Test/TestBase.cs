@@ -22,21 +22,21 @@ namespace NQueen.Test
                 ? GetUniqueSolutions(boardSize).ToList()
                 : GetAllSolutions(boardSize).ToList();
 
-        public List<sbyte[]> GetActualSolutions(sbyte boardSize, SolutionMode solutionMode)
+        public List<sbyte[]> GetActualSolutions(sbyte boardSize, SolutionMode solutionMode, DisplayMode displayMode)
             => Sut
-                .GetSimulationResultsAsync(boardSize, solutionMode)
+                .GetSimulationResultsAsync(boardSize, solutionMode, displayMode)
                 .Result
                 .Solutions
                 .Select(s => s.QueenList)
                 .ToList();
 
+        public static List<sbyte[]> GetSingleSolution(sbyte boardSize) => singleSolution[boardSize];
+
+        public static List<sbyte[]> GetUniqueSolutions(sbyte boardSize) => uniqueSolutions[boardSize];
+
+        public static List<sbyte[]> GetAllSolutions(sbyte boardSize) => allSolutions[boardSize];
+
         #region PrivateAttributes
-        private static List<sbyte[]> GetSingleSolution(sbyte boardSize) => singleSolution[boardSize];
-
-        private static List<sbyte[]> GetUniqueSolutions(sbyte boardSize) => uniqueSolutions[boardSize];
-
-        private static List<sbyte[]> GetAllSolutions(sbyte boardSize) => allSolutions[boardSize];
-
         private static readonly Dictionary<sbyte, List<sbyte[]>> singleSolution = new Dictionary<sbyte, List<sbyte[]>>
         {
             { 1, new List<sbyte[]> { new sbyte[]  { 0 } } },

@@ -376,7 +376,7 @@ namespace NQueen.GUI.ViewModel
 
             UpdateGui();
             SimulationResults = await Solver
-                                .GetSimulationResultsAsync(BoardSize, SolutionMode);
+                                .GetSimulationResultsAsync(BoardSize, SolutionMode, DisplayMode);
 
             // Fetch MaxNoOfSolutionsInOutput and add it to Solutions.
             ExtractCorrectNoOfSols();
