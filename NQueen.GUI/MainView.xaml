@@ -2,19 +2,14 @@
 		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"		
 		xmlns:view="clr-namespace:NQueen.GUI.View"
 		xmlns:converter="clr-namespace:NQueen.GUI.Converter"
-		xmlns:viewmodel="clr-namespace:NQueen.GUI.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel}"
 		mc:Ignorable="d" FontSize="14"
-
 		MinWidth="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth},
 				Converter={converter:RatioConverter}, ConverterParameter='0.90'}"
-
 		MinHeight="{Binding Source={x:Static SystemParameters.PrimaryScreenHeight},
 				Converter={converter:RatioConverter}, ConverterParameter='0.96'}"
-
 		Title="Solutions of NQueen-Problem with Backtracking - .Net5"
 		WindowStartupLocation="CenterScreen" ResizeMode="CanResize" WindowState="Normal" >
 
