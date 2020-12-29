@@ -1,7 +1,6 @@
 ﻿using NQueen.Common;
 using NQueen.Common.Enum;
-using NQueen.Common.Interface;
-//using NQueen.Common.Properties;
+using NQueen.Model;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -36,7 +35,7 @@ namespace NQueen.Presentation
 
         internal int NoOfSolutionsInOutput { get; }
 
-        public StringBuilder FormatSingleSolution(Solution solution) =>
+        public static StringBuilder FormatSingleSolution(Solution solution) =>
             new StringBuilder().Append($"{solution.Details}");
 
         public string Write2File(SolutionMode solutionMode)

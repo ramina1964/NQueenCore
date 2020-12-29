@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using NQueen.Common;
+using System.Collections.Generic;
 
-namespace NQueen.Common.Interface
+namespace NQueen.Model
 {
     public interface ISimulationResults
     {
