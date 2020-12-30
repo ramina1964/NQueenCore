@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NQueen.Shared
+namespace NQueen.Model
 {
     public class SolutionFoundEventArgs : EventArgs
     {
