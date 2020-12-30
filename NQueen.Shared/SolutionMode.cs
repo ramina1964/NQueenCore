@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace NQueen.Common
+namespace NQueen.Shared
 {
     public enum SolutionMode
     {

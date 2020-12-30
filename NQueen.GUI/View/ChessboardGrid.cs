@@ -1,5 +1,5 @@
-﻿using NQueen.Common;
-using NQueen.GUI.ViewModel;
+﻿using NQueen.GUI.ViewModel;
+using NQueen.Shared;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;

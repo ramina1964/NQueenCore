@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace NQueen.Common
+namespace NQueen.Shared
 {
     public class SequenceEquality<T> : IEqualityComparer<IEnumerable<T>>
     {

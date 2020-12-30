@@ -1,5 +1,5 @@
-﻿using NQueen.Common;
-using NQueen.Model;
+﻿using NQueen.Model;
+using NQueen.Shared;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;

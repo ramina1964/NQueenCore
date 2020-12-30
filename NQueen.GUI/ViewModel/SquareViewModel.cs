@@ -1,5 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
-using NQueen.Common;
+using NQueen.Shared;
 using System.Windows.Media;
 
 namespace NQueen.GUI.ViewModel

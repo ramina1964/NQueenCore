@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NQueen.Common\NQueen.Common.csproj" />
+    <ProjectReference Include="..\NQueen.Shared\NQueen.Shared.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,5 @@
-﻿using NQueen.Common;
-using NQueen.Model;
+﻿using NQueen.Model;
+using NQueen.Shared;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;

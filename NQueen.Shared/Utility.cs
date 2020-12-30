@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NQueen.Common
+namespace NQueen.Shared
 {
     public static class Utility
     {
@@ -46,9 +46,9 @@ namespace NQueen.Common
             solution.SelectMany(s => GetSymmetricalSolutions(s)).ToList();
 
         public static int FindSolutionSize(sbyte boardSize, SolutionMode solutionMode) =>
-            (solutionMode == SolutionMode.Single)
+            solutionMode == SolutionMode.Single
                 ? 1
-                : (solutionMode == SolutionMode.Unique)
+                : solutionMode == SolutionMode.Unique
                 ? GetSolutionSizeUnique(boardSize)
                 : GetSolutionSizeAll(boardSize);
 
@@ -114,13 +114,13 @@ namespace NQueen.Common
 
             if (noOfSolutions <= MaxNoOfSolutionsInOutput)
             {
-                return (solutionMode == SolutionMode.All)
+                return solutionMode == SolutionMode.All
                  ? $"List of All Solution(s), Included Symmetrical Ones:"
                  : $"List of Unique Solution(s), Excluded Symmetrical Ones:";
             }
 
             // Here is: NoOfSolutions > MaxNoOfSolutionsInOutput
-            return (solutionMode == SolutionMode.All)
+            return solutionMode == SolutionMode.All
                 ? $"List of First {MaxNoOfSolutionsInOutput} Solution(s), May Include Symmetrical Ones:"
                 : $"List of First {MaxNoOfSolutionsInOutput} Unique Solution(s), Excluded Symmetrical Ones:";
         }

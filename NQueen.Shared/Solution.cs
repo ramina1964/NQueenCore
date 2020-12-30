@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace NQueen.Common
+namespace NQueen.Shared
 {
     public class Solution : ISolution
     {

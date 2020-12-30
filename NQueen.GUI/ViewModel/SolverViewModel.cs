@@ -2,9 +2,9 @@
 using FluentValidation.Results;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using NQueen.Common;
 using NQueen.Model;
 using NQueen.Presentation;
+using NQueen.Shared;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

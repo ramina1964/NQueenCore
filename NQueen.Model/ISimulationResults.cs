@@ -1,4 +1,4 @@
-﻿using NQueen.Common;
+﻿using NQueen.Shared;
 using System.Collections.Generic;
 
 namespace NQueen.Model
