@@ -1,5 +1,5 @@
 ﻿using NQueen.Model;
-using NQueen.Shared;
+using NQueen.Shared.Enums;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;

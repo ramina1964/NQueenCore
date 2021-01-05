@@ -3,6 +3,7 @@ using FluentValidation.Results;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using NQueen.Shared;
+using NQueen.Shared.Enums;
 using NQueen.Shared.Interfaces;
 using System;
 using System.Collections.Generic;

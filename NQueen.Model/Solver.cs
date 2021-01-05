@@ -1,5 +1,5 @@
-﻿//using GalaSoft.MvvmLight;
-using NQueen.Shared;
+﻿using NQueen.Shared;
+using NQueen.Shared.Enums;
 using NQueen.Shared.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace NQueen.Model
 {

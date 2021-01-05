@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NQueen.Shared.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 

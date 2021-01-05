@@ -1,4 +1,4 @@
-﻿namespace NQueen.Shared
+﻿namespace NQueen.Shared.Enums
 {
     public enum DisplayMode
     {

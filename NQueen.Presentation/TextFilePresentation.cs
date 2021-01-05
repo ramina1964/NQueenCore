@@ -1,5 +1,5 @@
-﻿using NQueen.Model;
-using NQueen.Shared;
+﻿using NQueen.Shared;
+using NQueen.Shared.Enums;
 using NQueen.Shared.Interfaces;
 using System;
 using System.Collections.ObjectModel;
