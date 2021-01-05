@@ -1,5 +1,6 @@
 ﻿//using GalaSoft.MvvmLight;
 using NQueen.Shared;
+using NQueen.Shared.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

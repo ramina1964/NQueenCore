@@ -2,9 +2,8 @@
 using FluentValidation.Results;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using NQueen.Model;
-using NQueen.Presentation;
 using NQueen.Shared;
+using NQueen.Shared.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -43,7 +42,9 @@ namespace NQueen.GUI.ViewModel
             {
                 var results = _validation?.Validate(this);
                 if (results == null || !results.Errors.Any())
+                {
                     return string.Empty;
+                }
 
                 var errors = string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage).ToArray());
                 return errors;

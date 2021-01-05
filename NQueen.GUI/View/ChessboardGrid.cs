@@ -10,9 +10,9 @@ namespace NQueen.GUI.View
     {
         public ChessboardGrid(sbyte size) => Size = size;
 
-        public int WindowHeight => 500;
+        public static int WindowHeight => 500;
 
-        public int WindowWidth => 500;
+        public static int WindowWidth => 500;
 
         public sbyte Size { get; set; }
 

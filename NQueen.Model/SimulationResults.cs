@@ -1,4 +1,5 @@
 ﻿using NQueen.Shared;
+using NQueen.Shared.Interfaces;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;

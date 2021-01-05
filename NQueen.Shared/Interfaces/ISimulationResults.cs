@@ -1,7 +1,7 @@
 ﻿using NQueen.Shared;
 using System.Collections.Generic;
 
-namespace NQueen.Model
+namespace NQueen.Shared.Interfaces
 {
     public interface ISimulationResults
     {

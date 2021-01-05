@@ -1,4 +1,4 @@
-﻿namespace NQueen.Shared
+﻿namespace NQueen.Shared.Interfaces
 {
     public interface ISolution
     {

@@ -1,9 +1,8 @@
 ﻿using NQueen.Shared;
-using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
-namespace NQueen.Model
+namespace NQueen.Shared.Interfaces
 {
     public delegate void QueenPlacedHandler(object sender, QueenPlacedEventArgs e);
     public delegate void SolutionFoundHandler(object sender, SolutionFoundEventArgs e);
