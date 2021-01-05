@@ -3,20 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29424.173
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NQueen.GUI", "NQueen.GUI\NQueen.GUI.csproj", "{090397BF-3C21-48B9-9978-A05A6D7FC230}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NQueen.GUI", "NQueen.GUI\NQueen.GUI.csproj", "{090397BF-3C21-48B9-9978-A05A6D7FC230}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NQueen.Model", "NQueen.Model\NQueen.Model.csproj", "{105B3286-DAEA-4F25-9640-16F26F6CD160}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NQueen.Model", "NQueen.Model\NQueen.Model.csproj", "{105B3286-DAEA-4F25-9640-16F26F6CD160}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NQueen.Test", "NQueen.Test\NQueen.Test.csproj", "{EB491A5A-834E-41F1-938E-2EFCC3479E12}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NQueen.Presentation", "NQueen.Presentation\NQueen.Presentation.csproj", "{39280441-FE76-4CD9-BDC1-11092521136E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NQueen.Presentation", "NQueen.Presentation\NQueen.Presentation.csproj", "{39280441-FE76-4CD9-BDC1-11092521136E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tasks", "Tasks", "{BD8E9A3C-AFF0-42CA-A2D6-1AF686841F50}"
 	ProjectSection(SolutionItems) = preProject
 		ToDo.txt = ToDo.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NQueen.Shared", "NQueen.Shared\NQueen.Shared.csproj", "{EA8C9AE7-F6EB-4C28-865F-DEA49F31CED0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NQueen.Shared", "NQueen.Shared\NQueen.Shared.csproj", "{EA8C9AE7-F6EB-4C28-865F-DEA49F31CED0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NQueen.Tests", "NQueen.Tests\NQueen.Tests.csproj", "{CE5731CC-EB82-4DDA-A386-32DAEAC7D3E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,10 +32,6 @@ Global
 		{105B3286-DAEA-4F25-9640-16F26F6CD160}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{105B3286-DAEA-4F25-9640-16F26F6CD160}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{105B3286-DAEA-4F25-9640-16F26F6CD160}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EB491A5A-834E-41F1-938E-2EFCC3479E12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EB491A5A-834E-41F1-938E-2EFCC3479E12}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EB491A5A-834E-41F1-938E-2EFCC3479E12}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EB491A5A-834E-41F1-938E-2EFCC3479E12}.Release|Any CPU.Build.0 = Release|Any CPU
 		{39280441-FE76-4CD9-BDC1-11092521136E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{39280441-FE76-4CD9-BDC1-11092521136E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39280441-FE76-4CD9-BDC1-11092521136E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -44,6 +40,10 @@ Global
 		{EA8C9AE7-F6EB-4C28-865F-DEA49F31CED0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA8C9AE7-F6EB-4C28-865F-DEA49F31CED0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA8C9AE7-F6EB-4C28-865F-DEA49F31CED0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE5731CC-EB82-4DDA-A386-32DAEAC7D3E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE5731CC-EB82-4DDA-A386-32DAEAC7D3E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE5731CC-EB82-4DDA-A386-32DAEAC7D3E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE5731CC-EB82-4DDA-A386-32DAEAC7D3E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
