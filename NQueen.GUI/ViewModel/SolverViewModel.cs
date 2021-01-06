@@ -2,6 +2,7 @@
 using FluentValidation.Results;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using NQueen.Presentation;
 using NQueen.Shared;
 using NQueen.Shared.Enums;
 using NQueen.Shared.Interfaces;
@@ -22,6 +23,12 @@ namespace NQueen.GUI.ViewModel
             Initialize(solver);
             Solver.QueenPlaced += Queens_QueenPlaced;
             Solver.SolutionFound += Queens_SolutionFound;
+            Solver.RaiseProgressChanged += OnProgressChanged;
+        }
+
+        private void OnProgressChanged(object sender, ProgressValueChangedEventArgs e)
+        {
+            ProgressValue = e.Value;
         }
 
         #region IDataErrorInfo
@@ -61,6 +68,22 @@ namespace NQueen.GUI.ViewModel
         public RelayCommand SaveCommand { get; set; }
 
         public static int MaxNoOfSolutionsInOutput => 50;
+
+        private double progressValue;
+        public double ProgressValue
+        {
+            get { return progressValue; }
+            set { Set(ref progressValue, value); }
+        }
+
+
+        private Visibility isVisible;
+        public Visibility IsVisible
+        {
+            get { return isVisible; }
+            set { Set(ref isVisible, value); }
+        }
+
 
         public IEnumerable<SolutionMode> EnumSolutionToItem
         {
@@ -150,8 +173,6 @@ namespace NQueen.GUI.ViewModel
                 if (Solver != null)
                 { Solver.DisplayMode = value; }
 
-                //IsVisualized = DisplayMode.Visualize == value;
-                //RaisePropertyChanged(nameof(BoardSizeText));
                 ValidationResult = _validation.Validate(this);
                 IsValid = ValidationResult.IsValid;
 
@@ -319,20 +340,18 @@ namespace NQueen.GUI.ViewModel
         private void Initialize(ISolver solver)
         {
             _validation = new InputViewModel { CascadeMode = CascadeMode.Stop };
-
             SimulateCommand = new RelayCommand(SimulateAsync, CanSimulate);
             CancelCommand = new RelayCommand(Cancel, CanCancel);
             SaveCommand = new RelayCommand(Save, CanSave);
-
             Solver = solver;
             IsSingleRunning = false;
             IsMultipleRunning = false;
-            //Solver.ProgressVisibility = Visibility.Collapsed;
-            //Solver.ProgressValue = 0;
             ObservableSolutions = Solver.ObservableSolutions;
             NoOfSolutions = $"{ObservableSolutions.Count,0:N0}";
             //DelayInMilliseconds = Settings.Default.DefaultDelayInMilliseconds;
             DelayInMilliseconds = 150;
+            IsVisible = Visibility.Visible;
+            ProgressValue = 0;
         }
 
         private void UpdateGui()
@@ -342,7 +361,7 @@ namespace NQueen.GUI.ViewModel
             NoOfSolutions = "0";
             ElapsedTimeInSec = $"{0,0:N1}";
             RaisePropertyChanged(nameof(ResultTitle));
-
+            ProgressValue = 0;
             ObservableSolutions?.Clear();
             Chessboard?.Squares.Clear();
             Chessboard?.CreateSquares(BoardSize, new List<SquareViewModel>());
@@ -357,6 +376,7 @@ namespace NQueen.GUI.ViewModel
 
             Chessboard.PlaceQueens(positions);
         }
+               
 
         private void Queens_SolutionFound(object sender, SolutionFoundEventArgs e)
         {
@@ -381,16 +401,13 @@ namespace NQueen.GUI.ViewModel
 
             // Fetch MaxNoOfSolutionsInOutput and add it to Solutions.
             ExtractCorrectNoOfSols();
-
             UpdateSummary();
 
             IsCalculated = true;
             SaveCommand.RaiseCanExecuteChanged();
-
             NoOfSolutions = $"{SimulationResults.NoOfSolutions,0:N0}";
             ElapsedTimeInSec = $"{SimulationResults.ElapsedTimeInSec,0:N1}";
-            SelectedSolution = ObservableSolutions.FirstOrDefault();
-            //Solver.ProgressVisibility = Visibility.Collapsed;
+            SelectedSolution = ObservableSolutions.FirstOrDefault();            
         }
 
         private void UpdateSummary()
@@ -404,8 +421,6 @@ namespace NQueen.GUI.ViewModel
                 else
                 {
                     IsMultipleRunning = true;
-                    //Solver.ProgressValue = 0;
-                    //Solver.ProgressVisibility = Visibility.Visible;
                 }
 
                 CanEditBoardSize = false;
@@ -421,9 +436,7 @@ namespace NQueen.GUI.ViewModel
 
             else
             {
-                IsMultipleRunning = false;
-                //Solver.ProgressValue = 0;
-                //Solver.ProgressVisibility = Visibility.Collapsed;
+                IsMultipleRunning = false;                
             }
 
             CanEditBoardSize = true;
@@ -446,14 +459,7 @@ namespace NQueen.GUI.ViewModel
 
                 sols
                 .ForEach(sol => ObservableSolutions.Add(sol));
-            }
-
-            // In case of activated visualization, just add a no. of MaxNoOfSolutionsInOutput to the solutions.
-            else
-            {
-                sols
-                    .ForEach(sol => ObservableSolutions.Add(sol));
-            }
+            }            
         }
 
         private bool CanSimulate() => IsValid && !IsSingleRunning && !IsMultipleRunning;
@@ -464,18 +470,12 @@ namespace NQueen.GUI.ViewModel
 
         private void Save()
         {
-            // var results = new TextFilePresentation(SimulationResults);
-            //var filePath = results.Write2File(SolutionMode);
-
-            //var caption = Resources.TitleSaveResultsMessage;
-            //var msg = String.Format(Resources.SaveResultsMessage, filePath);
-            const MessageBoxButton button = MessageBoxButton.OK;
-            const MessageBoxImage icon = MessageBoxImage.Information;
-            //MessageBox.Show(msg, caption, button, icon);
-            MessageBox.Show("To-Do", "Uff", button, icon);
-
+            var results = new TextFilePresentation(SimulationResults);
+            var filePath = results.Write2File(SolutionMode);
+            var msg = $"Successfully wrote results to: {filePath}";            
+            MessageBox.Show(msg);
             IsCalculated = false;
-            SaveCommand.RaiseCanExecuteChanged();
+            //SaveCommand.RaiseCanExecuteChanged();
         }
 
         private bool CanSave() => !IsSingleRunning && !IsMultipleRunning && IsCalculated && SimulationResults?.NoOfSolutions > 0;
