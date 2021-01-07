@@ -40,15 +40,15 @@ namespace NQueen.Presentation
 
         public string Write2File(SolutionMode solutionMode)
         {
-            var topFolder = Environment.CurrentDirectory;
-            var subFolder = Path.Combine(topFolder, "Results");
+            var dir = new DirectoryInfo(Environment.CurrentDirectory).Parent.Parent.Parent.Parent;
             var fileName = $"Board Size - {BoardSize}" + ".txt";
+            var subFolder = Path.Combine(dir.FullName, "Results");
+            var filePath = Path.Combine(subFolder, fileName);
 
-            var dirInfo = Directory.Exists(subFolder)
+            var _ = Directory.Exists(subFolder)
                 ? new DirectoryInfo(subFolder)
                 : Directory.CreateDirectory(subFolder);
 
-            var filePath = Path.Combine(dirInfo.Name, fileName);
             File.WriteAllText(filePath, PrintFinalResults(solutionMode));
             return filePath;
         }

@@ -1,4 +1,5 @@
 ﻿using NQueen.Shared.Enums;
+using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
@@ -6,6 +7,7 @@ namespace NQueen.Shared.Interfaces
 {
     public delegate void QueenPlacedHandler(object sender, QueenPlacedEventArgs e);
     public delegate void SolutionFoundHandler(object sender, SolutionFoundEventArgs e);
+    public delegate void ProgressChangedHandler(object sender, ProgressValueChangedEventArgs e);
 
     public interface ISolver
     {
@@ -17,13 +19,13 @@ namespace NQueen.Shared.Interfaces
 
         DisplayMode DisplayMode { get; set; }
 
-        //Visibility ProgressVisibility { get; set; }
-
-        //double ProgressValue { get; set; }
+        double ProgressValue { get; set; }
 
         ObservableCollection<Solution> ObservableSolutions { get; set; }
 
         Task<ISimulationResults> GetSimulationResultsAsync(sbyte boardSize, SolutionMode solutionMode, DisplayMode displayMode);
+
+        event ProgressChangedHandler RaiseProgressChanged;
 
         event QueenPlacedHandler QueenPlaced;
 
