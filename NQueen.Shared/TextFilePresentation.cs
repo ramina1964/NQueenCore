@@ -1,12 +1,11 @@
-﻿using NQueen.Shared;
-using NQueen.Shared.Enums;
+﻿using NQueen.Shared.Enums;
 using NQueen.Shared.Interfaces;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
 
-namespace NQueen.Presentation
+namespace NQueen.Shared
 {
     public class TextFilePresentation
     {
