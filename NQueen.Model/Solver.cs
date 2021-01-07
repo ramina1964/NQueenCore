@@ -10,6 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
+
+
 namespace NQueen.Model
 {
     public class Solver : ISolver
@@ -21,7 +23,7 @@ namespace NQueen.Model
         public int DelayInMilliseconds { get; set; }
 
         public bool CancelSolver { get; set; }
-
+        
         public SolutionMode SolutionMode { get; set; }
 
         public DisplayMode DisplayMode { get; set; }
@@ -34,6 +36,8 @@ namespace NQueen.Model
 
         public event SolutionFoundHandler SolutionFound;
 
+        public event ProgressChangedHandler RaiseProgressChanged;
+        
         public Task<ISimulationResults> GetSimulationResultsAsync(sbyte boardSize, SolutionMode solutionMode, DisplayMode displayMode)
         {
             return Task.Factory.StartNew(() =>
@@ -66,29 +70,8 @@ namespace NQueen.Model
 
         #region PublicProperties
 
-        //public Visibility ProgressVisibility
-        //{
-        //    get => _progressBarVisibility;
-        //    set => Set(ref _progressBarVisibility, value);
-        //}
-
-        //public double ProgressValue
-        //{
-        //    get => _progressValue;
-        //    set
-        //    {
-        //        Set(ref _progressValue, value);
-        //        Set(ref _progressLabel, $"{value}%");
-        //        RaisePropertyChanged(nameof(ProgressLabel));
-        //    }
-        //}
-
-        //public string ProgressLabel
-        //{
-        //    get => _progressLabel;
-        //    set => Set(ref _progressLabel, value);
-        //}
-
+        public double ProgressValue { get; set; }
+        public double ProgressLabel { get; set; }
         public sbyte BoardSize { get; set; }
 
         public string BoardSizeText { get; set; }
@@ -103,6 +86,8 @@ namespace NQueen.Model
 
         protected virtual void OnQueenPlaced(object sender, QueenPlacedEventArgs e) => QueenPlaced?.Invoke(this, e);
 
+        protected virtual void OnRaiseProgressChanged(object sender, ProgressValueChangedEventArgs e) => RaiseProgressChanged?.Invoke(this, e);
+
         protected virtual void OnSolutionFound(object sender, SolutionFoundEventArgs e) => SolutionFound?.Invoke(this, e);
 
         #region PrivateMethods
@@ -116,8 +101,6 @@ namespace NQueen.Model
                 BoardSize / 2 + 1);
             QueenList = Enumerable.Repeat((sbyte)-1, BoardSize).ToArray();
             Solutions = new HashSet<sbyte[]>(new SequenceEquality<sbyte>());
-
-            //ObservableSolutions = new ObservableCollection<Solution>();
             var solutionSize = Utility.FindSolutionSize(BoardSize, SolutionMode);
             ObservableSolutions = new ObservableCollection<Solution>(new List<Solution>(solutionSize));
         }
@@ -140,7 +123,6 @@ namespace NQueen.Model
             {
                 Solutions.Add(solution);
                 symmetricalSolutions.ForEach(s => Solutions.Add(s));
-
                 return;
             }
 
@@ -156,7 +138,7 @@ namespace NQueen.Model
         private IEnumerable<Solution> MainSolve()
         {
             // Recursive call to start the simulation
-            RecSolve(0);
+            RecSolve(0); //return value ignored here...
 
             return Solutions
                     .Select((s, index) => new Solution(s, index + 1));
@@ -169,7 +151,11 @@ namespace NQueen.Model
 
             // All Symmetrical solutions are found and registered. Quit the recursion.
             if (QueenList[0] == HalfSize)
-            { return false; }
+            { 
+                ProgressValue = Math.Round(100.0 * QueenList[0] / HalfSize, 1);
+                OnRaiseProgressChanged(this, new ProgressValueChangedEventArgs(ProgressValue));
+                return false;
+            }
 
             if (DisplayMode == DisplayMode.Visualize)
             {
@@ -192,7 +178,8 @@ namespace NQueen.Model
                 if (DisplayMode == DisplayMode.Visualize)
                 { SolutionFound(this, new SolutionFoundEventArgs(QueenList)); }
 
-                //ProgressValue = Math.Round(100.0 * QueenList[0] / HalfSize, 1);
+                ProgressValue = Math.Round(100.0 * QueenList[0] / HalfSize, 1);
+                OnRaiseProgressChanged(this,new ProgressValueChangedEventArgs(ProgressValue));
                 return false;
             }
 
@@ -230,10 +217,6 @@ namespace NQueen.Model
             return -1;
         }
 
-        #endregion PrivateMethods
-
-        //private Visibility _progressBarVisibility;
-        //private double _progressValue;
-        //private string _progressLabel;
+        #endregion PrivateMethods        
     }
 }
