@@ -280,7 +280,7 @@ namespace NQueen.GUI.ViewModel
             set => Set(ref _elapsedTime, value);
         }
 
-        // This property returns true if a SingleSolution is running.
+        // Returns true if a SingleSolution is running.
         public bool IsSingleRunning
         {
             get => _isSingleRunning;
@@ -299,7 +299,7 @@ namespace NQueen.GUI.ViewModel
             }
         }
 
-        // This property returns true if a SingleSolution is running.
+        // Returns true if a UniqueSolution or AllSolutions is running.
         public bool IsMultipleRunning
         {
             get => _isMultipleRunning;
@@ -313,12 +313,12 @@ namespace NQueen.GUI.ViewModel
                     SaveCommand.RaiseCanExecuteChanged();
                 }
 
-                // Also set value of IsFinished Property as well as notify all listeners.
+                // Also set value of IsFinished Property.
                 Set(nameof(IsFinished), ref _isFinished, !value, true);
             }
         }
 
-        // This property returns false if a simulation is running, otherwise true, i.e., the opposite of IsRunning.
+        // Returns false if a simulation is running, otherwise true, i.e., the opposite of IsRunning.
         public bool IsFinished
         {
             get => _isFinished;
