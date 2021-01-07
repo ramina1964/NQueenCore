@@ -21,14 +21,9 @@ namespace NQueen.GUI.ViewModel
         public SolverViewModel(ISolver solver)
         {
             Initialize(solver);
-            Solver.QueenPlaced += Queens_QueenPlaced;
-            Solver.SolutionFound += Queens_SolutionFound;
-            Solver.RaiseProgressChanged += OnProgressChanged;
-        }
-
-        private void OnProgressChanged(object sender, ProgressValueChangedEventArgs e)
-        {
-            ProgressValue = e.Value;
+            Solver.QueenPlaced += OnQueenPlaced;
+            Solver.SolutionFound += OnSolutionFound;
+            Solver.ProgressValueChanged += OnProgressValueChanged;
         }
 
         #region IDataErrorInfo
@@ -69,21 +64,34 @@ namespace NQueen.GUI.ViewModel
 
         public static int MaxNoOfSolutionsInOutput => 50;
 
-        private double progressValue;
         public double ProgressValue
         {
-            get { return progressValue; }
-            set { Set(ref progressValue, value); }
+            get { return _progressValue; }
+            set
+            {
+                if (Set(ref _progressValue, value))
+                {
+                    ProgressLabel = ProgressValue.ToString();
+                    RaisePropertyChanged(nameof(ProgressLabel));
+                }
+            }
         }
 
-
-        private Visibility isVisible;
-        public Visibility IsVisible
+        public string ProgressLabel
         {
-            get { return isVisible; }
-            set { Set(ref isVisible, value); }
+            get => _progressLabel;
+            set => Set(ref _progressLabel, value);
         }
 
+        public Visibility ProgressVisibility
+        {
+            get => _progressVisibility;
+            set
+            {
+                if (Set(ref _progressVisibility, value))
+                { RaisePropertyChanged(nameof(ProgressLabel)); }
+            }
+        }
 
         public IEnumerable<SolutionMode> EnumSolutionToItem
         {
@@ -219,6 +227,7 @@ namespace NQueen.GUI.ViewModel
         }
 
         public ValidationResult ValidationResult { get; set; }
+
         public string ResultTitle => Utility.SolutionTitle(SolutionMode);
 
         public bool IsValid
@@ -350,8 +359,9 @@ namespace NQueen.GUI.ViewModel
             NoOfSolutions = $"{ObservableSolutions.Count,0:N0}";
             //DelayInMilliseconds = Settings.Default.DefaultDelayInMilliseconds;
             DelayInMilliseconds = 150;
-            IsVisible = Visibility.Visible;
+            ProgressVisibility = Visibility.Hidden;
             ProgressValue = 0;
+            ProgressLabel = "0";
         }
 
         private void UpdateGui()
@@ -367,7 +377,9 @@ namespace NQueen.GUI.ViewModel
             Chessboard?.CreateSquares(BoardSize, new List<SquareViewModel>());
         }
 
-        private void Queens_QueenPlaced(object sender, QueenPlacedEventArgs e)
+        private void OnProgressValueChanged(object sender, ProgressValueChangedEventArgs e) => ProgressValue = e.Value;
+
+        private void OnQueenPlaced(object sender, QueenPlacedEventArgs e)
         {
             var sol = new Solution(e.Solution, 1);
             var positions = sol
@@ -376,9 +388,8 @@ namespace NQueen.GUI.ViewModel
 
             Chessboard.PlaceQueens(positions);
         }
-               
 
-        private void Queens_SolutionFound(object sender, SolutionFoundEventArgs e)
+        private void OnSolutionFound(object sender, SolutionFoundEventArgs e)
         {
             var id = ObservableSolutions.Count + 1;
             var sol = new Solution(e.Solution, id);
@@ -396,8 +407,11 @@ namespace NQueen.GUI.ViewModel
             UpdateSummary();
 
             UpdateGui();
+            ProgressVisibility = Visibility.Visible;
             SimulationResults = await Solver
                                 .GetSimulationResultsAsync(BoardSize, SolutionMode, DisplayMode);
+
+            ProgressVisibility = Visibility.Hidden;
 
             // Fetch MaxNoOfSolutionsInOutput and add it to Solutions.
             ExtractCorrectNoOfSols();
@@ -407,7 +421,7 @@ namespace NQueen.GUI.ViewModel
             SaveCommand.RaiseCanExecuteChanged();
             NoOfSolutions = $"{SimulationResults.NoOfSolutions,0:N0}";
             ElapsedTimeInSec = $"{SimulationResults.ElapsedTimeInSec,0:N1}";
-            SelectedSolution = ObservableSolutions.FirstOrDefault();            
+            SelectedSolution = ObservableSolutions.FirstOrDefault();
         }
 
         private void UpdateSummary()
@@ -436,7 +450,7 @@ namespace NQueen.GUI.ViewModel
 
             else
             {
-                IsMultipleRunning = false;                
+                IsMultipleRunning = false;
             }
 
             CanEditBoardSize = true;
@@ -459,7 +473,7 @@ namespace NQueen.GUI.ViewModel
 
                 sols
                 .ForEach(sol => ObservableSolutions.Add(sol));
-            }            
+            }
         }
 
         private bool CanSimulate() => IsValid && !IsSingleRunning && !IsMultipleRunning;
@@ -472,7 +486,7 @@ namespace NQueen.GUI.ViewModel
         {
             var results = new TextFilePresentation(SimulationResults);
             var filePath = results.Write2File(SolutionMode);
-            var msg = $"Successfully wrote results to: {filePath}";            
+            var msg = $"Successfully wrote results to: {filePath}";
             MessageBox.Show(msg);
             IsCalculated = false;
             //SaveCommand.RaiseCanExecuteChanged();
@@ -482,6 +496,9 @@ namespace NQueen.GUI.ViewModel
         #endregion PrivateMethods
 
         #region PrivateFields
+        private double _progressValue;
+        private string _progressLabel;
+        private Visibility _progressVisibility;
         private IEnumerable<SolutionMode> _enumSolutionToItem;
         private IEnumerable<DisplayMode> _enumDisplayToItem;
         private InputViewModel _validation;

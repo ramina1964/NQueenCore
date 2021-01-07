@@ -251,14 +251,13 @@
 
 					<ProgressBar Grid.Row="0" Width="Auto" Height="35" Foreground="Green"
 								 Value="{Binding ProgressValue, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="100"
-								 HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-								 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-								 Visibility="{Binding IsVisible}" />
+								 Visibility="{Binding ProgressVisibility}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+								 HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
 
-					<!--<Label Style="{StaticResource LabelStyle}" Grid.Row="0" Width="45" Height="Auto" Background="Aqua"
-						   Content="{Binding Solver.ProgressLabel}" Visibility="{Binding Solver.ProgressVisibility}" 
+					<Label Style="{StaticResource LabelStyle}" Grid.Row="0" Width="45" Height="Auto" Background="Aqua"
+						   Content="{Binding ProgressLabel, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding ProgressVisibility}"
 						   HorizontalAlignment="Center" VerticalAlignment="Center"
-						   HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />-->
+						   HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
 
 				</Grid>
 				<!-- End of Status Panel -->
