@@ -14,7 +14,7 @@ Sol. No. 12                  (1, 3), (2, 6), (3, 2), (4, 5), (5, 8), (6, 1), (7,
 
 
 Summary of Results:
-Date and Time                07/01/2021 23:56:30
+Date and Time                08/01/2021 00:01:04
 BoardSize                                      8
 No. of Unique Solutions                       12
 Elapsed Time (s)                               0
