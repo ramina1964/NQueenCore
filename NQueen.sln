@@ -5,16 +5,11 @@ VisualStudioVersion = 16.0.29424.173
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NQueen.GUI", "NQueen.GUI\NQueen.GUI.csproj", "{090397BF-3C21-48B9-9978-A05A6D7FC230}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tasks", "Tasks", "{BD8E9A3C-AFF0-42CA-A2D6-1AF686841F50}"
-	ProjectSection(SolutionItems) = preProject
-		ToDo.txt = ToDo.txt
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NQueen.Shared", "NQueen.Shared\NQueen.Shared.csproj", "{EA8C9AE7-F6EB-4C28-865F-DEA49F31CED0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NQueen.Tests", "NQueen.Tests\NQueen.Tests.csproj", "{CE5731CC-EB82-4DDA-A386-32DAEAC7D3E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NQueen.Kernel", "NQueen.Kernel\NQueen.Kernel.csproj", "{715BBB35-00EB-46E5-A9A5-A78B07C8B351}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NQueen.Kernel", "NQueen.Kernel\NQueen.Kernel.csproj", "{715BBB35-00EB-46E5-A9A5-A78B07C8B351}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
