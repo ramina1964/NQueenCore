@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NQueen.Model\NQueen.Model.csproj" />
+    <ProjectReference Include="..\NQueen.Kernel\NQueen.Kernel.csproj" />
     <ProjectReference Include="..\NQueen.Shared\NQueen.Shared.csproj" />
   </ItemGroup>
 

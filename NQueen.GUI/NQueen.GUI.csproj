@@ -15,7 +15,7 @@
     <PackageReference Include="MvvmLightLibsStd10" Version="5.4.1.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NQueen.Model\NQueen.Model.csproj" />
+    <ProjectReference Include="..\NQueen.Kernel\NQueen.Kernel.csproj" />
     <ProjectReference Include="..\NQueen.Presentation\NQueen.Presentation.csproj" />
   </ItemGroup>
   <ItemGroup>

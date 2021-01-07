@@ -1,5 +1,5 @@
 ﻿using NQueen.GUI.ViewModel;
-using NQueen.Model;
+using NQueen.Kernel;
 using System.Windows;
 
 namespace NQueen.GUI

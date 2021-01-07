@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace NQueen.Model
+namespace NQueen.Kernel
 {
     public class SimulationResults : ISimulationResults
     {
