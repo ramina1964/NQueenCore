@@ -150,7 +150,7 @@
 
 					<ComboBox Grid.Row="2" Grid.Column="1" x:Name="CmbDisplayMode" Margin="5, 2"
 							  ItemsSource="{Binding EnumDisplayToItem, Mode=TwoWay}" SelectedItem="{Binding DisplayMode}"
-							  IsEnabled="{Binding IsFinished}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+							  IsEnabled="{Binding IsIdle}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
 							  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
 
 					<Label Style="{StaticResource LabelStyle}" Grid.Row="3" Grid.Column="0" Content="Delay" Margin="5, 2"
@@ -254,7 +254,7 @@
 								 Visibility="{Binding ProgressVisibility}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
 								 HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
 
-					<Label Style="{StaticResource LabelStyle}" Grid.Row="0" Width="45" Height="Auto" Background="Aqua"
+					<Label Style="{StaticResource LabelStyle}" Grid.Row="0" Width="50" Height="Auto" Background="Aqua"
 						   Content="{Binding ProgressLabel, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding ProgressVisibility}"
 						   HorizontalAlignment="Center" VerticalAlignment="Center"
 						   HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />

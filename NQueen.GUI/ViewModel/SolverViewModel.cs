@@ -71,7 +71,7 @@ namespace NQueen.GUI.ViewModel
             {
                 if (Set(ref _progressValue, value))
                 {
-                    ProgressLabel = ProgressValue.ToString();
+                    ProgressLabel = ProgressValue.ToString() + " %";
                     RaisePropertyChanged(nameof(ProgressLabel));
                 }
             }
@@ -357,6 +357,7 @@ namespace NQueen.GUI.ViewModel
             IsMultipleRunning = false;
             ObservableSolutions = Solver.ObservableSolutions;
             NoOfSolutions = $"{ObservableSolutions.Count,0:N0}";
+            
             //DelayInMilliseconds = Settings.Default.DefaultDelayInMilliseconds;
             DelayInMilliseconds = 150;
             ProgressVisibility = Visibility.Hidden;

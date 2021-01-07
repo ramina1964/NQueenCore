@@ -25,7 +25,7 @@ namespace NQueen.Model
 
         public DisplayMode DisplayMode { get; set; }
 
-        public HashSet<sbyte[]> Solutions = new HashSet<sbyte[]>(new SequenceEquality<sbyte>());
+        public HashSet<sbyte[]> Solutions { get; set; }
 
         public ObservableCollection<Solution> ObservableSolutions { get; set; }
 
@@ -80,12 +80,11 @@ namespace NQueen.Model
         public sbyte HalfSize { get; set; }
 
         public sbyte[] QueenList { get; set; }
-
         #endregion PublicProperties
 
-        protected virtual void OnQueenPlaced(object sender, QueenPlacedEventArgs e) => QueenPlaced?.Invoke(this, e);
-
         protected virtual void OnProgressChanged(object sender, ProgressValueChangedEventArgs e) => ProgressValueChanged?.Invoke(this, e);
+
+        protected virtual void OnQueenPlaced(object sender, QueenPlacedEventArgs e) => QueenPlaced?.Invoke(this, e);
 
         protected virtual void OnSolutionFound(object sender, SolutionFoundEventArgs e) => SolutionFound?.Invoke(this, e);
 
