@@ -294,8 +294,8 @@ namespace NQueen.GUI.ViewModel
                     SaveCommand.RaiseCanExecuteChanged();
                 }
 
-                // Also set value of IsFinished Property as well as notify all listeners.
-                Set(nameof(IsFinished), ref _isFinished, !value, true);
+                // Also set value of IsIdle Property.
+                Set(nameof(IsIdle), ref _isIdle, !value, true);
             }
         }
 
@@ -313,16 +313,16 @@ namespace NQueen.GUI.ViewModel
                     SaveCommand.RaiseCanExecuteChanged();
                 }
 
-                // Also set value of IsFinished Property.
-                Set(nameof(IsFinished), ref _isFinished, !value, true);
+                // Also set value of IsIdle Property.
+                Set(nameof(IsIdle), ref _isIdle, !value, true);
             }
         }
 
         // Returns false if a simulation is running, otherwise true, i.e., the opposite of IsRunning.
-        public bool IsFinished
+        public bool IsIdle
         {
-            get => _isFinished;
-            set => Set(ref _isFinished, value);
+            get => _isIdle;
+            set => Set(ref _isIdle, value);
         }
 
         public bool CanEditBoardSize
@@ -512,7 +512,7 @@ namespace NQueen.GUI.ViewModel
         private sbyte _boardSize;
         private bool _isVisualized;
         private bool _isValid;
-        private bool _isFinished;
+        private bool _isIdle;
         private bool _isSingleRunning;
         private bool _isMultipleRunning;
         private bool _isCalculated;
