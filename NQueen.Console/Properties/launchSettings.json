@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "NQueen.ConsoleApp": {
+      "commandName": "Project"
+    }
+  }
+}
