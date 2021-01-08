@@ -70,7 +70,7 @@ namespace NQueen.GUI.ViewModel
             {
                 if (Set(ref _progressValue, value))
                 {
-                    ProgressLabel = ProgressValue.ToString() + " %";
+                    ProgressLabel = _progressValue.ToString() + " %";
                     RaisePropertyChanged(nameof(ProgressLabel));
                 }
             }
@@ -351,6 +351,7 @@ namespace NQueen.GUI.ViewModel
             SimulateCommand = new RelayCommand(SimulateAsync, CanSimulate);
             CancelCommand = new RelayCommand(Cancel, CanCancel);
             SaveCommand = new RelayCommand(Save, CanSave);
+
             Solver = solver;
             IsSingleRunning = false;
             IsMultipleRunning = false;
@@ -361,7 +362,6 @@ namespace NQueen.GUI.ViewModel
             DelayInMilliseconds = 150;
             ProgressVisibility = Visibility.Hidden;
             ProgressValue = 0;
-            ProgressLabel = "0";
         }
 
         private void UpdateGui()
@@ -371,6 +371,7 @@ namespace NQueen.GUI.ViewModel
             NoOfSolutions = "0";
             ElapsedTimeInSec = $"{0,0:N1}";
             RaisePropertyChanged(nameof(ResultTitle));
+
             ProgressValue = 0;
             ObservableSolutions?.Clear();
             Chessboard?.Squares.Clear();
@@ -489,7 +490,6 @@ namespace NQueen.GUI.ViewModel
             var msg = $"Successfully wrote results to: {filePath}";
             MessageBox.Show(msg);
             IsCalculated = false;
-            //SaveCommand.RaiseCanExecuteChanged();
         }
 
         private bool CanSave() => !IsSingleRunning && !IsMultipleRunning && IsCalculated && SimulationResults?.NoOfSolutions > 0;
