@@ -4,6 +4,7 @@ using NQueen.Kernel;
 using NQueen.ConsoleApp.Commands;
 using System.Collections.Generic;
 using System.Linq;
+using System.Diagnostics;
 
 namespace NQueen.ConsoleApp
 {
@@ -12,12 +13,18 @@ namespace NQueen.ConsoleApp
         public static Dictionary<string, bool> Commands { get; set; }
         public static Dictionary<string, string> AvailableCommands { get; set; }
 
+        //in order to enable dotnet-counters you need to install dotnet-counters tool with the following command (use cmd)
+        //dotnet tool install --global dotnet-counters
+        //link: https://docs.microsoft.com/en-us/dotnet/core/diagnostics/dotnet-counters#:~:text=dotnet-counters%20is%20a%20performance%20monitoring%20tool%20for%20ad-hoc,values%20that%20are%20published%20via%20the%20EventCounter%20API.
+        
+        private static bool DOTNETCOUNTERSENABLED = false; //this is used for enabling dotnet-counters performance utility when you run the application
+
         private static int NqueenSize;
         static void Main(string[] args)
         {
             InitCommands();
             OutputBanner();
-
+            LaunchConsoleMonitor();
             //if console app is started without args
             if (args.Length == 0)
             {
@@ -32,11 +39,12 @@ namespace NQueen.ConsoleApp
                         while (runagain)
                         {
                             Console.WriteLine("\nRun again to debug memory usage?");
+                            Console.WriteLine("\tYes or No\n");
                             var ans = Console.ReadLine().ToLower();
                             if (ans == "yes")
                             {
                                 Console.WriteLine();
-                                DispatchCommands.ProcessCommand("RUN", "ok");                                
+                                DispatchCommands.ProcessCommand("RUN", "ok");
                             }
                             else
                             {
@@ -152,6 +160,22 @@ namespace NQueen.ConsoleApp
                 }
             }
         }
-    }
 
+        static void LaunchConsoleMonitor(string extraSourceNames = "")
+        {
+            if (DOTNETCOUNTERSENABLED)
+            {
+                int processID = Process.GetCurrentProcess().Id;
+                ProcessStartInfo ps = new ProcessStartInfo()
+                {
+                    FileName = "dotnet-counters",
+                    Arguments = $"monitor --process-id {processID} NQueen.ConsoleApp System.Runtime " + extraSourceNames,
+                    UseShellExecute = true
+                };
+                Process.Start(ps);
+            }
+        }
+
+
+    }
 }
