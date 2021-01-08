@@ -11,6 +11,7 @@ namespace NQueen.ConsoleApp
     {
         public static Dictionary<string, bool> Commands { get; set; }
         public static Dictionary<string, string> AvailableCommands { get; set; }
+
         private static int NqueenSize;
         static void Main(string[] args)
         {
@@ -27,6 +28,22 @@ namespace NQueen.ConsoleApp
                     {
                         ConsoleUtils.WriteLineColored(ConsoleColor.Cyan, $"\nSolver is running nqueen size {NqueenSize}:\n");
                         DispatchCommands.ProcessCommand("RUN", "ok");
+                        bool runagain = true;
+                        while (runagain)
+                        {
+                            Console.WriteLine("\nRun again to debug memory usage?");
+                            var ans = Console.ReadLine().ToLower();
+                            if (ans == "yes")
+                            {
+                                Console.WriteLine();
+                                DispatchCommands.ProcessCommand("RUN", "ok");                                
+                            }
+                            else
+                            {
+                                runagain = false;
+                            }
+
+                        }
                         break;
                     }
                     ConsoleUtils.WriteLineColored(ConsoleColor.Cyan, $"Enter a {required} ");
