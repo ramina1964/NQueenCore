@@ -69,8 +69,6 @@ namespace NQueen.Kernel
 
         public double ProgressValue { get; set; }
 
-        public double ProgressLabel { get; set; }
-
         public sbyte BoardSize { get; set; }
 
         public string BoardSizeText { get; set; }
@@ -97,6 +95,7 @@ namespace NQueen.Kernel
             HalfSize = (sbyte)(BoardSize % 2 == 0 ?
                 BoardSize / 2 :
                 BoardSize / 2 + 1);
+
             QueenList = Enumerable.Repeat((sbyte)-1, BoardSize).ToArray();
             Solutions = new HashSet<sbyte[]>(new SequenceEquality<sbyte>());
             var solutionSize = Utility.FindSolutionSize(BoardSize, SolutionMode);
