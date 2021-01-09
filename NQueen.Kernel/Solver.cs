@@ -35,15 +35,12 @@ namespace NQueen.Kernel
 
         public event ProgressValueChangedHandler ProgressValueChanged;
 
-        public Task<ISimulationResults> GetSimulationResultsAsync(sbyte boardSize, SolutionMode solutionMode, DisplayMode displayMode)
+        public Task<ISimulationResults> GetSimulationResultsAsync(sbyte boardSize, SolutionMode solutionMode, DisplayMode displayMode = DisplayMode.Hide)
         {
-            return Task.Factory.StartNew(() =>
-            {
-                SolutionMode = solutionMode;
-                DisplayMode = displayMode;
-                Initialize(boardSize);
-                return GetResults();
-            });
+            Initialize(boardSize);
+            SolutionMode = solutionMode;
+            DisplayMode = displayMode;
+            return Task.Factory.StartNew(() => GetResults() );
         }
 
         #endregion ISolverInterface
@@ -141,17 +138,17 @@ namespace NQueen.Kernel
                     .Select((s, index) => new Solution(s, index + 1));
         }
 
-        private bool RecSolve(sbyte colNo)
+        private void RecSolve(sbyte colNo)
         {
             if (CancelSolver)
-            { return false; }
+            { return ; }
 
             // All Symmetrical solutions are found and registered. Quit the recursion.
             if (QueenList[0] == HalfSize)
             {
                 ProgressValue = Math.Round(100.0 * QueenList[0] / HalfSize, 1);
                 OnProgressChanged(this, new ProgressValueChangedEventArgs(ProgressValue));
-                return false;
+                return;
             }
 
             if (DisplayMode == DisplayMode.Visualize)
@@ -161,10 +158,10 @@ namespace NQueen.Kernel
             }
 
             if (SolutionMode == SolutionMode.Single && NoOfSolutions == 1)
-            { return true; }
+            { return; }
 
             if (colNo == -1)
-            { return false; }
+            { return; }
 
             // Here a new solution is found.
             if (colNo == BoardSize)
@@ -177,17 +174,18 @@ namespace NQueen.Kernel
 
                 ProgressValue = Math.Round(100.0 * QueenList[0] / HalfSize, 1);
                 OnProgressChanged(this, new ProgressValueChangedEventArgs(ProgressValue));
-                return false;
+                return;
             }
 
             QueenList[colNo] = LocateQueen(colNo);
             if (QueenList[colNo] == -1)
             {
-                return false;
+                return;
             }
 
             var nextCol = (sbyte)(colNo + 1);
-            return RecSolve(nextCol) || RecSolve(colNo);
+            RecSolve(nextCol);
+            RecSolve(colNo);
         }
 
         // Locate Queen

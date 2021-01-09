@@ -6,12 +6,11 @@ namespace NQueen.ConsoleApp.Commands
     {
         internal const string VALID_COMMANDS = "BOARDSIZE, SOLUTIONMODE";
         internal const string COMMANDEXAMPLE = "BOARDSIZE=8 SOLUTIONMODE=ALL";
+
         static void DumpAllHelp()
         {
             DumpHelpText(NQUEEN_HELP_SOLVE);
             DumpHelpText(NQUEEN_HELP_SOLUTIONMODE);
-            //var example = $"Example command: {COMMANDEXAMPLE}";
-            //ConsoleUtils.WriteLineColored(ConsoleColor.Cyan, example);
         }
 
         internal static void ProcessHelpCommand(string cmd)
@@ -31,12 +30,11 @@ namespace NQueen.ConsoleApp.Commands
                 DumpHelpText(NQUEEN_HELP_SOLUTIONMODE);
             else
                 DispatchCommands.ShowErrorExit($"Unrecognized command {parts[1]}, try " + HelpCommands.VALID_COMMANDS);
-            //System.Environment.Exit(0);
         }
 
         static void DumpHelpText(string text)
         {
-            int index = 0;
+            var index = 0;
             foreach (string line in text.Split("\n"))
             {
                 if (index++ == 0)
@@ -47,10 +45,10 @@ namespace NQueen.ConsoleApp.Commands
         }
 
         const string NQUEEN_HELP_SOLVE =
-        @"  BOARDSIZE - Run solver on a specific boardsize between 4 - 17";    
+        @"  BOARDSIZE - Run solver on a specific boardsize between 4 - 17";
 
         const string NQUEEN_HELP_SOLUTIONMODE =
-        @"  SOLUTIONMODE - Runs solver with SolutionMode set to all, unique or single";
+        @"  SOLUTIONMODE - Runs solver with SolutionMode set to All, Unique or Single";
 
     }
 

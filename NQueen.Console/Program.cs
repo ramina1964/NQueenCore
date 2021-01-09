@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Text;
-using NQueen.Kernel;
 using NQueen.ConsoleApp.Commands;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +9,13 @@ namespace NQueen.ConsoleApp
     class Program
     {
         public static Dictionary<string, bool> Commands { get; set; }
+
         public static Dictionary<string, string> AvailableCommands { get; set; }
 
-        //in order to enable dotnet-counters you need to install dotnet-counters tool with the following command (use cmd)
-        //dotnet tool install --global dotnet-counters
-        //link: https://docs.microsoft.com/en-us/dotnet/core/diagnostics/dotnet-counters#:~:text=dotnet-counters%20is%20a%20performance%20monitoring%20tool%20for%20ad-hoc,values%20that%20are%20published%20via%20the%20EventCounter%20API.
+        // In order to enable dotnet-counters you need to install dotnet-counters tool with the following command (use cmd)
+        // dotnet tool install --global dotnet-counters
+        // link: https://docs.microsoft.com/en-us/dotnet/core/diagnostics/dotnet-counters#:~:text=dotnet-counters%20is%20a%20performance%20monitoring%20tool%20for%20ad-hoc,values%20that%20are%20published%20via%20the%20EventCounter%20API.
         
-        private static bool DOTNETCOUNTERSENABLED = false; //this is used for enabling dotnet-counters performance utility when you run the application
-
-        private static int NqueenSize;
         static void Main(string[] args)
         {
             InitCommands();
@@ -33,7 +29,7 @@ namespace NQueen.ConsoleApp
                     var required = GetRequiredCommand();
                     if (required == "RUN")
                     {
-                        ConsoleUtils.WriteLineColored(ConsoleColor.Cyan, $"\nSolver is running nqueen size {NqueenSize}:\n");
+                        ConsoleUtils.WriteLineColored(ConsoleColor.Cyan, $"\nSolver is running nqueen size {BoardSize}:\n");
                         DispatchCommands.ProcessCommand("RUN", "ok");
                         bool runagain = true;
                         while (runagain)
@@ -69,7 +65,7 @@ namespace NQueen.ConsoleApp
                             Commands[required] = true;
                             if (required.ToUpper() == "BOARDSIZE")
                             {
-                                NqueenSize = Convert.ToInt32(answer);
+                                BoardSize = Convert.ToInt32(answer);
                             }
                         }
                     }
@@ -87,7 +83,7 @@ namespace NQueen.ConsoleApp
                         Commands[feature.ToUpper()] = true;
                         if (feature.ToUpper() == "BOARDSIZE")
                         {
-                            NqueenSize = Convert.ToInt32(value);
+                            BoardSize = Convert.ToInt32(value);
                         }
                     }
                 }
@@ -103,7 +99,7 @@ namespace NQueen.ConsoleApp
         static (string feature, string value) ParseInput(string msg)
         {
             var option = msg.ToCharArray().TakeWhile(e => e != '=').ToArray();
-            var n = msg.Substring(option.Count() + 1);
+            var n = msg[(option.Length + 1)..];
             return (new string(option), n);
         }
 
@@ -131,13 +127,17 @@ namespace NQueen.ConsoleApp
 
         static void InitCommands()
         {
-            Commands = new Dictionary<string, bool>();
-            Commands["BOARDSIZE"] = false;
-            Commands["SOLUTIONMODE"] = false;
-            Commands["RUN"] = false;
-            AvailableCommands = new Dictionary<string, string>();
-            AvailableCommands["BOARDSIZE"] = "Value between 4 - 17";
-            AvailableCommands["SOLUTIONMODE"] = "Available commands are: All, unique, single";
+            Commands = new Dictionary<string, bool>
+            {
+                ["BOARDSIZE"] = false,
+                ["SOLUTIONMODE"] = false,
+                ["RUN"] = false
+            };
+            AvailableCommands = new Dictionary<string, string>
+            {
+                ["BOARDSIZE"] = "Value between 4 - 17",
+                ["SOLUTIONMODE"] = "Available commands are: All, unique, single"
+            };
         }
 
         static void OutputBanner()
@@ -150,7 +150,7 @@ namespace NQueen.ConsoleApp
                     ConsoleColor defaultColor = Console.ForegroundColor;
                     Console.Write("|");
                     Console.ForegroundColor = ConsoleColor.Magenta;
-                    Console.Write(line.Substring(1, line.Length - 2));
+                    Console.Write(line[1..^1]);
                     Console.ForegroundColor = defaultColor;
                     Console.WriteLine("|");
                 }
@@ -165,7 +165,7 @@ namespace NQueen.ConsoleApp
         {
             if (DOTNETCOUNTERSENABLED)
             {
-                int processID = Process.GetCurrentProcess().Id;
+                int processID = Environment.ProcessId;
                 ProcessStartInfo ps = new ProcessStartInfo()
                 {
                     FileName = "dotnet-counters",
@@ -176,6 +176,9 @@ namespace NQueen.ConsoleApp
             }
         }
 
+        // This is used for enabling dotnet-counters performance utility when you run the application
+        private static readonly bool DOTNETCOUNTERSENABLED = false;
+        private static int BoardSize;
 
     }
 }
