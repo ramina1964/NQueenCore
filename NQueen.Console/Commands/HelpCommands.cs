@@ -4,8 +4,8 @@ namespace NQueen.ConsoleApp.Commands
 {
     internal class HelpCommands
     {
-        internal const string VALID_COMMANDS = "BOARDSIZE, SOLUTIONMODE";
-        internal const string COMMANDEXAMPLE = "BOARDSIZE=8 SOLUTIONMODE=2";
+        public const string VALID_COMMANDS = "BOARDSIZE, SOLUTIONMODE";
+        public const string COMMANDEXAMPLE = "BOARDSIZE=8 SOLUTIONMODE=2";
 
         static void DumpAllHelp()
         {
@@ -13,7 +13,7 @@ namespace NQueen.ConsoleApp.Commands
             DumpHelpText(NQUEEN_HELP_SOLUTIONMODE);
         }
 
-        internal static void ProcessHelpCommand(string cmd)
+        public static void ProcessHelpCommand(string cmd)
         {
             cmd = cmd.ToUpper();
             string[] parts = cmd.Split(" ");
@@ -32,7 +32,7 @@ namespace NQueen.ConsoleApp.Commands
                 DispatchCommands.ShowErrorExit($"Unrecognized command {parts[1]}, try " + HelpCommands.VALID_COMMANDS);
         }
 
-        static void DumpHelpText(string text)
+        public static void DumpHelpText(string text)
         {
             var index = 0;
             foreach (string line in text.Split("\n"))
@@ -44,10 +44,10 @@ namespace NQueen.ConsoleApp.Commands
             }
         }
 
-        const string NQUEEN_HELP_SOLVE =
-        @"  BOARDSIZE - Run solver on a specific boardsize between 4 - 17";
+        public const string NQUEEN_HELP_SOLVE =
+        @"  BOARDSIZE - Run solver on a specific boardsize inside [1, 37] for a Single Solution, or inside [1, 17] for Multiple Solutions]";
 
-        const string NQUEEN_HELP_SOLUTIONMODE =
+        public const string NQUEEN_HELP_SOLUTIONMODE =
         @"  SOLUTIONMODE - Runs solver with SolutionMode set to All, Unique or Single";
 
     }

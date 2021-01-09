@@ -44,10 +44,7 @@ namespace NQueen.ConsoleApp
                                 DispatchCommands.ProcessCommand("RUN", "ok");
                             }
                             else
-                            {
-                                runagain = false;
-                            }
-
+                            { runagain = false; }
                         }
                         break;
                     }
@@ -55,9 +52,7 @@ namespace NQueen.ConsoleApp
                     Console.WriteLine($"\tAvailable commands: {AvailableCommands[required]}");
                     var answer = Console.ReadLine();
                     if (answer.ToLower() == "-h" || answer.ToLower() == "help")
-                    {
-                        HelpCommands.ProcessHelpCommand(answer);
-                    }
+                    { HelpCommands.ProcessHelpCommand(answer); }
                     else
                     {
                         var ok = DispatchCommands.ProcessCommand(required, answer);
@@ -65,9 +60,7 @@ namespace NQueen.ConsoleApp
                         {
                             Commands[required] = true;
                             if (required.ToUpper() == "BOARDSIZE")
-                            {
-                                BoardSize = Convert.ToSByte(answer);
-                            }
+                            { BoardSize = Convert.ToSByte(answer); }
                         }
                     }
                 }
@@ -130,13 +123,13 @@ namespace NQueen.ConsoleApp
         {
             Commands = new Dictionary<string, bool>
             {
-                ["BOARDSIZE"] = false,
                 ["SOLUTIONMODE"] = false,
+                ["BOARDSIZE"] = false,
                 ["RUN"] = false
             };
             AvailableCommands = new Dictionary<string, string>
             {
-                ["BOARDSIZE"] = "Value between 1 - 17",
+                ["BOARDSIZE"] = "Value between in the Range [1, 17]",
                 ["SOLUTIONMODE"] = "0 - Single Solution, 1 - Unique Solutions, 2 - All Solutions"
             };
         }
