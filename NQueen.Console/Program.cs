@@ -15,13 +15,14 @@ namespace NQueen.ConsoleApp
         // In order to enable dotnet-counters you need to install dotnet-counters tool with the following command (use cmd)
         // dotnet tool install --global dotnet-counters
         // link: https://docs.microsoft.com/en-us/dotnet/core/diagnostics/dotnet-counters#:~:text=dotnet-counters%20is%20a%20performance%20monitoring%20tool%20for%20ad-hoc,values%20that%20are%20published%20via%20the%20EventCounter%20API.
-        
+
         static void Main(string[] args)
         {
             InitCommands();
             OutputBanner();
             LaunchConsoleMonitor();
-            //if console app is started without args
+
+            // If console app is started without args:
             if (args.Length == 0)
             {
                 while (!Commands.All(e => e.Value))
@@ -29,7 +30,7 @@ namespace NQueen.ConsoleApp
                     var required = GetRequiredCommand();
                     if (required == "RUN")
                     {
-                        ConsoleUtils.WriteLineColored(ConsoleColor.Cyan, $"\nSolver is running nqueen size {BoardSize}:\n");
+                        ConsoleUtils.WriteLineColored(ConsoleColor.Cyan, $"\nSolver is running ...");
                         DispatchCommands.ProcessCommand("RUN", "ok");
                         bool runagain = true;
                         while (runagain)
@@ -65,16 +66,17 @@ namespace NQueen.ConsoleApp
                             Commands[required] = true;
                             if (required.ToUpper() == "BOARDSIZE")
                             {
-                                BoardSize = Convert.ToInt32(answer);
+                                BoardSize = Convert.ToSByte(answer);
                             }
                         }
                     }
                 }
             }
-            //console app is started with custom args
+
+            // Console app is started with custom args:
             else
             {
-                for (int i = 0; i < args.Length; i++)
+                for (var i = 0; i < args.Length; i++)
                 {
                     (string feature, string value) = ParseInput(args[i]);
                     var ok = DispatchCommands.ProcessCommand(feature, value);
@@ -83,7 +85,7 @@ namespace NQueen.ConsoleApp
                         Commands[feature.ToUpper()] = true;
                         if (feature.ToUpper() == "BOARDSIZE")
                         {
-                            BoardSize = Convert.ToInt32(value);
+                            BoardSize = Convert.ToSByte(value);
                         }
                     }
                 }
@@ -112,19 +114,18 @@ namespace NQueen.ConsoleApp
 
         const string BannerString =
 @"
-|=====================================================|
-| NQueen - A .NET 5.0 Console Application             |
-|                                                     |
-| (c) 2021 - Ramin Anvar and Lars Erik Pedersen       |
-|                                                     |
-| App developed for Solving N-Queen Problem           |
-| using the Recursive Backtracking Algorithm          |
-|                                                     |
-| Version 0.50. Use help to list available commands.  |
-|                                                     |
-|=====================================================|
+|====================================================|
+| NQueen.ConsoleApp - A .NET 5.0 Console Application |
+|                                                    |
+| (c) 2021 - Ramin Anvar and Lars Erik Pedersen      |
+|                                                    |
+| App Developed for Solving N-Queen Problem          |
+| Using the Recursive Backtracking Algorithm         |
+|                                                    |
+| Version 0.50. Use help to list available commands. |
+|                                                    |
+|====================================================|
 ";
-
         static void InitCommands()
         {
             Commands = new Dictionary<string, bool>
@@ -178,7 +179,8 @@ namespace NQueen.ConsoleApp
 
         // This is used for enabling dotnet-counters performance utility when you run the application
         private static readonly bool DOTNETCOUNTERSENABLED = false;
-        private static int BoardSize;
+
+        private static sbyte BoardSize { get; set; }
 
     }
 }

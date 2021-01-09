@@ -19,7 +19,7 @@ namespace NQueen.ConsoleApp.Commands
             feature = feature.Replace("  ", " ").TrimEnd();
             if (feature == "")
             {
-                System.Environment.Exit(0);
+                Environment.Exit(0);
             }
 
             feature = feature.ToUpper();
@@ -31,20 +31,24 @@ namespace NQueen.ConsoleApp.Commands
                 };
 
                 var simulationResult = solver.GetSimulationResultsAsync(BoardSize, SolutionMode, DisplayMode.Hide);
-                ConsoleUtils.WriteLineColored(ConsoleColor.Blue, $"Here is a summary from NQueen solver with boardsize {simulationResult.Result.BoardSize}:\n");
-                ConsoleUtils.WriteLineColored(ConsoleColor.Gray, $"Number of solutions found: {simulationResult.Result.NoOfSolutions}");
-                ConsoleUtils.WriteLineColored(ConsoleColor.Gray, $"Elapsed time in seconds: {simulationResult.Result.ElapsedTimeInSec}");
-                
+                var simTitle = $"Summary of the Results for BoardSize = { BoardSize } and DisplayMode = { DispatchCommands.SolutionMode }";
+                ConsoleUtils.WriteLineColored(ConsoleColor.Blue, $"\n{simTitle}:");
+
+                var noOfSolutions = String.Format("{0:n0}", simulationResult.Result.NoOfSolutions);
+                var elapsedTime = String.Format("{0:n1}", simulationResult.Result.ElapsedTimeInSec);
+                ConsoleUtils.WriteLineColored(ConsoleColor.Gray, $"Number of solutions found: {noOfSolutions, 10}");
+                ConsoleUtils.WriteLineColored(ConsoleColor.Gray, $"Elapsed time in seconds: {elapsedTime, 14}");
+
                 var example = simulationResult.Result.Solutions.First().Details;
-                ConsoleUtils.WriteLineColored(ConsoleColor.Gray, "And here, is the queen Locations from the Lower Left Corner, (column No., Row No.):");
-                ConsoleUtils.WriteLineColored(ConsoleColor.Blue, "\nExample output - first solution found:\n");
+                var solutionTitle = "\nExample Output - First Solution Found - Starting from the Lower Left Corner - (column No., Row No.):";
+                ConsoleUtils.WriteLineColored(ConsoleColor.Blue, solutionTitle);
                 ConsoleUtils.WriteLineColored(ConsoleColor.Yellow, example);
                 return true;
             }
 
             if (feature == "BOARDSIZE")
             {
-                var ok = int.TryParse(value, out int size);
+                var ok = sbyte.TryParse(value, out sbyte size);
                 if (ok)
                 {
                     BoardSize = Convert.ToSByte(size);
@@ -85,8 +89,7 @@ namespace NQueen.ConsoleApp.Commands
             Console.ForegroundColor = priorColor;
             Console.WriteLine(errorString);
             Console.WriteLine();
-            System.Environment.Exit(-1);
-
+            Environment.Exit(-1);
         }
     }
 }
