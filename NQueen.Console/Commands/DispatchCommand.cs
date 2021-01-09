@@ -32,8 +32,8 @@ namespace NQueen.ConsoleApp.Commands
 
                 var noOfSolutions = String.Format("{0:n0}", simulationResult.Result.NoOfSolutions);
                 var elapsedTime = String.Format("{0:n1}", simulationResult.Result.ElapsedTimeInSec);
-                ConsoleUtils.WriteLineColored(ConsoleColor.Gray, $"Number of solutions found: {noOfSolutions, 10}");
-                ConsoleUtils.WriteLineColored(ConsoleColor.Gray, $"Elapsed time in seconds: {elapsedTime, 14}");
+                ConsoleUtils.WriteLineColored(ConsoleColor.Gray, $"Number of solutions found: {noOfSolutions,10}");
+                ConsoleUtils.WriteLineColored(ConsoleColor.Gray, $"Elapsed time in seconds: {elapsedTime,14}");
 
                 var example = simulationResult.Result.Solutions.FirstOrDefault()?.Details;
                 var solutionTitle = (example == null)
@@ -61,12 +61,16 @@ namespace NQueen.ConsoleApp.Commands
 
             if (key == "SOLUTIONMODE")
             {
-                var response = value[0].ToString().ToUpper() + value[1..];
-                var ok = Enum.TryParse(response, out SolutionMode solutionMode);
-                if (ok)
+                var isValidInt = int.TryParse(value.ToString(), out int userChoice);
+                if (isValidInt)
                 {
-                    SolutionMode = solutionMode;
-                    return true;
+                    //var validEnum = Enum.TryParse(typeof(SolutionMode), userChoice.ToString(), out object solutionMode);
+                    var validEnum = Enum.TryParse(typeof(SolutionMode), userChoice.ToString(), out object mode);
+                    if (validEnum)
+                    {
+                        SolutionMode = (SolutionMode)mode;
+                        return true;
+                    }
                 }
 
                 else

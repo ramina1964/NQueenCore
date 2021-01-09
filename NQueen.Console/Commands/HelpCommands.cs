@@ -5,7 +5,7 @@ namespace NQueen.ConsoleApp.Commands
     internal class HelpCommands
     {
         internal const string VALID_COMMANDS = "BOARDSIZE, SOLUTIONMODE";
-        internal const string COMMANDEXAMPLE = "BOARDSIZE=8 SOLUTIONMODE=ALL";
+        internal const string COMMANDEXAMPLE = "BOARDSIZE=8 SOLUTIONMODE=2";
 
         static void DumpAllHelp()
         {
