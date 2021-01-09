@@ -13,22 +13,18 @@ namespace NQueen.ConsoleApp.Commands
 
         public DisplayMode DisplayMode = DisplayMode.Hide;
 
-        public static bool ProcessCommand(string feature, string value)
+        public static bool ProcessCommand(string key, string value)
         {
-            bool ret = false;
-            feature = feature.Replace("  ", " ").TrimEnd();
-            if (feature == "")
-            {
-                Environment.Exit(0);
-            }
+            var returnValue = false;
+            key = key.Replace("  ", " ").TrimEnd();
+            if (key == string.Empty)
+            { Environment.Exit(0); }
 
-            feature = feature.ToUpper();
-            if (feature == "RUN")
+            key = key.ToUpper();
+            if (key == "RUN")
             {
                 var solver = new Solver(BoardSize)
-                {
-                    SolutionMode = SolutionMode
-                };
+                { SolutionMode = SolutionMode };
 
                 var simulationResult = solver.GetSimulationResultsAsync(BoardSize, SolutionMode, DisplayMode.Hide);
                 var simTitle = $"Summary of the Results for BoardSize = { BoardSize } and DisplayMode = { DispatchCommands.SolutionMode }";
@@ -39,14 +35,16 @@ namespace NQueen.ConsoleApp.Commands
                 ConsoleUtils.WriteLineColored(ConsoleColor.Gray, $"Number of solutions found: {noOfSolutions, 10}");
                 ConsoleUtils.WriteLineColored(ConsoleColor.Gray, $"Elapsed time in seconds: {elapsedTime, 14}");
 
-                var example = simulationResult.Result.Solutions.First().Details;
-                var solutionTitle = "\nExample Output - First Solution Found - Starting from the Lower Left Corner - (column No., Row No.):";
+                var example = simulationResult.Result.Solutions.FirstOrDefault()?.Details;
+                var solutionTitle = (example == null)
+                                    ? "\nNo Solution Found!"
+                                    : "\nFirst Solution Found - Starting from the Lower Left Corner - (column No., Row No.):";
                 ConsoleUtils.WriteLineColored(ConsoleColor.Blue, solutionTitle);
                 ConsoleUtils.WriteLineColored(ConsoleColor.Yellow, example);
                 return true;
             }
 
-            if (feature == "BOARDSIZE")
+            if (key == "BOARDSIZE")
             {
                 var ok = sbyte.TryParse(value, out sbyte size);
                 if (ok)
@@ -61,10 +59,10 @@ namespace NQueen.ConsoleApp.Commands
                 }
             }
 
-            if (feature == "SOLUTIONMODE")
+            if (key == "SOLUTIONMODE")
             {
-                var svar = value[0].ToString().ToUpper() + value[1..];
-                var ok = Enum.TryParse(svar, out SolutionMode solutionMode);
+                var response = value[0].ToString().ToUpper() + value[1..];
+                var ok = Enum.TryParse(response, out SolutionMode solutionMode);
                 if (ok)
                 {
                     SolutionMode = solutionMode;
@@ -77,7 +75,7 @@ namespace NQueen.ConsoleApp.Commands
                 }
             }
 
-            return ret;
+            return returnValue;
         }
 
         internal static void ShowErrorExit(string errorString)
