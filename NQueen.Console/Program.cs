@@ -18,7 +18,7 @@ namespace NQueen.ConsoleApp
 
         static void Main(string[] args)
         {
-            //you need to change to font to SimSun-ExtB in order to show unicode characters in console - IMPORTANT
+            // You need to change to font to SimSun-ExtB in order to show unicode characters in console - IMPORTANT
             Console.OutputEncoding = System.Text.Encoding.UTF8;            
             InitCommands();
             OutputBanner();

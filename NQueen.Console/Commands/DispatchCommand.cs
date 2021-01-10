@@ -8,6 +8,7 @@ namespace NQueen.ConsoleApp.Commands
     public class DispatchCommands
     {
         public static char WhiteQueen { get; set; } = '\u2655';
+
         public static sbyte BoardSize { get; set; }
 
         public static SolutionMode SolutionMode { get; set; }

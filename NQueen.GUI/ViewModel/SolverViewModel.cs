@@ -145,7 +145,7 @@ namespace NQueen.GUI.ViewModel
             set
             {
                 var isChanged = Set(ref _solutionMode, value);
-                if (!isChanged)
+                if (Solver == null || !isChanged)
                 { return; }
 
                 Solver.SolutionMode = value;
@@ -154,18 +154,23 @@ namespace NQueen.GUI.ViewModel
                     ? $"Solution"
                     : $"Solutions (Max: {MaxNoOfSolutionsInOutput})";
 
+                ValidationResult = _validation.Validate(this, options => options.IncludeAllRuleSets());
                 RaisePropertyChanged(nameof(BoardSizeText));
                 RaisePropertyChanged(nameof(SolutionTitle));
                 ValidationResult = _validation.Validate(this);
                 IsValid = ValidationResult.IsValid;
 
-                if (IsValid)
+                if (!IsValid)
                 {
-                    IsIdle = true;
+                    IsIdle = false;
                     SimulateCommand?.RaiseCanExecuteChanged();
-                    SaveCommand?.RaiseCanExecuteChanged();
-                    UpdateGui();
+                    return;
                 }
+
+                IsIdle = true;
+                SimulateCommand?.RaiseCanExecuteChanged();
+                SaveCommand?.RaiseCanExecuteChanged();
+                UpdateGui();
             }
         }
 
@@ -175,11 +180,10 @@ namespace NQueen.GUI.ViewModel
             set
             {
                 var isChanged = Set(ref _displayMode, value);
-                if (!isChanged)
-                { return; }
-
-                if (Solver != null)
-                { Solver.DisplayMode = value; }
+                if (Solver != null || !isChanged)
+                {
+                    Solver.DisplayMode = value;
+                }
 
                 ValidationResult = _validation.Validate(this);
                 IsValid = ValidationResult.IsValid;
@@ -238,7 +242,11 @@ namespace NQueen.GUI.ViewModel
         public bool IsValid
         {
             get => _isValid;
-            set => Set(ref _isValid, value);
+            set
+            {
+                Set(ref _isValid, value);
+                RaisePropertyChanged(nameof(CanSimulate));
+            }
         }
 
         public ISolver Solver
@@ -357,7 +365,7 @@ namespace NQueen.GUI.ViewModel
             IsMultipleRunning = false;
             ObservableSolutions = Solver.ObservableSolutions;
             NoOfSolutions = $"{ObservableSolutions.Count,0:N0}";
-            
+
             DelayInMilliseconds = Utility.DefaultDelayInMilliseconds;
             ProgressVisibility = Visibility.Hidden;
             ProgressValue = 0;
@@ -423,6 +431,7 @@ namespace NQueen.GUI.ViewModel
             ElapsedTimeInSec = $"{SimulationResults.ElapsedTimeInSec,0:N1}";
             SelectedSolution = ObservableSolutions.FirstOrDefault();
             IsIdle = true;
+            SaveCommand.RaiseCanExecuteChanged();
         }
 
         private void UpdateSummary()

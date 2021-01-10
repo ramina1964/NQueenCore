@@ -12,10 +12,7 @@ namespace NQueen.GUI.ViewModel
         private void ValidationRules()
         {
             RuleFor(q => q.BoardSizeText)
-                .NotNull()
-                .WithMessage(q => string.Format(Resources.ValueNullOrWhiteSpaceError, nameof(q.BoardSize)))
-
-                .NotEmpty()
+                .NotNull().NotEmpty()
                 .WithMessage(q => string.Format(Resources.ValueNullOrWhiteSpaceError, nameof(q.BoardSize)))
 
                 .Must(bst => sbyte.TryParse(bst, out sbyte value))
