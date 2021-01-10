@@ -154,21 +154,18 @@ namespace NQueen.GUI.ViewModel
                     ? $"Solution"
                     : $"Solutions (Max: {MaxNoOfSolutionsInOutput})";
 
-                ValidationResult = _validation.Validate(this, options => options.IncludeAllRuleSets());
                 RaisePropertyChanged(nameof(BoardSizeText));
                 RaisePropertyChanged(nameof(SolutionTitle));
-                ValidationResult = _validation.Validate(this);
+                ValidationResult = _validation.Validate(this, options => options.IncludeAllRuleSets());
                 IsValid = ValidationResult.IsValid;
 
                 if (!IsValid)
                 {
                     IsIdle = false;
-                    SimulateCommand?.RaiseCanExecuteChanged();
                     return;
                 }
 
                 IsIdle = true;
-                SimulateCommand?.RaiseCanExecuteChanged();
                 SaveCommand?.RaiseCanExecuteChanged();
                 UpdateGui();
             }
@@ -302,17 +299,17 @@ namespace NQueen.GUI.ViewModel
                 var isChanged = Set(ref _isSingleRunning, value);
                 if (isChanged)
                 {
-                    CancelCommand.RaiseCanExecuteChanged();
                     SimulateCommand.RaiseCanExecuteChanged();
+                    CancelCommand.RaiseCanExecuteChanged();
                     SaveCommand.RaiseCanExecuteChanged();
-                }
 
-                // Also set value of IsIdle Property.
-                Set(nameof(IsIdle), ref _isIdle, !value, true);
+                    // Also set value of IsIdle Property and broadcast it, the last parameter below.
+                    Set(nameof(IsIdle), ref _isIdle, !value, true);
+                }
             }
         }
 
-        // Returns true if a UniqueSolution or AllSolutions is running.
+        // Returns true if UniqueSolutions or AllSolutions is running.
         public bool IsMultipleRunning
         {
             get => _isMultipleRunning;
@@ -321,13 +318,13 @@ namespace NQueen.GUI.ViewModel
                 var isChanged = Set(ref _isMultipleRunning, value);
                 if (isChanged)
                 {
-                    CancelCommand.RaiseCanExecuteChanged();
                     SimulateCommand.RaiseCanExecuteChanged();
+                    CancelCommand.RaiseCanExecuteChanged();
                     SaveCommand.RaiseCanExecuteChanged();
-                }
 
-                // Also set value of IsIdle Property.
-                Set(nameof(IsIdle), ref _isIdle, !value, true);
+                    // Also set value of IsIdle Property and broadcast it, the last parameter below.
+                    Set(nameof(IsIdle), ref _isIdle, !value, true);
+                }
             }
         }
 
@@ -335,7 +332,16 @@ namespace NQueen.GUI.ViewModel
         public bool IsIdle
         {
             get => _isIdle;
-            set => Set(ref _isIdle, value);
+            set
+            {
+                var isChanged = Set(ref _isIdle, value);
+                if (isChanged)
+                {
+                    CancelCommand.RaiseCanExecuteChanged();
+                    SimulateCommand.RaiseCanExecuteChanged();
+                    SaveCommand.RaiseCanExecuteChanged();
+                }
+            }
         }
 
         public bool CanEditBoardSize
@@ -501,7 +507,7 @@ namespace NQueen.GUI.ViewModel
             IsIdle = true;
         }
 
-        private bool CanSave() => !IsSingleRunning && !IsMultipleRunning && IsIdle && SimulationResults?.NoOfSolutions > 0;
+        private bool CanSave() => !IsSingleRunning && !IsMultipleRunning && SimulationResults?.NoOfSolutions > 0;
         #endregion PrivateMethods
 
         #region PrivateFields
