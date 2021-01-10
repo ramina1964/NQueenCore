@@ -7,6 +7,7 @@ namespace NQueen.ConsoleApp.Commands
 {
     public class DispatchCommands
     {
+        public static char WhiteQueen { get; set; } = '\u2655';
         public static sbyte BoardSize { get; set; }
 
         public static SolutionMode SolutionMode { get; set; }
@@ -65,12 +66,16 @@ namespace NQueen.ConsoleApp.Commands
             ConsoleUtils.WriteLineColored(ConsoleColor.Gray, $"Number of solutions found: {noOfSolutions,10}");
             ConsoleUtils.WriteLineColored(ConsoleColor.Gray, $"Elapsed time in seconds: {elapsedTime,14}");
 
-            var example = simulationResult.Result.Solutions.FirstOrDefault()?.Details;
+            var example = simulationResult.Result.Solutions.FirstOrDefault();
             var solutionTitle = (example == null)
                                 ? "\nNo Solution Found!"
                                 : "\nFirst Solution Found - Numbers in paranteses: Column No. and Row No., Starting from the Lower Left Corner:";
             ConsoleUtils.WriteLineColored(ConsoleColor.Blue, solutionTitle);
-            ConsoleUtils.WriteLineColored(ConsoleColor.Yellow, example);
+            ConsoleUtils.WriteLineColored(ConsoleColor.Yellow, example.Details);
+            var board = CreateChessBoard(example.QueenList);
+            ConsoleUtils.WriteLineColored(ConsoleColor.Blue, $"\nDrawing of first solution:\n");
+            ConsoleUtils.WriteLineColored(ConsoleColor.Gray, "\tIMPORTANT - you need to set default fonts (in this console window) to SimSun-ExtB in order to show unicode characters\n");            
+            Console.WriteLine(board);
             return true;
         }
 
@@ -124,6 +129,48 @@ namespace NQueen.ConsoleApp.Commands
             }
             return true;
         }
+
+        private static string[,] ChessBoardHelper(sbyte[] queens)
+        {
+            var size = queens.Length;
+            string[,] arr = new string [size,size];
+           
+            for (int col = 0; col < size ; col++)
+            {
+                var rowPlace = queens[col];
+                for (int row = 0; row < size; row++)
+                {
+                    if (row == rowPlace)
+                    {
+                        arr[row,col] = col == size - 1 ? $"|{WhiteQueen}|" : $"|{WhiteQueen}"; ;
+                    }
+                    else
+                    { 
+                        arr[row, col] = col == size - 1 ? "|-|" : "|-";
+                    }
+                }
+            }
+
+            return arr;
+        }
+
+        private static string CreateChessBoard(sbyte[] queens)
+        {
+            var arr = ChessBoardHelper(queens);
+            var size = queens.Length;
+            var board = string.Empty;
+            for (int row = size - 1; row >= 0; row--)
+            {
+                for (int col = 0; col < size; col++)
+                {
+                    board += arr[row, col];
+                }
+                board += Environment.NewLine;
+            }
+
+            return board;
+        }
+
         #endregion PrivateMethods
 
     }
