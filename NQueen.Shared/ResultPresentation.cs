@@ -7,10 +7,10 @@ using System.Text;
 
 namespace NQueen.Shared
 {
-    public class TextFilePresentation
+    public class ResultPresentation
     {
         #region Constructor
-        public TextFilePresentation(ISimulationResults results)
+        public ResultPresentation(ISimulationResults results)
         {
             MaxNoOfSolutionsInOutput = 50;
             BoardSize = results.BoardSize;
@@ -21,20 +21,19 @@ namespace NQueen.Shared
         }
         #endregion Constructor
 
-        #region PublicMembers
-        public ObservableCollection<Solution> Solutions { get; }
+        internal ObservableCollection<Solution> Solutions { get; }
 
-        public double ElapsedTimeInSec { get; set; }
+        internal double ElapsedTimeInSec { get; set; }
 
         internal int NoOfSolutions { get; }
 
-        public int MaxNoOfSolutionsInOutput { get; }
+        internal int MaxNoOfSolutionsInOutput { get; }
 
         internal int BoardSize { get; set; }
 
         internal int NoOfSolutionsInOutput { get; }
 
-        public static StringBuilder FormatSingleSolution(Solution solution) =>
+        internal static StringBuilder FormatSingleSolution(Solution solution) =>
             new StringBuilder().Append($"{solution.Details}");
 
         public string Write2File(SolutionMode solutionMode)
@@ -69,7 +68,6 @@ namespace NQueen.Shared
 
             return sb.AppendLine();
         }
-        #endregion PublicMembers
 
         #region PrivateMembers
         private StringBuilder GetSummary(SolutionMode solutionMode)

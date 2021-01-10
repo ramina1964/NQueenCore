@@ -7,7 +7,21 @@ namespace NQueen.Shared
 {
     public static class Utility
     {
-        public const int MaxNoOfSolutionsInOutput = 50;
+        public const int MaxNoOfSolutionsInOutput = 40;
+
+        public const int DefaultDelayInMilliseconds = 250;
+
+        public const sbyte DefaultBoardSize = 8;
+
+        public const sbyte RelativeFactor = 8;
+
+        public const sbyte MinBoardSize = 1;
+
+        public const sbyte MaxBoardSizeForUniqueCase = 17;
+
+        public const sbyte MaxBoardSizeForSingleCase = 37;
+
+        public const sbyte MaxBoardSizeForAllCase = 16;
 
         public static List<sbyte[]> GetSymmetricalSolutions(sbyte[] solution)
         {
@@ -53,50 +67,6 @@ namespace NQueen.Shared
                 ? GetSolutionSizeUnique(boardSize)
                 : GetSolutionSizeAll(boardSize);
 
-        private static int GetSolutionSizeUnique(sbyte boardSize) => boardSize switch
-        {
-            1 => 1,
-            2 => 0,
-            3 => 0,
-            4 => 1,
-            5 => 2,
-            6 => 1,
-            7 => 6,
-            8 => 12,
-            9 => 46,
-            10 => 92,
-            11 => 341,
-            12 => 1787,
-            13 => 9233,
-            14 => 45752,
-            15 => 285053,
-            16 => 1846955,
-            17 => 11977939,
-            _ => throw new ArgumentOutOfRangeException("BoardSize must be a positive integer less than 18.", nameof(boardSize)),
-        };
-
-        private static int GetSolutionSizeAll(sbyte boardSize) => boardSize switch
-        {
-            1 => 1,
-            2 => 0,
-            3 => 0,
-            4 => 2,
-            5 => 10,
-            6 => 4,
-            7 => 40,
-            8 => 92,
-            9 => 352,
-            10 => 724,
-            11 => 2680,
-            12 => 14200,
-            13 => 73712,
-            14 => 365596,
-            15 => 2279184,
-            16 => 14772512,
-            17 => 95815104,
-            _ => throw new ArgumentOutOfRangeException("BoardSize must be a positive integer less than 18.", nameof(boardSize)),
-        };
-
         public static string SolutionTitle(SolutionMode solutionMode)
         {
             return solutionMode switch
@@ -108,7 +78,7 @@ namespace NQueen.Shared
             };
         }
 
-        public static string SolutionTitle(SolutionMode solutionMode, int noOfSolutions)
+        internal static string SolutionTitle(SolutionMode solutionMode, int noOfSolutions)
         {
             if (solutionMode == SolutionMode.Single)
             { return "Solution:"; }
@@ -116,8 +86,8 @@ namespace NQueen.Shared
             if (noOfSolutions <= MaxNoOfSolutionsInOutput)
             {
                 return solutionMode == SolutionMode.All
-                 ? $"List of All Solution(s), Included Symmetrical Ones:"
-                 : $"List of Unique Solution(s), Excluded Symmetrical Ones:";
+                 ? $"List of All Solutions (Included Symmetrical Ones):"
+                 : $"List of Unique Solutions (Excluded Symmetrical Ones):";
             }
 
             // Here is: NoOfSolutions > MaxNoOfSolutionsInOutput
@@ -125,5 +95,54 @@ namespace NQueen.Shared
                 ? $"List of First {MaxNoOfSolutionsInOutput} Solution(s), May Include Symmetrical Ones:"
                 : $"List of First {MaxNoOfSolutionsInOutput} Unique Solution(s), Excluded Symmetrical Ones:";
         }
+
+        #region PrivateMembers
+        private static int GetSolutionSizeUnique(sbyte boardSize) =>
+            boardSize switch
+            {
+                1 => 1,
+                2 => 0,
+                3 => 0,
+                4 => 1,
+                5 => 2,
+                6 => 1,
+                7 => 6,
+                8 => 12,
+                9 => 46,
+                10 => 92,
+                11 => 341,
+                12 => 1787,
+                13 => 9233,
+                14 => 45752,
+                15 => 285053,
+                16 => 1846955,
+                17 => 11977939,
+                _ => throw new ArgumentOutOfRangeException("BoardSize must be a positive integer less than 18.", nameof(boardSize)),
+            };
+
+        private static int GetSolutionSizeAll(sbyte boardSize) =>
+            boardSize switch
+            {
+                1 => 1,
+                2 => 0,
+                3 => 0,
+                4 => 2,
+                5 => 10,
+                6 => 4,
+                7 => 40,
+                8 => 92,
+                9 => 352,
+                10 => 724,
+                11 => 2680,
+                12 => 14200,
+                13 => 73712,
+                14 => 365596,
+                15 => 2279184,
+                16 => 14772512,
+                17 => 95815104,
+                _ => throw new ArgumentOutOfRangeException("BoardSize must be a positive integer less than 18.", nameof(boardSize)),
+            };
+        #endregion PrivateMembers
+
     }
 }

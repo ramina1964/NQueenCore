@@ -2,7 +2,7 @@
 
 namespace NQueen.ConsoleApp.Commands
 {
-    internal class HelpCommands
+    public class HelpCommands
     {
         public const string VALID_COMMANDS = "BOARDSIZE, SOLUTIONMODE";
         public const string COMMANDEXAMPLE = "BOARDSIZE=8 SOLUTIONMODE=2";

@@ -2,7 +2,7 @@
 
 namespace NQueen.ConsoleApp.Commands
 {
-    internal static class ConsoleUtils
+    public static class ConsoleUtils
     {
         public static void WriteLineColored(ConsoleColor color, string str)
         {

@@ -150,8 +150,9 @@ namespace NQueen.GUI.ViewModel
 
                 Solver.SolutionMode = value;
                 SolutionTitle =
-                    (SolutionMode == SolutionMode.Single) ? $"Solution" :
-                    $"Solutions (Max: {MaxNoOfSolutionsInOutput})";
+                    (SolutionMode == SolutionMode.Single)
+                    ? $"Solution"
+                    : $"Solutions (Max: {MaxNoOfSolutionsInOutput})";
 
                 RaisePropertyChanged(nameof(BoardSizeText));
                 RaisePropertyChanged(nameof(SolutionTitle));
@@ -160,7 +161,7 @@ namespace NQueen.GUI.ViewModel
 
                 if (IsValid)
                 {
-                    IsCalculated = false;
+                    IsIdle = true;
                     SimulateCommand?.RaiseCanExecuteChanged();
                     SaveCommand?.RaiseCanExecuteChanged();
                     UpdateGui();
@@ -185,7 +186,7 @@ namespace NQueen.GUI.ViewModel
 
                 if (IsValid)
                 {
-                    IsCalculated = false;
+                    IsIdle = true;
                     IsVisualized = DisplayMode.Visualize == value;
                     RaisePropertyChanged(nameof(BoardSizeText));
                     SimulateCommand?.RaiseCanExecuteChanged();
@@ -206,11 +207,16 @@ namespace NQueen.GUI.ViewModel
 
                 ValidationResult = _validation.Validate(this);
                 IsValid = ValidationResult.IsValid;
+                if (!IsValid)
+                {
+                    IsIdle = false;
+                    SimulateCommand?.RaiseCanExecuteChanged();
+                }
 
                 if (IsValid)
                 {
-                    IsCalculated = false;
-                    Set(ref _boardSize, sbyte.Parse(_boardSizeText));
+                    IsIdle = true;
+                    Set(ref _boardSize, sbyte.Parse(value));
                     RaisePropertyChanged(nameof(BoardSize));
                     SaveCommand?.RaiseCanExecuteChanged();
                     SimulateCommand?.RaiseCanExecuteChanged();
@@ -317,7 +323,7 @@ namespace NQueen.GUI.ViewModel
             }
         }
 
-        // Returns false if a simulation is running, otherwise true, i.e., the opposite of IsRunning.
+        // Returns false if a simulation is running, otherwise true.
         public bool IsIdle
         {
             get => _isIdle;
@@ -336,12 +342,6 @@ namespace NQueen.GUI.ViewModel
             set => Set(ref _canEditSolutionMode, value);
         }
 
-        // Returns true if the results of simulation with new parameters are ready, false otherwise.
-        public bool IsCalculated
-        {
-            get => _isCalculated;
-            set => Set(ref _isCalculated, value);
-        }
         #endregion PublicProperties
 
         #region PrivateMethods
@@ -358,8 +358,7 @@ namespace NQueen.GUI.ViewModel
             ObservableSolutions = Solver.ObservableSolutions;
             NoOfSolutions = $"{ObservableSolutions.Count,0:N0}";
             
-            //DelayInMilliseconds = Settings.Default.DefaultDelayInMilliseconds;
-            DelayInMilliseconds = 150;
+            DelayInMilliseconds = Utility.DefaultDelayInMilliseconds;
             ProgressVisibility = Visibility.Hidden;
             ProgressValue = 0;
         }
@@ -418,11 +417,12 @@ namespace NQueen.GUI.ViewModel
             ExtractCorrectNoOfSols();
             UpdateSummary();
 
-            IsCalculated = true;
+            IsIdle = false;
             SaveCommand.RaiseCanExecuteChanged();
             NoOfSolutions = $"{SimulationResults.NoOfSolutions,0:N0}";
             ElapsedTimeInSec = $"{SimulationResults.ElapsedTimeInSec,0:N1}";
             SelectedSolution = ObservableSolutions.FirstOrDefault();
+            IsIdle = true;
         }
 
         private void UpdateSummary()
@@ -485,14 +485,14 @@ namespace NQueen.GUI.ViewModel
 
         private void Save()
         {
-            var results = new TextFilePresentation(SimulationResults);
+            var results = new ResultPresentation(SimulationResults);
             var filePath = results.Write2File(SolutionMode);
             var msg = $"Successfully wrote results to: {filePath}";
             MessageBox.Show(msg);
-            IsCalculated = false;
+            IsIdle = true;
         }
 
-        private bool CanSave() => !IsSingleRunning && !IsMultipleRunning && IsCalculated && SimulationResults?.NoOfSolutions > 0;
+        private bool CanSave() => !IsSingleRunning && !IsMultipleRunning && IsIdle && SimulationResults?.NoOfSolutions > 0;
         #endregion PrivateMethods
 
         #region PrivateFields
@@ -515,7 +515,7 @@ namespace NQueen.GUI.ViewModel
         private bool _isIdle;
         private bool _isSingleRunning;
         private bool _isMultipleRunning;
-        private bool _isCalculated;
+        //private bool _isCalculated;
         private ISolver _solver;
         private Solution _selectedSolution;
         private bool _canEditBoardSize;
