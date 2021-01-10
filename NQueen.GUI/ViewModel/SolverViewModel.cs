@@ -166,7 +166,6 @@ namespace NQueen.GUI.ViewModel
                 }
 
                 IsIdle = true;
-                SaveCommand?.RaiseCanExecuteChanged();
                 UpdateGui();
             }
         }
@@ -190,8 +189,6 @@ namespace NQueen.GUI.ViewModel
                     IsIdle = true;
                     IsVisualized = DisplayMode.Visualize == value;
                     RaisePropertyChanged(nameof(BoardSizeText));
-                    SimulateCommand?.RaiseCanExecuteChanged();
-                    SaveCommand?.RaiseCanExecuteChanged();
                     UpdateGui();
                 }
             }
@@ -209,18 +206,13 @@ namespace NQueen.GUI.ViewModel
                 ValidationResult = _validation.Validate(this);
                 IsValid = ValidationResult.IsValid;
                 if (!IsValid)
-                {
-                    IsIdle = false;
-                    SimulateCommand?.RaiseCanExecuteChanged();
-                }
+                { IsIdle = false; }
 
                 if (IsValid)
                 {
                     IsIdle = true;
                     Set(ref _boardSize, sbyte.Parse(value));
                     RaisePropertyChanged(nameof(BoardSize));
-                    SaveCommand?.RaiseCanExecuteChanged();
-                    SimulateCommand?.RaiseCanExecuteChanged();
                     UpdateGui();
                 }
             }
@@ -299,9 +291,7 @@ namespace NQueen.GUI.ViewModel
                 var isChanged = Set(ref _isSingleRunning, value);
                 if (isChanged)
                 {
-                    SimulateCommand.RaiseCanExecuteChanged();
-                    CancelCommand.RaiseCanExecuteChanged();
-                    SaveCommand.RaiseCanExecuteChanged();
+                    UpdateButtonFunctionality();
 
                     // Also set value of IsIdle Property and broadcast it, the last parameter below.
                     Set(nameof(IsIdle), ref _isIdle, !value, true);
@@ -318,9 +308,7 @@ namespace NQueen.GUI.ViewModel
                 var isChanged = Set(ref _isMultipleRunning, value);
                 if (isChanged)
                 {
-                    SimulateCommand.RaiseCanExecuteChanged();
-                    CancelCommand.RaiseCanExecuteChanged();
-                    SaveCommand.RaiseCanExecuteChanged();
+                    UpdateButtonFunctionality();
 
                     // Also set value of IsIdle Property and broadcast it, the last parameter below.
                     Set(nameof(IsIdle), ref _isIdle, !value, true);
@@ -336,11 +324,7 @@ namespace NQueen.GUI.ViewModel
             {
                 var isChanged = Set(ref _isIdle, value);
                 if (isChanged)
-                {
-                    CancelCommand.RaiseCanExecuteChanged();
-                    SimulateCommand.RaiseCanExecuteChanged();
-                    SaveCommand.RaiseCanExecuteChanged();
-                }
+                { UpdateButtonFunctionality(); }
             }
         }
 
@@ -391,6 +375,13 @@ namespace NQueen.GUI.ViewModel
             Chessboard?.CreateSquares(BoardSize, new List<SquareViewModel>());
         }
 
+        private void UpdateButtonFunctionality()
+        {
+            CancelCommand.RaiseCanExecuteChanged();
+            SimulateCommand.RaiseCanExecuteChanged();
+            SaveCommand.RaiseCanExecuteChanged();
+        }
+
         private void OnProgressValueChanged(object sender, ProgressValueChangedEventArgs e) => ProgressValue = e.Value;
 
         private void OnQueenPlaced(object sender, QueenPlacedEventArgs e)
@@ -432,12 +423,11 @@ namespace NQueen.GUI.ViewModel
             UpdateSummary();
 
             IsIdle = false;
-            SaveCommand.RaiseCanExecuteChanged();
             NoOfSolutions = $"{SimulationResults.NoOfSolutions,0:N0}";
             ElapsedTimeInSec = $"{SimulationResults.ElapsedTimeInSec,0:N1}";
             SelectedSolution = ObservableSolutions.FirstOrDefault();
+            
             IsIdle = true;
-            SaveCommand.RaiseCanExecuteChanged();
         }
 
         private void UpdateSummary()
@@ -530,7 +520,6 @@ namespace NQueen.GUI.ViewModel
         private bool _isIdle;
         private bool _isSingleRunning;
         private bool _isMultipleRunning;
-        //private bool _isCalculated;
         private ISolver _solver;
         private Solution _selectedSolution;
         private bool _canEditBoardSize;
