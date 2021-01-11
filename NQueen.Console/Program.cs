@@ -34,26 +34,27 @@ namespace NQueen.ConsoleApp
                     {
                         ConsoleUtils.WriteLineColored(ConsoleColor.Cyan, $"\nSolver is running ...");
                         DispatchCommands.ProcessCommand("RUN", "ok");
-                        bool runagain = true;
-                        while (runagain)
+                        var runAgain = true;
+                        while (runAgain)
                         {
                             Console.WriteLine("\nRun again to debug memory usage?");
                             Console.WriteLine("\tYes or No\n");
-                            var ans = Console.ReadLine().ToLower();
-                            if (ans == "yes")
+                            var ans = Console.ReadLine().Trim().ToLower();
+                            if (ans == "yes" || ans == "y")
                             {
                                 Console.WriteLine();
                                 DispatchCommands.ProcessCommand("RUN", "ok");
                             }
                             else
-                            { runagain = false; }
+                            { runAgain = false; }
                         }
                         break;
                     }
+
                     ConsoleUtils.WriteLineColored(ConsoleColor.Cyan, $"Enter a {required} ");
                     Console.WriteLine($"\tAvailable commands: {AvailableCommands[required]}");
-                    var answer = Console.ReadLine();
-                    if (answer.ToLower() == "-h" || answer.ToLower() == "help")
+                    var answer = Console.ReadLine().Trim().ToLower();
+                    if (answer == "help" || answer == "-h")
                     { HelpCommands.ProcessHelpCommand(answer); }
                     else
                     {
@@ -61,7 +62,7 @@ namespace NQueen.ConsoleApp
                         if (ok)
                         {
                             Commands[required] = true;
-                            if (required.ToUpper() == "BOARDSIZE")
+                            if (required.Trim().ToUpper() == "BOARDSIZE")
                             { BoardSize = Convert.ToSByte(answer); }
                         }
                     }
@@ -176,6 +177,5 @@ namespace NQueen.ConsoleApp
         private static readonly bool DOTNETCOUNTERSENABLED = false;
 
         private static sbyte BoardSize { get; set; }
-
     }
 }

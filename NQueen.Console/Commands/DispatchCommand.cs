@@ -1,7 +1,7 @@
-﻿using System;
-using System.Linq;
-using NQueen.Kernel;
+﻿using NQueen.Kernel;
 using NQueen.Shared.Enums;
+using System;
+using System.Linq;
 
 namespace NQueen.ConsoleApp.Commands
 {
@@ -13,14 +13,21 @@ namespace NQueen.ConsoleApp.Commands
 
         public static SolutionMode SolutionMode { get; set; }
 
-        public static bool IsSolutionModeMultiple => (SolutionMode == SolutionMode.Unique || SolutionMode == SolutionMode.All);
+        public static bool IsSolutionModeUnique => SolutionMode == SolutionMode.Unique;
 
-        public static sbyte UpperBoardSizeForMultipleSolutions => 17;
+        public static bool IsSolutionModeAll => SolutionMode == SolutionMode.All;
 
         public static sbyte UpperBoardSizeForSingleSolution => 37;
 
-        public static string TooLargeSizeForMultipleSolutions =>
-            $"BoardSize is too large for 'Unique Solutions' or 'All Solutions'. Choose a number in the range [1, {UpperBoardSizeForMultipleSolutions}].";
+        public static sbyte UpperBoardSizeForUniqueSolutions => 17;
+
+        public static sbyte UpperBoardSizeForAllSolutions => 16;
+
+        public static string TooLargeSizeForAllSolutions =>
+            $"BoardSize is too large for 'Unique Solutions'. Choose a number in the range [1, {UpperBoardSizeForUniqueSolutions}].";
+
+        public static string TooLargeSizeForUniqueSolutions =>
+            $"BoardSize is too large for 'Unique Solutions'. Choose a number in the range [1, {UpperBoardSizeForUniqueSolutions}].";
 
         public static string TooLargeSizeForSingleSolution =>
             $"BoardSize is too large for a 'Single Solutions'. Choose a number in the range [1, {UpperBoardSizeForSingleSolution}].";
@@ -75,38 +82,48 @@ namespace NQueen.ConsoleApp.Commands
             ConsoleUtils.WriteLineColored(ConsoleColor.Yellow, example.Details);
             var board = CreateChessBoard(example.QueenList);
             ConsoleUtils.WriteLineColored(ConsoleColor.Blue, $"\nDrawing of first solution:\n");
-            ConsoleUtils.WriteLineColored(ConsoleColor.Gray, "\tIMPORTANT - you need to set default fonts (in this console window) to SimSun-ExtB in order to show unicode characters\n");            
+
+            var message = "\tIMPORTANT - You need to set default fonts (in this console window) to SimSun-ExtB in order to show unicode characters.\n";
+            ConsoleUtils.WriteLineColored(ConsoleColor.Gray, message);
             Console.WriteLine(board);
             return true;
         }
 
         private static bool CheckSolutionMode(string value)
         {
-            var isValidInt = int.TryParse(value.ToString(), out int userChoice);
-            if (isValidInt)
+            var isValidInt = int.TryParse(value, out int userChoice);
+            if (!isValidInt)
             {
-                var validEnum = Enum.TryParse(typeof(SolutionMode), userChoice.ToString(), out object mode);
-                if (validEnum)
-                {
-                    SolutionMode = (SolutionMode)mode;
-                    return true;
-                }
+                Console.WriteLine("Invalid integer format, try again.\n");
                 return false;
             }
 
-            else
+            switch (userChoice)
             {
-                Console.WriteLine("Could not parse solutionmode");
-                return false;
+                case 0:
+                    SolutionMode = SolutionMode.Single;
+                    return true;
+
+                case 1:
+                    SolutionMode = SolutionMode.Unique;
+                    return true;
+
+                case 2:
+                    SolutionMode = SolutionMode.All;
+                    return true;
+
+                default:
+                    Console.WriteLine("Invalid Option, try 0, 1, or 2.");
+                    return false;
             }
         }
 
         private static bool CheckBoardSize(string value)
         {
-            var ok = sbyte.TryParse(value, out sbyte size);
-            if (!ok)
+            var validInt = int.TryParse(value, out int size);
+            if (!validInt)
             {
-                Console.WriteLine("Could not parse displaymode");
+                Console.WriteLine("Invalid integer format, try again.");
                 return false;
             }
 
@@ -117,36 +134,43 @@ namespace NQueen.ConsoleApp.Commands
                 return false;
             }
 
-            if (IsSolutionModeMultiple && UpperBoardSizeForMultipleSolutions < BoardSize)
+            if (IsSolutionModeUnique && BoardSize > UpperBoardSizeForUniqueSolutions)
             {
-                Console.WriteLine(TooLargeSizeForMultipleSolutions);
+                Console.WriteLine(TooLargeSizeForUniqueSolutions);
                 return false;
             }
 
-            if (SolutionMode == SolutionMode.Single && UpperBoardSizeForSingleSolution < BoardSize)
+            if (SolutionMode == SolutionMode.Single && BoardSize > UpperBoardSizeForSingleSolution)
             {
                 Console.WriteLine(TooLargeSizeForSingleSolution);
                 return false;
             }
+
+            if (IsSolutionModeAll && BoardSize > UpperBoardSizeForUniqueSolutions)
+            {
+                Console.WriteLine(TooLargeSizeForAllSolutions);
+                return false;
+            }
+
             return true;
         }
 
         private static string[,] ChessBoardHelper(sbyte[] queens)
         {
             var size = queens.Length;
-            string[,] arr = new string [size,size];
-           
-            for (int col = 0; col < size ; col++)
+            string[,] arr = new string[size, size];
+
+            for (int col = 0; col < size; col++)
             {
                 var rowPlace = queens[col];
                 for (int row = 0; row < size; row++)
                 {
                     if (row == rowPlace)
                     {
-                        arr[row,col] = col == size - 1 ? $"|{WhiteQueen}|" : $"|{WhiteQueen}"; ;
+                        arr[row, col] = col == size - 1 ? $"|{WhiteQueen}|" : $"|{WhiteQueen}"; ;
                     }
                     else
-                    { 
+                    {
                         arr[row, col] = col == size - 1 ? "|-|" : "|-";
                     }
                 }
