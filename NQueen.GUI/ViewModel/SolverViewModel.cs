@@ -61,8 +61,6 @@ namespace NQueen.GUI.ViewModel
 
         public RelayCommand SaveCommand { get; set; }
 
-        public static int MaxNoOfSolutionsInOutput => 50;
-
         public double ProgressValue
         {
             get { return _progressValue; }
@@ -92,16 +90,16 @@ namespace NQueen.GUI.ViewModel
             }
         }
 
-        public IEnumerable<SolutionMode> EnumSolutionToItem
+        public IEnumerable<SolutionMode> EnumSolutionModes
         {
             get => Enum.GetValues(typeof(SolutionMode)).Cast<SolutionMode>();
-            set => Set(ref _enumSolutionToItem, value);
+            set => Set(ref _enumSolutionModes, value);
         }
 
-        public IEnumerable<DisplayMode> EnumDisplayToItem
+        public IEnumerable<DisplayMode> EnumDisplayModes
         {
             get => Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
-            set => Set(ref _enumDisplayToItem, value);
+            set => Set(ref _enumDisplayModes, value);
         }
 
         public bool IsVisualized
@@ -152,7 +150,7 @@ namespace NQueen.GUI.ViewModel
                 SolutionTitle =
                     (SolutionMode == SolutionMode.Single)
                     ? $"Solution"
-                    : $"Solutions (Max: {MaxNoOfSolutionsInOutput})";
+                    : $"Solutions (Max: {Utility.MaxNoOfSolutionsInOutput})";
 
                 RaisePropertyChanged(nameof(BoardSizeText));
                 RaisePropertyChanged(nameof(SolutionTitle));
@@ -467,7 +465,7 @@ namespace NQueen.GUI.ViewModel
         {
             var sols = SimulationResults
                         .Solutions
-                        .Take(MaxNoOfSolutionsInOutput)
+                        .Take(Utility.MaxNoOfSolutionsInOutput)
                         .ToList();
 
             sols.ForEach(s => ObservableSolutions.Add(s));
@@ -504,8 +502,8 @@ namespace NQueen.GUI.ViewModel
         private double _progressValue;
         private string _progressLabel;
         private Visibility _progressVisibility;
-        private IEnumerable<SolutionMode> _enumSolutionToItem;
-        private IEnumerable<DisplayMode> _enumDisplayToItem;
+        private IEnumerable<SolutionMode> _enumSolutionModes;
+        private IEnumerable<DisplayMode> _enumDisplayModes;
         private InputViewModel _validation;
         private static ISimulationResults _simulationResults;
         private int _delayInMilliseconds;

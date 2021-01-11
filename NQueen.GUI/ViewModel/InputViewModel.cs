@@ -11,7 +11,7 @@ namespace NQueen.GUI.ViewModel
 
         private void ValidationRules()
         {
-            RuleFor(q => q.BoardSizeText)
+            _ = RuleFor(q => q.BoardSizeText)
                 .NotNull().NotEmpty()
                 .WithMessage(q => string.Format(Resources.ValueNullOrWhiteSpaceError, nameof(q.BoardSize)))
 
@@ -21,19 +21,19 @@ namespace NQueen.GUI.ViewModel
                 .Must(bst => sbyte.Parse(bst) >= Utility.MinBoardSize)
                 .WithMessage(q => string.Format(Resources.BoardSizeTooSmallError, nameof(q.BoardSize), Utility.MinBoardSize));
 
-            RuleFor(q => q.BoardSizeText)
+            _ = RuleFor(q => q.BoardSizeText)
                 .Must(bst => sbyte.TryParse(bst, out sbyte result) && result <= Utility.MaxBoardSizeForSingleCase)
                 .When(q => q.SolutionMode == SolutionMode.Single)
                 .WithMessage(q => string.Format(Resources.BoardSizeTooLargeSingleCaseError,
                         nameof(q.BoardSize), nameof(Resources.SingleSolution), Utility.MaxBoardSizeForSingleCase));
 
-            RuleFor(q => q.BoardSizeText)
+            _ = RuleFor(q => q.BoardSizeText)
                 .Must(bst => sbyte.TryParse(bst, out sbyte result) && result <= Utility.MaxBoardSizeForUniqueCase)
                 .When(q => q.SolutionMode == SolutionMode.Unique)
                 .WithMessage(q => string.Format(Resources.BoardSizeTooLargeUniqueCaseError,
                         nameof(q.BoardSize), nameof(Resources.UniqueSolutions), Utility.MaxBoardSizeForUniqueCase));
 
-            RuleFor(q => q.BoardSizeText)
+            _ = RuleFor(q => q.BoardSizeText)
                 .Must(bst => sbyte.TryParse(bst, out sbyte result) && result <= Utility.MaxBoardSizeForAllCase)
                 .When(q => q.SolutionMode == SolutionMode.All)
                 .WithMessage(q => string.Format(Resources.BoardSizeTooLargeAllCaseError,

@@ -7,7 +7,7 @@ namespace NQueen.Shared
 {
     public static class Utility
     {
-        public const int MaxNoOfSolutionsInOutput = 40;
+        public const int MaxNoOfSolutionsInOutput = 50;
 
         public const int DefaultDelayInMilliseconds = 250;
 
