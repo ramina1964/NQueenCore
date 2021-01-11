@@ -13,31 +13,28 @@ namespace NQueen.GUI.ViewModel
         {
             _ = RuleFor(q => q.BoardSizeText)
                 .NotNull().NotEmpty()
-                .WithMessage(q => string.Format(Resources.ValueNullOrWhiteSpaceError, nameof(q.BoardSize)))
+                .WithMessage(q => Utility.ValueNullOrWhiteSpaceError)
 
                 .Must(bst => sbyte.TryParse(bst, out sbyte value))
-                .WithMessage(q => string.Format(Resources.InvalidIntError, nameof(q.BoardSize)))
+                .WithMessage(q => Utility.InvalidSByteError)
 
                 .Must(bst => sbyte.Parse(bst) >= Utility.MinBoardSize)
-                .WithMessage(q => string.Format(Resources.BoardSizeTooSmallError, nameof(q.BoardSize), Utility.MinBoardSize));
+                .WithMessage(q => Utility.BoardSizeTooSmallError);
 
             _ = RuleFor(q => q.BoardSizeText)
                 .Must(bst => sbyte.TryParse(bst, out sbyte result) && result <= Utility.MaxBoardSizeForSingleCase)
                 .When(q => q.SolutionMode == SolutionMode.Single)
-                .WithMessage(q => string.Format(Resources.BoardSizeTooLargeSingleCaseError,
-                        nameof(q.BoardSize), nameof(Resources.SingleSolution), Utility.MaxBoardSizeForSingleCase));
+                .WithMessage(q => Utility.BoardSizeTooLargeSingleCaseError);
 
             _ = RuleFor(q => q.BoardSizeText)
                 .Must(bst => sbyte.TryParse(bst, out sbyte result) && result <= Utility.MaxBoardSizeForUniqueCase)
                 .When(q => q.SolutionMode == SolutionMode.Unique)
-                .WithMessage(q => string.Format(Resources.BoardSizeTooLargeUniqueCaseError,
-                        nameof(q.BoardSize), nameof(Resources.UniqueSolutions), Utility.MaxBoardSizeForUniqueCase));
+                .WithMessage(q => Utility.BoardSizeTooLargeUniqueCaseError);
 
             _ = RuleFor(q => q.BoardSizeText)
                 .Must(bst => sbyte.TryParse(bst, out sbyte result) && result <= Utility.MaxBoardSizeForAllCase)
                 .When(q => q.SolutionMode == SolutionMode.All)
-                .WithMessage(q => string.Format(Resources.BoardSizeTooLargeAllCaseError,
-                        nameof(q.BoardSize), nameof(Resources.AllSolutions), Utility.MaxBoardSizeForAllCase));
+                .WithMessage(q => Utility.BoardSizeTooLargeAllCaseError);
         }
     }
 }

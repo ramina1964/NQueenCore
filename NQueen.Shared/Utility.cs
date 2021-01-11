@@ -9,7 +9,7 @@ namespace NQueen.Shared
     {
         public const int MaxNoOfSolutionsInOutput = 50;
 
-        public const int DefaultDelayInMilliseconds = 250;
+        public const int DefaultDelayInMilliseconds = 250;  
 
         public const sbyte DefaultBoardSize = 8;
 
@@ -22,6 +22,23 @@ namespace NQueen.Shared
         public const sbyte MaxBoardSizeForSingleCase = 37;
 
         public const sbyte MaxBoardSizeForAllCase = 16;
+
+        public static string InvalidSByteError => $"Board size must be a valid sbyte.";
+
+        public static string NoSolutionMessage => $"No Solutions Found for this board size. Try a larger value!";
+
+        public static string TitleNoSolutionMessage => $"No Solutions Found for this board size. Try a larger value!";
+
+        public static string ValueNullOrWhiteSpaceError => $"No Solutions Found for this board size. Try a larger value!";
+
+        public static string BoardSizeTooSmallError => $"Board size must be greater than or equal to {MinBoardSize}.";
+
+        public static string BoardSizeTooLargeAllCaseError => $"Board size for all solutions must not exceed {MaxBoardSizeForAllCase}.";
+
+        public static string BoardSizeTooLargeUniqueCaseError => $"Board size for unique solutions must not exceed {MaxBoardSizeForUniqueCase}.";
+
+        public static string BoardSizeTooLargeSingleCaseError => $"Board size for single solution must not exceed {MaxBoardSizeForSingleCase}.";
+
 
         public static List<sbyte[]> GetSymmetricalSolutions(sbyte[] solution)
         {
@@ -143,6 +160,5 @@ namespace NQueen.Shared
                 _ => throw new ArgumentOutOfRangeException("BoardSize must be a positive integer less than 18.", nameof(boardSize)),
             };
         #endregion PrivateMembers
-
     }
 }

@@ -117,43 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AllSolutions" xml:space="preserve">
-    <value>All Solutions</value>
-  </data>
-  <data name="BoardSizeTooLargeAllCaseError" xml:space="preserve">
-    <value>{0} for {1} must not exceed {2}.</value>
-  </data>
-  <data name="BoardSizeTooLargeSingleCaseError" xml:space="preserve">
-    <value>{0} for {1} must not exceed {2}.</value>
-  </data>
-  <data name="BoardSizeTooLargeUniqueCaseError" xml:space="preserve">
-    <value>{0} for {1} must not exceed {2}.</value>
-  </data>
-  <data name="BoardSizeTooSmallError" xml:space="preserve">
-    <value>{0} must be greater than or equal to {1}.</value>
-  </data>
-  <data name="InvalidIntError" xml:space="preserve">
-    <value>{0} must be a valid integer.</value>
-  </data>
-  <data name="NoSolutionMessage" xml:space="preserve">
-    <value>No Solutions Found for this {0}. Try a larger value!</value>
-  </data>
-  <data name="SaveResultsMessage" xml:space="preserve">
-    <value>Results are Saved into: {0}.</value>
-  </data>
-  <data name="SingleSolution" xml:space="preserve">
-    <value>Single Solution</value>
-  </data>
-  <data name="TitleNoSolutionMessage" xml:space="preserve">
-    <value>Empty Solution List</value>
-  </data>
-  <data name="TitleSaveResultsMessage" xml:space="preserve">
-    <value>Save Results</value>
-  </data>
-  <data name="UniqueSolutions" xml:space="preserve">
-    <value>Unique Solutions</value>
-  </data>
-  <data name="ValueNullOrWhiteSpaceError" xml:space="preserve">
-    <value>{0} can not be null, empty or contain contain white space.</value>
-  </data>
 </root>
