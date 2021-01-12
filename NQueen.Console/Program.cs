@@ -19,7 +19,7 @@ namespace NQueen.ConsoleApp
         static void Main(string[] args)
         {
             // You need to change to font to SimSun-ExtB in order to show unicode characters in console - IMPORTANT
-            Console.OutputEncoding = System.Text.Encoding.UTF8;            
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
             InitCommands();
             OutputBanner();
             LaunchConsoleMonitor();
@@ -39,8 +39,8 @@ namespace NQueen.ConsoleApp
                         {
                             Console.WriteLine("\nRun again to debug memory usage?");
                             Console.WriteLine("\tYes or No\n");
-                            var ans = Console.ReadLine().Trim().ToLower();
-                            if (ans == "yes" || ans == "y")
+                            var runAgainAnswer = Console.ReadLine().Trim().ToLower();
+                            if (runAgainAnswer.Equals("yes") || runAgainAnswer.Equals("y"))
                             {
                                 Console.WriteLine();
                                 DispatchCommands.ProcessCommand("RUN", "ok");
@@ -52,18 +52,18 @@ namespace NQueen.ConsoleApp
                     }
 
                     ConsoleUtils.WriteLineColored(ConsoleColor.Cyan, $"Enter a {required} ");
-                    Console.WriteLine($"\tAvailable commands: {AvailableCommands[required]}");
-                    var answer = Console.ReadLine().Trim().ToLower();
-                    if (answer == "help" || answer == "-h")
-                    { HelpCommands.ProcessHelpCommand(answer); }
+                    Console.WriteLine($"\t{AvailableCommands[required]}");
+                    var userInput = Console.ReadLine().Trim().ToLower();
+                    if (userInput.Equals("help") || userInput.Equals("-h"))
+                    { HelpCommands.ProcessHelpCommand(userInput); }
                     else
                     {
-                        var ok = DispatchCommands.ProcessCommand(required, answer);
+                        var ok = DispatchCommands.ProcessCommand(required, userInput);
                         if (ok)
                         {
                             Commands[required] = true;
                             if (required.Trim().ToUpper() == "BOARDSIZE")
-                            { BoardSize = Convert.ToSByte(answer); }
+                            { BoardSize = Convert.ToSByte(userInput); }
                         }
                     }
                 }
@@ -74,12 +74,12 @@ namespace NQueen.ConsoleApp
             {
                 for (var i = 0; i < args.Length; i++)
                 {
-                    (string feature, string value) = ParseInput(args[i]);
-                    var ok = DispatchCommands.ProcessCommand(feature, value);
+                    (string key, string value) = ParseInput(args[i]);
+                    var ok = DispatchCommands.ProcessCommand(key, value);
                     if (ok)
                     {
-                        Commands[feature.ToUpper()] = true;
-                        if (feature.ToUpper() == "BOARDSIZE")
+                        Commands[key.ToUpper()] = true;
+                        if (key.Equals("BOARDSIZE"))
                         {
                             BoardSize = Convert.ToSByte(value);
                         }
@@ -132,8 +132,8 @@ namespace NQueen.ConsoleApp
             };
             AvailableCommands = new Dictionary<string, string>
             {
-                ["SOLUTIONMODE"] = "0 - Single Solution, 1 - Unique Solutions, 2 - All Solutions",
-                ["BOARDSIZE"] = "Value in the Range: [1, 37] for Single Solution, [1, 17] for Unique Solution, [1, 16] for All Solutions",
+                ["SOLUTIONMODE"] = HelpCommands.NQUEEN_SOLUTIONMODE,
+                ["BOARDSIZE"] = HelpCommands.NQUEEN_BOARDSIZE,
             };
         }
 
