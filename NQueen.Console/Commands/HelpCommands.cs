@@ -45,10 +45,10 @@ namespace NQueen.ConsoleApp.Commands
         }
 
         public const string NQUEEN_HELP_SOLVE =
-        @"  BOARDSIZE - Run solver on a specific boardsize inside [1, 37] for a Single Solution, or inside [1, 17] for Multiple Solutions]";
+        @"  BOARDSIZE - Run solver on inside [1, 37] for a Single Solution, inside [1, 17] for Unique Solutions, or inside [1, 16] for All Solutions]";
 
         public const string NQUEEN_HELP_SOLUTIONMODE =
-        @"  SOLUTIONMODE - Runs solver with SolutionMode set to All, Unique or Single";
+        @"  SOLUTIONMODE - Runs solver with SolutionMode set to Single, Unique, or All";
 
     }
 

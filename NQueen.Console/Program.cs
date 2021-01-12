@@ -132,8 +132,8 @@ namespace NQueen.ConsoleApp
             };
             AvailableCommands = new Dictionary<string, string>
             {
-                ["BOARDSIZE"] = "Value between in the Range [1, 17]",
-                ["SOLUTIONMODE"] = "0 - Single Solution, 1 - Unique Solutions, 2 - All Solutions"
+                ["SOLUTIONMODE"] = "0 - Single Solution, 1 - Unique Solutions, 2 - All Solutions",
+                ["BOARDSIZE"] = "Value in the Range: [1, 37] for Single Solution, [1, 17] for Unique Solution, [1, 16] for All Solutions",
             };
         }
 

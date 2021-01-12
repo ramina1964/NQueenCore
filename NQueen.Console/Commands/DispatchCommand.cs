@@ -85,10 +85,10 @@ namespace NQueen.ConsoleApp.Commands
 
         private static bool CheckSolutionMode(string value)
         {
-            var isValidInt = int.TryParse(value, out int userChoice);
-            if (!isValidInt)
+            var isValid = int.TryParse(value, out int userChoice);
+            if (!isValid)
             {
-                Console.WriteLine("Invalid integer format, try again.\n");
+                Console.WriteLine("Invalid Integer. Try again.\n");
                 return false;
             }
 
@@ -107,22 +107,22 @@ namespace NQueen.ConsoleApp.Commands
                     return true;
 
                 default:
-                    Console.WriteLine("Invalid Option, try 0, 1, or 2.");
+                    Console.WriteLine("Invalid Option: Try 0, 1, or 2.");
                     return false;
-            }
+            } 
         }
 
         private static bool CheckBoardSize(string value)
         {
-            var validInt = int.TryParse(value, out int size);
-            if (!validInt)
+            var isValidNo = sbyte.TryParse(value, out sbyte size);
+            if (!isValidNo) 
             {
-                Console.WriteLine("Invalid integer format, try again.");
+                Console.WriteLine("Invalid number. Try again.");
                 return false;
             }
 
             BoardSize = Convert.ToSByte(size);
-            if (1 > BoardSize)
+            if (BoardSize < 1)
             {
                 Console.WriteLine("BoardSize must be a positive number.");
                 return false;
