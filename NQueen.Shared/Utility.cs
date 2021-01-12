@@ -124,7 +124,7 @@ namespace NQueen.Shared
                 15 => 285053,
                 16 => 1846955,
                 17 => 11977939,
-                _ => throw new ArgumentOutOfRangeException("BoardSize must be a positive integer less than 18.", nameof(boardSize)),
+                _ => throw new ArgumentOutOfRangeException(SizeTooLargeForUniqueSolutionsMsg)
             };
 
         private static int GetSolutionSizeAll(sbyte boardSize) =>
@@ -147,7 +147,7 @@ namespace NQueen.Shared
                 15 => 2279184,
                 16 => 14772512,
                 17 => 95815104,
-                _ => throw new ArgumentOutOfRangeException("BoardSize must be a positive integer less than 18.", nameof(boardSize)),
+                _ => throw new ArgumentOutOfRangeException(SizeTooLargeForAllSolutionsMsg)
             };
         #endregion PrivateMembers
     }
