@@ -1,4 +1,5 @@
 ﻿using NQueen.Kernel;
+using NQueen.Shared;
 using NQueen.Shared.Enums;
 using System;
 using System.Linq;
@@ -13,24 +14,11 @@ namespace NQueen.ConsoleApp.Commands
 
         public static SolutionMode SolutionMode { get; set; }
 
+        public static bool IsSolutionModeSingle => SolutionMode == SolutionMode.Single;
+
         public static bool IsSolutionModeUnique => SolutionMode == SolutionMode.Unique;
 
         public static bool IsSolutionModeAll => SolutionMode == SolutionMode.All;
-
-        public static sbyte UpperBoardSizeForSingleSolution => 37;
-
-        public static sbyte UpperBoardSizeForUniqueSolutions => 17;
-
-        public static sbyte UpperBoardSizeForAllSolutions => 16;
-
-        public static string TooLargeSizeForAllSolutions =>
-            $"BoardSize is too large for 'Unique Solutions'. Choose a number in the range [1, {UpperBoardSizeForUniqueSolutions}].";
-
-        public static string TooLargeSizeForUniqueSolutions =>
-            $"BoardSize is too large for 'Unique Solutions'. Choose a number in the range [1, {UpperBoardSizeForUniqueSolutions}].";
-
-        public static string TooLargeSizeForSingleSolution =>
-            $"BoardSize is too large for a 'Single Solutions'. Choose a number in the range [1, {UpperBoardSizeForSingleSolution}].";
 
         public static bool ProcessCommand(string key, string value)
         {
@@ -134,21 +122,21 @@ namespace NQueen.ConsoleApp.Commands
                 return false;
             }
 
-            if (IsSolutionModeUnique && BoardSize > UpperBoardSizeForUniqueSolutions)
+            if (IsSolutionModeSingle && BoardSize > Utility.MaxBoardSizeForSingleSolution)
             {
-                Console.WriteLine(TooLargeSizeForUniqueSolutions);
+                Console.WriteLine(Utility.SizeTooLargeForSingleSolutionMsg);
                 return false;
             }
 
-            if (SolutionMode == SolutionMode.Single && BoardSize > UpperBoardSizeForSingleSolution)
+            if (IsSolutionModeUnique && BoardSize > Utility.MaxBoardSizeForUniqueSolutions)
             {
-                Console.WriteLine(TooLargeSizeForSingleSolution);
+                Console.WriteLine(Utility.SizeTooLargeForUniqueSolutionsMsg);
                 return false;
             }
 
-            if (IsSolutionModeAll && BoardSize > UpperBoardSizeForUniqueSolutions)
+            if (IsSolutionModeAll && BoardSize > Utility.MaxBoardSizeForAllSolutions)
             {
-                Console.WriteLine(TooLargeSizeForAllSolutions);
+                Console.WriteLine(Utility.SizeTooLargeForAllSolutionsMsg);
                 return false;
             }
 

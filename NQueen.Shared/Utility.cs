@@ -12,9 +12,9 @@ namespace NQueen.Shared
         public const sbyte DefaultBoardSize = 8;
         public const sbyte RelativeFactor = 8;
         public const sbyte MinBoardSize = 1;
-        public const sbyte MaxBoardSizeForSingleCase = 37;
-        public const sbyte MaxBoardSizeForUniqueCase = 17;
-        public const sbyte MaxBoardSizeForAllCase = 16;
+        public const sbyte MaxBoardSizeForSingleSolution = 37;
+        public const sbyte MaxBoardSizeForUniqueSolutions = 17;
+        public const sbyte MaxBoardSizeForAllSolutions = 16;
 
         public static string InvalidSByteError => $"Board size must be a valid sbyte.";
 
@@ -22,15 +22,15 @@ namespace NQueen.Shared
 
         public static string TitleNoSolutionMessage => $"No Solutions Found for this board size. Try a larger value!";
 
-        public static string ValueNullOrWhiteSpaceError => $"Board size can not be null, empty or contain solely spaces.";
+        public static string ValueNullOrWhiteSpaceMsg => $"Board size can not be null, empty or contain solely spaces.";
 
-        public static string BoardSizeTooSmallError => $"Board size must be greater than or equal to {MinBoardSize}.";
+        public static string SizeTooSmallMsg => $"Board size must be greater than or equal to {MinBoardSize}.";
 
-        public static string BoardSizeTooLargeSingleCaseError => $"Board size for single solution must not exceed {MaxBoardSizeForSingleCase}.";
+        public static string SizeTooLargeForSingleSolutionMsg => $"Board size for single solution must not exceed {MaxBoardSizeForSingleSolution}.";
 
-        public static string BoardSizeTooLargeUniqueCaseError => $"Board size for unique solutions must not exceed {MaxBoardSizeForUniqueCase}.";
+        public static string SizeTooLargeForUniqueSolutionsMsg => $"Board size for unique solutions must not exceed {MaxBoardSizeForUniqueSolutions}.";
 
-        public static string BoardSizeTooLargeAllCaseError => $"Board size for all solutions must not exceed {MaxBoardSizeForAllCase}.";
+        public static string SizeTooLargeForAllSolutionsMsg => $"Board size for all solutions must not exceed {MaxBoardSizeForAllSolutions}.";
 
         public static List<sbyte[]> GetSymmetricalSolutions(sbyte[] solution)
         {
