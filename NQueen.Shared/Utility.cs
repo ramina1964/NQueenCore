@@ -18,9 +18,7 @@ namespace NQueen.Shared
 
         public static string InvalidSByteError => $"Board size must be a valid sbyte.";
 
-        public static string NoSolutionMessage => $"No Solutions Found for this board size. Try a larger value!";
-
-        public static string TitleNoSolutionMessage => $"No Solutions Found for this board size. Try a larger value!";
+        public static string NoSolutionMessage => $"No Solutions found. Try a larger board size!";
 
         public static string ValueNullOrWhiteSpaceMsg => $"Board size can not be null, empty or contain solely spaces.";
 

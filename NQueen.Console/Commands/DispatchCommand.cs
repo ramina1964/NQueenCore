@@ -54,11 +54,17 @@ namespace NQueen.ConsoleApp.Commands
             { SolutionMode = SolutionMode };
 
             var simulationResult = solver.GetSimulationResultsAsync(BoardSize, SolutionMode, DisplayMode.Hide);
+            var noOfSolutions = simulationResult.Result.NoOfSolutions;
+            var elapsedTime = simulationResult.Result.ElapsedTimeInSec;
+            if (noOfSolutions == 0)
+            {
+                ConsoleUtils.WriteLineColored(ConsoleColor.Blue, $"\n{Utility.NoSolutionMessage}");
+                return true;
+            }
+
             var simTitle = $"Summary of the Results for BoardSize = { BoardSize } and DisplayMode = { DispatchCommands.SolutionMode }";
             ConsoleUtils.WriteLineColored(ConsoleColor.Blue, $"\n{simTitle}:");
 
-            var noOfSolutions = string.Format("{0:n0}", simulationResult.Result.NoOfSolutions);
-            var elapsedTime = string.Format("{0:n1}", simulationResult.Result.ElapsedTimeInSec);
             ConsoleUtils.WriteLineColored(ConsoleColor.Gray, $"Number of solutions found: {noOfSolutions,10}");
             ConsoleUtils.WriteLineColored(ConsoleColor.Gray, $"Elapsed time in seconds: {elapsedTime,14}");
 
