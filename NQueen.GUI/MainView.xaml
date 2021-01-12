@@ -139,7 +139,7 @@
 						   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
 						   HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
 
-                    <ComboBox Grid.Row="1" Grid.Column="1" Margin="5, 2" ItemsSource="{Binding EnumSolutionModes, Mode=TwoWay}"
+					<ComboBox Grid.Row="1" Grid.Column="1" Margin="5, 2" ItemsSource="{Binding EnumSolutionModes, Mode=TwoWay}"
 							  SelectedItem="{Binding SolutionMode}" IsEnabled="{Binding CanEditSolutionMode}"
 							  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
 							  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
