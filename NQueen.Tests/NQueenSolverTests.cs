@@ -3,7 +3,7 @@ using NQueen.Kernel;
 using NQueen.Shared.Enums;
 using NUnit.Framework;
 
-namespace NQueen.Test
+namespace NQueen.Tests
 {
     public class NQueenSolverTests : TestBase
     {
@@ -17,10 +17,10 @@ namespace NQueen.Test
             ExpectedSolutions = GetExpectedSolutions(boardSize, solutionMode);
 
             // Act
-            ActualSolutions = GetActualSolutions(boardSize, solutionMode, DisplayMode.Hide);
+            ActualSolutions = GetActualSolutions(boardSize, solutionMode);
 
             // Assert
-            Assert.AreEqual(ExpectedSolutions.Count, ActualSolutions.Count);
+            Assert.AreEqual(ExpectedNoOfSolutions, ActualNoOfSolutions);
             ActualSolutions.Should().Equals(ExpectedSolutions);
         }
 
@@ -39,43 +39,43 @@ namespace NQueen.Test
             ExpectedSolutions = GetExpectedSolutions(boardSize, solutionMode);
 
             // Act
-            ActualSolutions = GetActualSolutions(boardSize, solutionMode, DisplayMode.Hide);
+            ActualSolutions = GetActualSolutions(boardSize, solutionMode);
 
             // Assert
-            Assert.AreEqual(ExpectedSolutions.Count, ActualSolutions.Count);
+            Assert.AreEqual(ExpectedNoOfSolutions, ActualNoOfSolutions);
             ActualSolutions.Should().Equals(ExpectedSolutions);
         }
 
         [TestCase(4, SolutionMode.Unique), TestCase(5, SolutionMode.Unique), TestCase(6, SolutionMode.Unique)]
         [TestCase(7, SolutionMode.Unique), TestCase(8, SolutionMode.Unique), TestCase(9, SolutionMode.Unique)]
-        public void Should_generate_correct_unique_solutions(sbyte boardSize, SolutionMode solutionMode)
+        public void Should_generate_correct_list_of_unique_solutions(sbyte boardSize, SolutionMode solutionMode)
         {
             // Arrange
             Sut = new Solver(boardSize);
             ExpectedSolutions = GetExpectedSolutions(boardSize, solutionMode);
 
             // Act
-            ActualSolutions = GetActualSolutions(boardSize, solutionMode, DisplayMode.Hide);
+            ActualSolutions = GetActualSolutions(boardSize, solutionMode);
 
             // Assert
-            Assert.AreEqual(ExpectedSolutions.Count, ActualSolutions.Count);
+            Assert.AreEqual(ExpectedNoOfSolutions, ActualNoOfSolutions);
             ActualSolutions.Should().Equals(ExpectedSolutions);
         }
 
         [TestCase(1, SolutionMode.All), TestCase(4, SolutionMode.All), TestCase(5, SolutionMode.All)]
         [TestCase(6, SolutionMode.All), TestCase(7, SolutionMode.All), TestCase(8, SolutionMode.All)]
-        public void Should_generate_cortrect_all_solutions(sbyte boardSize, SolutionMode solutionMode)
+        public void Should_generate_correct_list_of_all_solutions(sbyte boardSize, SolutionMode solutionMode)
         {
             // Arrange
             Sut = new Solver(boardSize);
             ExpectedSolutions = GetExpectedSolutions(boardSize, solutionMode);
 
             // Act
-            ActualSolutions = GetActualSolutions(boardSize, solutionMode, DisplayMode.Hide);
+            ActualSolutions = GetActualSolutions(boardSize, solutionMode);
 
             // Assert
-            Assert.AreEqual(ExpectedSolutions.Count, ActualSolutions.Count);
-            ActualSolutions.Should().Equals(ExpectedSolutions);
+            Assert.AreEqual(ExpectedNoOfSolutions, ActualNoOfSolutions);
+            ActualSolutions.Solutions.Should().Equals(ExpectedSolutions);
         }
     }
 }

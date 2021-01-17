@@ -1,10 +1,11 @@
 ﻿using NQueen.Kernel;
 using NQueen.Shared.Enums;
+using NQueen.Shared.Interfaces;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NQueen.Test
+namespace NQueen.Tests
 {
     [TestFixture]
     public class TestBase
@@ -13,22 +14,23 @@ namespace NQueen.Test
 
         public List<sbyte[]> ExpectedSolutions { get; set; }
 
-        public List<sbyte[]> ActualSolutions { get; set; }
+        public int ExpectedNoOfSolutions => ExpectedSolutions.Count;
+
+        public ISimulationResults ActualSolutions { get; set; }
+
+        public int ActualNoOfSolutions => ActualSolutions.NoOfSolutions;
 
         public static List<sbyte[]> GetExpectedSolutions(sbyte boardSize, SolutionMode solutionMode)
-            => (solutionMode == SolutionMode.Single)
+            => solutionMode == SolutionMode.Single
                 ? GetSingleSolution(boardSize).ToList()
-                : (solutionMode == SolutionMode.Unique)
+                : solutionMode == SolutionMode.Unique
                 ? GetUniqueSolutions(boardSize).ToList()
                 : GetAllSolutions(boardSize).ToList();
 
-        public List<sbyte[]> GetActualSolutions(sbyte boardSize, SolutionMode solutionMode, DisplayMode displayMode)
-            => Sut
-                .GetSimulationResultsAsync(boardSize, solutionMode, displayMode)
-                .Result
-                .Solutions
-                .Select(s => s.QueenList)
-                .ToList();
+        public ISimulationResults GetActualSolutions(sbyte boardSize, SolutionMode solutionMode) =>
+                Sut
+                .GetSimulationResultsAsync(boardSize, solutionMode)
+                .Result;
 
         public static List<sbyte[]> GetSingleSolution(sbyte boardSize) => singleSolution[boardSize];
 
