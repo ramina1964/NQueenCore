@@ -99,36 +99,6 @@ namespace NQueen.Kernel
             ObservableSolutions = new ObservableCollection<Solution>(new List<Solution>(solutionSize));
         }
 
-        private void UpdateSolutions(IEnumerable<sbyte> queens)
-        {
-            var solution = queens.ToArray();
-
-            // If solutionMode == SolutionMode.Single, then we are done.
-            if (SolutionMode == SolutionMode.Single)
-            {
-                Solutions.Add(solution);
-                return;
-            }
-
-            var symmetricalSolutions = Utility.GetSymmetricalSolutions(solution).ToList();
-
-            // If solutionMode == SolutionMode.All, add this solution and all of the symmetrical counterparts to All Solutions.
-            if (SolutionMode == SolutionMode.All)
-            {
-                Solutions.Add(solution);
-                symmetricalSolutions.ForEach(s => Solutions.Add(s));
-                return;
-            }
-
-            // There is nothing to add, if the symmetrical solutions and solutions list has any overlap.
-            if (Solutions.Overlaps(symmetricalSolutions))
-            { return; }
-
-            // None of the symmetrical solutions exists in the solutions list, add the new solution to the Unique Solutions.
-            Solutions.Add(solution);
-            return;
-        }
-
         private IEnumerable<Solution> MainSolve()
         {
             // Recursive call to start the simulation
@@ -157,7 +127,7 @@ namespace NQueen.Kernel
             // Here a new solution is found.
             if (colNo == BoardSize)
             {
-                UpdateSolutions(QueenList);
+                UpdateSolutions(QueenList.ToArray());
 
                 // Activate this code in case of IsVisulaized == true.
                 if (DisplayMode == DisplayMode.Visualize)
@@ -180,6 +150,30 @@ namespace NQueen.Kernel
 
             var nextCol = (sbyte)(colNo + 1);
             return RecSolve(nextCol) || RecSolve(colNo);
+        }
+
+        private void UpdateSolutions(sbyte[] solution)
+        {
+            // For SolutionMode.Single:
+            if (SolutionMode == SolutionMode.Single)
+            {
+                Solutions.Add(solution);
+                return;
+            }
+
+            var symmetricalSolutions = Utility.GetSymmetricalSolutions(solution);
+
+            // For SolutionMode.All, add this solution and all its symmetrical counterparts to Solutions.
+            if (SolutionMode == SolutionMode.All)
+            {
+                Solutions.Add(solution);
+                symmetricalSolutions.ForEach(s => Solutions.Add(s));
+                return;
+            }
+
+            // For SolutionMode.Unique: Add this solution to Solutions only if no overlaps between Solutions and symmetricalSolutions are found.
+            if (!Solutions.Overlaps(symmetricalSolutions))
+            { Solutions.Add(solution); }
         }
 
         // Locate Queen
