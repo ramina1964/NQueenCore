@@ -133,14 +133,14 @@
 					<TextBox Style="{StaticResource TextBoxNumericalStyle}" Grid.Row="0" Grid.Column="1" Margin= "5, 2"
 							 Text="{Binding BoardSizeText, UpdateSourceTrigger=LostFocus, Mode=TwoWay,
 									ValidatesOnDataErrors=True, ValidatesOnExceptions=True}"
-							 IsEnabled="{Binding CanEditBoardSize}" />
+							 IsEnabled="{Binding IsIdle}" />
 
 					<Label Style="{StaticResource LabelStyle}" Grid.Row="1" Grid.Column="0" Content="Solution Mode" Margin="5, 2"
 						   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
 						   HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
 
 					<ComboBox Grid.Row="1" Grid.Column="1" Margin="5, 2" ItemsSource="{Binding EnumSolutionModes, Mode=TwoWay}"
-							  SelectedItem="{Binding SolutionMode}" IsEnabled="{Binding CanEditSolutionMode}"
+							  SelectedItem="{Binding SolutionMode}" IsEnabled="{Binding IsIdle}"
 							  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
 							  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
 

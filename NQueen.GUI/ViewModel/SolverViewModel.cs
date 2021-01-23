@@ -266,8 +266,10 @@ namespace NQueen.GUI.ViewModel
             Chessboard = new Chessboard { WindowWidth = boardDimension, WindowHeight = boardDimension };
             Chessboard.CreateSquares(BoardSize, new List<SquareViewModel>());
 
-            CanEditBoardSize = true;
-            CanEditSolutionMode = true;
+            //CanEditBoardSize = true;
+            //CanEditSolutionMode = true;
+
+            IsIdle = true;
             IsSingleRunning = false;
             IsMultipleRunning = false;
             SolutionMode = SolutionMode.Unique;
@@ -326,17 +328,17 @@ namespace NQueen.GUI.ViewModel
             }
         }
 
-        public bool CanEditBoardSize
-        {
-            get => _canEditBoardSize;
-            set => Set(ref _canEditBoardSize, value);
-        }
+        //public bool CanEditBoardSize
+        //{
+        //    get => _canEditBoardSize;
+        //    set => Set(ref _canEditBoardSize, value);
+        //}
 
-        public bool CanEditSolutionMode
-        {
-            get => _canEditSolutionMode;
-            set => Set(ref _canEditSolutionMode, value);
-        }
+        //public bool CanEditSolutionMode
+        //{
+        //    get => _canEditSolutionMode;
+        //    set => Set(ref _canEditSolutionMode, value);
+        //}
 
         #endregion PublicProperties
 
@@ -441,10 +443,11 @@ namespace NQueen.GUI.ViewModel
                     IsMultipleRunning = true;
                 }
 
-                CanEditBoardSize = false;
-                CanEditSolutionMode = false;
-                Solver.CancelSolver = false;
+                //CanEditBoardSize = false;
+                //CanEditSolutionMode = false;
+                //Solver.CancelSolver = false;
 
+                IsIdle = false;
                 return;
             }
 
@@ -457,8 +460,10 @@ namespace NQueen.GUI.ViewModel
                 IsMultipleRunning = false;
             }
 
-            CanEditBoardSize = true;
-            CanEditSolutionMode = true;
+            //CanEditBoardSize = true;
+            //CanEditSolutionMode = true;
+
+            IsIdle = true;
         }
 
         private void ExtractCorrectNoOfSols()
@@ -520,7 +525,7 @@ namespace NQueen.GUI.ViewModel
         private bool _isMultipleRunning;
         private ISolver _solver;
         private Solution _selectedSolution;
-        private bool _canEditBoardSize;
+        //private bool _canEditBoardSize;
         private bool _canEditSolutionMode;
         private string _solutionTitle;
         #endregion PrivateFields
