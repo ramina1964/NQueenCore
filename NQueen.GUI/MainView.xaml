@@ -224,14 +224,14 @@
 						<ColumnDefinition />
 					</Grid.ColumnDefinitions>
 
-					<Button Grid.Row="0" Grid.Column="0" Style="{StaticResource ButtonStyle}" Content="Cancel" Margin="3"
-							Command="{Binding CancelCommand, UpdateSourceTrigger=PropertyChanged}" 
-							HorizontalAlignment="Center" VerticalAlignment="Stretch"
-							HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
-
-					<Button Grid.Row="0" Grid.Column="1" Style="{StaticResource ButtonStyle}" Content="Simulate" Margin="3"
+					<Button Grid.Row="0" Grid.Column="0" Style="{StaticResource ButtonStyle}" Content="Simulate" Margin="3"
 							Command="{Binding SimulateCommand, UpdateSourceTrigger=PropertyChanged}"
 							IsDefault="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+							HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+
+					<Button Grid.Row="0" Grid.Column="1" Style="{StaticResource ButtonStyle}" Content="Cancel" Margin="3"
+							Command="{Binding CancelCommand, UpdateSourceTrigger=PropertyChanged}" 
+							HorizontalAlignment="Center" VerticalAlignment="Stretch"
 							HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
 				</Grid>
 			</GroupBox>

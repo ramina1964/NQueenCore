@@ -392,29 +392,6 @@ namespace NQueen.GUI.ViewModel
             SelectedSolution = sol;
         }
 
-        private async void SimulateAsync()
-        {
-            UpdateSummary();
-
-            UpdateGui();
-            ProgressVisibility = Visibility.Visible;
-            SimulationResults = await Solver
-                                .GetSimulationResultsAsync(BoardSize, SolutionMode, DisplayMode);
-
-            ProgressVisibility = Visibility.Hidden;
-
-            // Fetch MaxNoOfSolutionsInOutput and add it to Solutions.
-            ExtractCorrectNoOfSols();
-            UpdateSummary();
-
-            IsIdle = false;
-            NoOfSolutions = $"{SimulationResults.NoOfSolutions,0:N0}";
-            ElapsedTimeInSec = $"{SimulationResults.ElapsedTimeInSec,0:N1}";
-            SelectedSolution = ObservableSolutions.FirstOrDefault();
-            
-            IsIdle = true;
-        }
-
         private void UpdateSummary()
         {
             // Before simulation
@@ -461,6 +438,28 @@ namespace NQueen.GUI.ViewModel
                 sols
                 .ForEach(sol => ObservableSolutions.Add(sol));
             }
+        }
+
+        private async void SimulateAsync()
+        {
+            IsIdle = false;
+
+            UpdateSummary();
+            UpdateGui();
+            ProgressVisibility = Visibility.Visible;
+            SimulationResults = await Solver
+                                .GetSimulationResultsAsync(BoardSize, SolutionMode, DisplayMode);
+
+            ProgressVisibility = Visibility.Hidden;
+
+            // Fetch MaxNoOfSolutionsInOutput and add it to Solutions.
+            ExtractCorrectNoOfSols();
+            UpdateSummary();
+            NoOfSolutions = $"{SimulationResults.NoOfSolutions,0:N0}";
+            ElapsedTimeInSec = $"{SimulationResults.ElapsedTimeInSec,0:N1}";
+            SelectedSolution = ObservableSolutions.FirstOrDefault();
+
+            IsIdle = true;
         }
 
         private bool CanSimulate() => IsValid && !IsSingleRunning && !IsMultipleRunning;

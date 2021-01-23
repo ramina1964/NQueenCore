@@ -1,4 +1,4 @@
-List of All Solutions (Included Symmetrical Ones):
+List of Unique Solutions (Excluded Symmetrical Ones):
 Sol. No. 1                   (1, 1), (2, 5), (3, 8), (4, 6), (5, 3), (6, 7), (7, 2), (8, 4)
 Sol. No. 2                   (1, 1), (2, 6), (3, 8), (4, 3), (5, 7), (6, 4), (7, 2), (8, 5)
 Sol. No. 3                   (1, 2), (2, 4), (3, 6), (4, 8), (5, 3), (6, 1), (7, 7), (8, 5)
@@ -14,8 +14,8 @@ Sol. No. 12                  (1, 3), (2, 6), (3, 2), (4, 5), (5, 8), (6, 1), (7,
 
 
 Summary of Results:
-Date and Time                23/01/2021 19:13:08
+Date and Time                23/01/2021 22:31:34
 BoardSize                                      8
-No. of All Solutions                          12
+No. of Unique Solutions                       12
 Elapsed Time (s)                               0
 
