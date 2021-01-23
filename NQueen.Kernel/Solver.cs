@@ -132,36 +132,27 @@ namespace NQueen.Kernel
         private IEnumerable<Solution> MainSolve()
         {
             // Recursive call to start the simulation
-            RecSolve(0); //return value ignored here...
+            RecSolve(0);
 
             return Solutions
                     .Select((s, index) => new Solution(s, index + 1));
         }
 
-        private void RecSolve(sbyte colNo)
+        private bool RecSolve(sbyte colNo)
         {
-            if (CancelSolver)
-            { return ; }
+            if (CancelSolver || colNo == -1)
+            { return false; }
 
             // All Symmetrical solutions are found and registered. Quit the recursion.
             if (QueenList[0] == HalfSize)
             {
                 ProgressValue = Math.Round(100.0 * QueenList[0] / HalfSize, 1);
                 OnProgressChanged(this, new ProgressValueChangedEventArgs(ProgressValue));
-                return;
-            }
-
-            if (DisplayMode == DisplayMode.Visualize)
-            {
-                OnQueenPlaced(this, new QueenPlacedEventArgs(QueenList));
-                Thread.Sleep(DelayInMilliseconds);
+                return false;
             }
 
             if (SolutionMode == SolutionMode.Single && NoOfSolutions == 1)
-            { return; }
-
-            if (colNo == -1)
-            { return; }
+            { return true; }
 
             // Here a new solution is found.
             if (colNo == BoardSize)
@@ -174,18 +165,21 @@ namespace NQueen.Kernel
 
                 ProgressValue = Math.Round(100.0 * QueenList[0] / HalfSize, 1);
                 OnProgressChanged(this, new ProgressValueChangedEventArgs(ProgressValue));
-                return;
+                return false;
             }
 
             QueenList[colNo] = LocateQueen(colNo);
             if (QueenList[colNo] == -1)
+            { return false; }
+
+            if (DisplayMode == DisplayMode.Visualize)
             {
-                return;
+                OnQueenPlaced(this, new QueenPlacedEventArgs(QueenList));
+                Thread.Sleep(DelayInMilliseconds);
             }
 
             var nextCol = (sbyte)(colNo + 1);
-            RecSolve(nextCol);
-            RecSolve(colNo);
+            return RecSolve(nextCol) || RecSolve(colNo);
         }
 
         // Locate Queen
