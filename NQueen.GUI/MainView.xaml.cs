@@ -1,4 +1,5 @@
 ﻿using NQueen.GUI.ViewModel;
+using System;
 
 namespace NQueen.GUI
 {
@@ -16,11 +17,11 @@ namespace NQueen.GUI
         private void MainView_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             var board = chessboard;
-            var size = (int)System.Math.Min(board.ActualWidth, board.ActualHeight);
+            var size = (int) Math.Min(board.ActualWidth, board.ActualHeight);
             board.Width = size;
             board.Height = size;
-            MainViewModel.SolverViewModel.SetChessboard(size);
-            DataContext = MainViewModel.SolverViewModel;
+            MainViewModel.SetChessboard(size);
+            DataContext = MainViewModel;
         }
     }
 }

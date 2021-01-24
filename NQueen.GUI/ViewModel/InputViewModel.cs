@@ -4,7 +4,7 @@ using NQueen.Shared.Enums;
 
 namespace NQueen.GUI.ViewModel
 {
-    public class InputViewModel : AbstractValidator<SolverViewModel>
+    public class InputViewModel : AbstractValidator<MainViewModel>
     {
         public InputViewModel() => ValidationRules();
 

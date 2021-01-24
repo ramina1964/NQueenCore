@@ -15,7 +15,7 @@ namespace NQueen.GUI
 
         private void Load()
         {
-            var boardSize = (sbyte)12;
+            var boardSize = (sbyte)8;
             var solver = new Solver(boardSize);
             MainViewModel = new MainViewModel(solver);
         }
