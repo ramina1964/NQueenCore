@@ -369,41 +369,37 @@ namespace NQueen.GUI.ViewModel
 
         private void UpdateProgressIndicator(SimulationStatus simulationStatus)
         {
+            IsIdle = true;
+            IsRunning = false;
+            IsSingleRunning = false;
+            IsOutputReady = true;
+            BusyIndicatorVisibility = Visibility.Hidden;
+            ProgressVisibility = Visibility.Hidden;
+            
             switch (simulationStatus)
             {
                 case SimulationStatus.Started:
                     IsIdle = false;
                     IsRunning = true;
-                    if (SolutionMode == SolutionMode.Single)
-                    { IsSingleRunning = true; }
                     IsOutputReady = false;
+
+                    if (SolutionMode == SolutionMode.Single)
+                    {
+                        IsSingleRunning = true;
+                        BusyIndicatorVisibility = Visibility.Visible;
+                    }
+
+                    // If SolutionMode.Unique || SolutionMode.All
+                    else if (IsRunning)
+                    {
+                        IsSingleRunning = false;
+                        ProgressVisibility = Visibility.Visible;
+                        ProgressValue = 0;
+                    }
                     break;
 
                 case SimulationStatus.Finished:
-                    IsIdle = true;
-                    IsRunning = false;
-                    IsSingleRunning = false;
-                    IsOutputReady = true;
                     break;
-            }
-
-            if (IsSingleRunning)
-            {
-                BusyIndicatorVisibility = Visibility.Visible;
-                ProgressVisibility = Visibility.Hidden;
-            }
-
-            else if (IsRunning)
-            {
-                BusyIndicatorVisibility = Visibility.Hidden;
-                ProgressVisibility = Visibility.Visible;
-                ProgressValue = 0;
-            }
-
-            else
-            {
-                BusyIndicatorVisibility = Visibility.Hidden;
-                ProgressVisibility = Visibility.Hidden;
             }
         }
 
