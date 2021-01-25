@@ -160,6 +160,7 @@ namespace NQueen.GUI.ViewModel
                 if (!IsValid)
                 {
                     IsIdle = false;
+                    IsOutputReady = false;
                     return;
                 }
 
@@ -183,6 +184,7 @@ namespace NQueen.GUI.ViewModel
                 if (IsValid)
                 {
                     IsIdle = true;
+                    IsOutputReady = false;
                     IsVisualized = DisplayMode.Visualize == value;
                     RaisePropertyChanged(nameof(BoardSizeText));
                     UpdateGui();
@@ -206,8 +208,10 @@ namespace NQueen.GUI.ViewModel
                 else
                 {
                     IsIdle = true;
+                    IsOutputReady = false;
                     Set(ref _boardSize, sbyte.Parse(value));
                     RaisePropertyChanged(nameof(BoardSize));
+                    SaveCommand.RaiseCanExecuteChanged();
                     UpdateGui();
                 }
             }
@@ -305,6 +309,16 @@ namespace NQueen.GUI.ViewModel
             }
         }
 
+        public bool IsOutputReady
+        {
+            get => _isOutputReady;
+            set
+            {
+                if (Set(ref _isOutputReady, value))
+                { UpdateButtonFunctionality(); }
+            }
+        }
+
         #endregion PublicProperties
 
         #region PrivateMethods
@@ -319,6 +333,8 @@ namespace NQueen.GUI.ViewModel
             BoardSize = Solver.BoardSize;
             IsSingleRunning = false;
             IsMultipleRunning = false;
+            IsOutputReady = false;
+
             ObservableSolutions = Solver.ObservableSolutions;
             NoOfSolutions = $"{ObservableSolutions.Count,0:N0}";
 
@@ -420,6 +436,7 @@ namespace NQueen.GUI.ViewModel
         private async void SimulateAsync()
         {
             IsIdle = false;
+            IsOutputReady = false;
 
             UpdateSummary();
             UpdateGui();
@@ -428,14 +445,13 @@ namespace NQueen.GUI.ViewModel
                                 .GetSimulationResultsAsync(BoardSize, SolutionMode, DisplayMode);
 
             ProgressVisibility = Visibility.Hidden;
-
-            // Fetch MaxNoOfSolutionsInOutput and add it to Solutions.
             ExtractCorrectNoOfSols();
             UpdateSummary();
             NoOfSolutions = $"{SimulationResults.NoOfSolutions,0:N0}";
             ElapsedTimeInSec = $"{SimulationResults.ElapsedTimeInSec,0:N1}";
             SelectedSolution = ObservableSolutions.FirstOrDefault();
 
+            IsOutputReady = true;
             IsIdle = true;
         }
 
@@ -454,7 +470,7 @@ namespace NQueen.GUI.ViewModel
             IsIdle = true;
         }
 
-        private bool CanSave() => !IsSingleRunning && !IsMultipleRunning && IsIdle;
+        private bool CanSave() => !IsSingleRunning && !IsMultipleRunning && IsOutputReady;
         #endregion PrivateMethods
 
         #region PrivateFields
@@ -475,6 +491,7 @@ namespace NQueen.GUI.ViewModel
         private bool _isVisualized;
         private bool _isValid;
         private bool _isIdle;
+        private bool _isOutputReady;
         private bool _isSingleRunning;
         private bool _isMultipleRunning;
         private ISolver _solver;
