@@ -5,6 +5,7 @@
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"		
 		xmlns:view="clr-namespace:NQueen.GUI.View"
 		xmlns:converter="clr-namespace:NQueen.GUI.Converter"
+		xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 		mc:Ignorable="d" FontSize="14"
 		MinWidth="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth},
 				Converter={converter:RatioConverter}, ConverterParameter='0.90'}"
@@ -139,7 +140,7 @@
 						   HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
 
 					<ComboBox Grid.Row="1" Grid.Column="1" Margin="5, 2" ItemsSource="{Binding EnumSolutionModes, Mode=TwoWay}"
-							  SelectedItem="{Binding SolutionMode}"
+							  SelectedItem="{Binding SolutionMode}" IsEnabled="{Binding IsIdle}"
 							  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
 							  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
 
@@ -245,8 +246,8 @@
 						<RowDefinition />
 					</Grid.RowDefinitions>
 
-					<!--<xctk:BusyIndicator Grid.Row="0" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-										IsBusy="{Binding IsSingleRunning}" />-->
+					<xctk:BusyIndicator Grid.Row="0" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+										 Visibility="{Binding BusyIndicatorVisibility}" IsBusy="{Binding IsSingleRunning}" />
 
 					<ProgressBar Grid.Row="0" Width="Auto" Height="35" Foreground="Green"
 								 Value="{Binding ProgressValue, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="100"

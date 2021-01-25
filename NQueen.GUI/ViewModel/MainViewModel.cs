@@ -90,6 +90,17 @@ namespace NQueen.GUI.ViewModel
             }
         }
 
+        public Visibility BusyIndicatorVisibility
+        {
+            get => _busyIndicatorVisibility;
+            set
+            {
+                Set(ref _busyIndicatorVisibility, value);
+            }
+        }
+
+
+
         public IEnumerable<SolutionMode> EnumSolutionModes
         {
             get => Enum.GetValues(typeof(SolutionMode)).Cast<SolutionMode>();
@@ -160,13 +171,13 @@ namespace NQueen.GUI.ViewModel
                 if (!IsValid)
                 {
                     IsIdle = false;
-                    IsSimulating = false;
+                    IsRunning = false;
                     IsOutputReady = false;
                     return;
                 }
 
                 IsIdle = true;
-                IsSimulating = false;
+                IsRunning = false;
                 UpdateGui();
             }
         }
@@ -186,7 +197,7 @@ namespace NQueen.GUI.ViewModel
                 if (IsValid)
                 {
                     IsIdle = true;
-                    IsSimulating = false;
+                    IsRunning = false;
                     IsOutputReady = false;
                     IsVisualized = DisplayMode.Visualize == value;
                     RaisePropertyChanged(nameof(BoardSizeText));
@@ -208,13 +219,13 @@ namespace NQueen.GUI.ViewModel
                 if (!IsValid)
                 {
                     IsIdle = false;
-                    IsSimulating = false;
+                    IsRunning = false;
                 }
 
                 else
                 {
                     IsIdle = true;
-                    IsSimulating = false;
+                    IsRunning = false;
                     IsOutputReady = false;
                     Set(ref _boardSize, sbyte.Parse(value));
                     RaisePropertyChanged(nameof(BoardSize));
@@ -271,7 +282,7 @@ namespace NQueen.GUI.ViewModel
             Chessboard.CreateSquares(BoardSize, new List<SquareViewModel>());
 
             IsIdle = true;
-            IsSimulating = false;
+            IsRunning = false;
             SolutionMode = SolutionMode.Unique;
             DisplayMode = DisplayMode.Hide;
         }
@@ -283,16 +294,21 @@ namespace NQueen.GUI.ViewModel
         }
 
         // Returns true if a simulation is running, false otherwise.
-        public bool IsSimulating
+        public bool IsRunning
         {
-            get => _isSimulating;
+            get => _isRunning;
             set
             {
-                if (Set(ref _isSimulating, value))
+                if (Set(ref _isRunning, value))
                 { UpdateButtonFunctionality(); }
             }
         }
 
+        public bool IsSingleRunning
+        {
+            get => _isSingleRunning;
+            set => Set(ref _isSingleRunning, value);
+        }
 
         public bool IsIdle
         {
@@ -327,7 +343,7 @@ namespace NQueen.GUI.ViewModel
             Solver = solver;
             BoardSize = Solver.BoardSize;
             IsIdle = true;
-            IsSimulating = false;
+            IsRunning = false;
             IsOutputReady = false;
 
             ObservableSolutions = Solver.ObservableSolutions;
@@ -335,6 +351,7 @@ namespace NQueen.GUI.ViewModel
 
             DelayInMilliseconds = Utility.DefaultDelayInMilliseconds;
             ProgressVisibility = Visibility.Hidden;
+            BusyIndicatorVisibility = Visibility.Hidden;
             ProgressValue = 0;
         }
 
@@ -345,11 +362,31 @@ namespace NQueen.GUI.ViewModel
             NoOfSolutions = "0";
             ElapsedTimeInSec = $"{0,0:N1}";
             RaisePropertyChanged(nameof(ResultTitle));
-
-            ProgressValue = 0;
             ObservableSolutions?.Clear();
             Chessboard?.Squares.Clear();
             Chessboard?.CreateSquares(BoardSize, new List<SquareViewModel>());
+        }
+
+        private void UpdateProgressIndicator()
+        {
+            if (IsSingleRunning)
+            {
+                BusyIndicatorVisibility = Visibility.Visible;
+                ProgressVisibility = Visibility.Hidden;
+            }
+
+            else if (IsRunning)
+            {
+                BusyIndicatorVisibility = Visibility.Hidden;
+                ProgressVisibility = Visibility.Visible;
+                ProgressValue = 0;
+            }
+
+            else
+            {
+                BusyIndicatorVisibility = Visibility.Hidden;
+                ProgressVisibility = Visibility.Hidden;
+            }
         }
 
         private void UpdateButtonFunctionality()
@@ -406,11 +443,14 @@ namespace NQueen.GUI.ViewModel
         private async void SimulateAsync()
         {
             IsIdle = false;
-            IsSimulating = true;
+            IsRunning = true;
+            if (SolutionMode == SolutionMode.Single)
+            { IsSingleRunning = true; }
             IsOutputReady = false;
 
             UpdateGui();
-            ProgressVisibility = Visibility.Visible;
+            UpdateProgressIndicator();
+
             SimulationResults = await Solver
                                 .GetSimulationResultsAsync(BoardSize, SolutionMode, DisplayMode);
 
@@ -421,15 +461,17 @@ namespace NQueen.GUI.ViewModel
             SelectedSolution = ObservableSolutions.FirstOrDefault();
 
             IsIdle = true;
-            IsSimulating = false;
+            IsRunning = false;
+            IsSingleRunning = false;
             IsOutputReady = true;
+            UpdateProgressIndicator();
         }
 
         private bool CanSimulate() => IsValid && IsIdle;
 
         private void Cancel() => Solver.CancelSolver = true;
 
-        private bool CanCancel() => IsSimulating;
+        private bool CanCancel() => IsRunning;
 
         private void Save()
         {
@@ -447,6 +489,7 @@ namespace NQueen.GUI.ViewModel
         private double _progressValue;
         private string _progressLabel;
         private Visibility _progressVisibility;
+        private Visibility _busyIndicatorVisibility;
         private IEnumerable<SolutionMode> _enumSolutionModes;
         private IEnumerable<DisplayMode> _enumDisplayModes;
         private InputViewModel _validation;
@@ -460,7 +503,8 @@ namespace NQueen.GUI.ViewModel
         private sbyte _boardSize;
         private bool _isVisualized;
         private bool _isValid;
-        private bool _isSimulating;
+        private bool _isRunning;
+        private bool _isSingleRunning;
         private bool _isIdle;
         private bool _isOutputReady;
         private ISolver _solver;

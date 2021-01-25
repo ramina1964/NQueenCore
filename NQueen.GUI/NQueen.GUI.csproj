@@ -11,6 +11,7 @@
   </ItemGroup>
   
   <ItemGroup>
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="4.0.2" />
     <PackageReference Include="MvvmLight" Version="5.4.1.1" />
     <PackageReference Include="FluentValidation" Version="9.4.0" />
     <PackageReference Include="MvvmLightLibsStd10" Version="5.4.1.1" />
