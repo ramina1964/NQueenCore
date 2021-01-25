@@ -367,8 +367,26 @@ namespace NQueen.GUI.ViewModel
             Chessboard?.CreateSquares(BoardSize, new List<SquareViewModel>());
         }
 
-        private void UpdateProgressIndicator()
+        private void UpdateProgressIndicator(SimulationStatus simulationStatus)
         {
+            switch (simulationStatus)
+            {
+                case SimulationStatus.Started:
+                    IsIdle = false;
+                    IsRunning = true;
+                    if (SolutionMode == SolutionMode.Single)
+                    { IsSingleRunning = true; }
+                    IsOutputReady = false;
+                    break;
+
+                case SimulationStatus.Finished:
+                    IsIdle = true;
+                    IsRunning = false;
+                    IsSingleRunning = false;
+                    IsOutputReady = true;
+                    break;
+            }
+
             if (IsSingleRunning)
             {
                 BusyIndicatorVisibility = Visibility.Visible;
@@ -442,15 +460,9 @@ namespace NQueen.GUI.ViewModel
 
         private async void SimulateAsync()
         {
-            IsIdle = false;
-            IsRunning = true;
-            if (SolutionMode == SolutionMode.Single)
-            { IsSingleRunning = true; }
-            IsOutputReady = false;
+            UpdateProgressIndicator(SimulationStatus.Started);
 
             UpdateGui();
-            UpdateProgressIndicator();
-
             SimulationResults = await Solver
                                 .GetSimulationResultsAsync(BoardSize, SolutionMode, DisplayMode);
 
@@ -460,11 +472,7 @@ namespace NQueen.GUI.ViewModel
             ElapsedTimeInSec = $"{SimulationResults.ElapsedTimeInSec,0:N1}";
             SelectedSolution = ObservableSolutions.FirstOrDefault();
 
-            IsIdle = true;
-            IsRunning = false;
-            IsSingleRunning = false;
-            IsOutputReady = true;
-            UpdateProgressIndicator();
+            UpdateProgressIndicator(SimulationStatus.Finished);
         }
 
         private bool CanSimulate() => IsValid && IsIdle;
