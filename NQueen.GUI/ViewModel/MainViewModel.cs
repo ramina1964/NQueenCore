@@ -389,30 +389,32 @@ namespace NQueen.GUI.ViewModel
             SelectedSolution = sol;
         }
 
-        private void UpdateSummary()
-        {
-            // Before simulation
-            if (!IsSingleRunning && !IsMultipleRunning)
-            {
-                if (SolutionMode == SolutionMode.Single)
-                { IsSingleRunning = true; }
+        //private void UpdateSummary()
+        //{
+        //    // Before simulation
+        //    if (IsSingleRunning || IsMultipleRunning)
+        //    {
+        //        // After Simulation
+        //        if (SolutionMode == SolutionMode.Single)
+        //        { IsSingleRunning = false; }
 
-                else
-                { IsMultipleRunning = true; }
+        //        else
+        //        { IsMultipleRunning = false; }
 
-                IsIdle = false;
-                return;
-            }
+        //        IsIdle = true;
+        //    }
+        //    else
+        //    {
+        //        if (SolutionMode == SolutionMode.Single)
+        //        { IsSingleRunning = true; }
 
-            // After Simulation
-            if (SolutionMode == SolutionMode.Single)
-            { IsSingleRunning = false; }
+        //        else
+        //        { IsMultipleRunning = true; }
 
-            else
-            { IsMultipleRunning = false; }
-
-            IsIdle = true;
-        }
+        //        IsIdle = false;
+        //        return;
+        //    }
+        //}
 
         private void ExtractCorrectNoOfSols()
         {
@@ -438,7 +440,7 @@ namespace NQueen.GUI.ViewModel
             IsIdle = false;
             IsOutputReady = false;
 
-            UpdateSummary();
+            //UpdateSummary();
             UpdateGui();
             ProgressVisibility = Visibility.Visible;
             SimulationResults = await Solver
@@ -446,7 +448,7 @@ namespace NQueen.GUI.ViewModel
 
             ProgressVisibility = Visibility.Hidden;
             ExtractCorrectNoOfSols();
-            UpdateSummary();
+            //UpdateSummary();
             NoOfSolutions = $"{SimulationResults.NoOfSolutions,0:N0}";
             ElapsedTimeInSec = $"{SimulationResults.ElapsedTimeInSec,0:N1}";
             SelectedSolution = ObservableSolutions.FirstOrDefault();
@@ -455,11 +457,11 @@ namespace NQueen.GUI.ViewModel
             IsIdle = true;
         }
 
-        private bool CanSimulate() => IsValid && !IsSingleRunning && !IsMultipleRunning;
+        private bool CanSimulate() => IsValid && IsIdle;
 
         private void Cancel() => Solver.CancelSolver = true;
 
-        private bool CanCancel() => IsSingleRunning || IsMultipleRunning;
+        private bool CanCancel() => !IsIdle;
 
         private void Save()
         {
