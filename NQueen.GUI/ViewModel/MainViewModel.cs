@@ -93,13 +93,8 @@ namespace NQueen.GUI.ViewModel
         public Visibility BusyIndicatorVisibility
         {
             get => _busyIndicatorVisibility;
-            set
-            {
-                Set(ref _busyIndicatorVisibility, value);
-            }
+            set => Set(ref _busyIndicatorVisibility, value);
         }
-
-
 
         public IEnumerable<SolutionMode> EnumSolutionModes
         {
@@ -304,6 +299,16 @@ namespace NQueen.GUI.ViewModel
             }
         }
 
+        public bool IsInInputMode
+        {
+            get => _isInInputMode;
+            set
+            {
+                if (Set(ref _isInInputMode, value))
+                { UpdateButtonFunctionality(); }
+            }
+        }
+
         public bool IsSingleRunning
         {
             get => _isSingleRunning;
@@ -343,6 +348,7 @@ namespace NQueen.GUI.ViewModel
             Solver = solver;
             BoardSize = Solver.BoardSize;
             IsIdle = true;
+            IsInInputMode = true;
             IsRunning = false;
             IsOutputReady = false;
 
@@ -370,6 +376,7 @@ namespace NQueen.GUI.ViewModel
         private void UpdateProgressIndicator(SimulationStatus simulationStatus)
         {
             IsIdle = true;
+            IsInInputMode = true;
             IsRunning = false;
             IsSingleRunning = false;
             IsOutputReady = true;
@@ -380,6 +387,7 @@ namespace NQueen.GUI.ViewModel
             {
                 case SimulationStatus.Started:
                     IsIdle = false;
+                    IsInInputMode = false;
                     IsRunning = true;
                     IsOutputReady = false;
 
@@ -507,9 +515,10 @@ namespace NQueen.GUI.ViewModel
         private sbyte _boardSize;
         private bool _isVisualized;
         private bool _isValid;
-        private bool _isRunning;
         private bool _isSingleRunning;
         private bool _isIdle;
+        private bool _isRunning;
+        private bool _isInInputMode;
         private bool _isOutputReady;
         private ISolver _solver;
         private Solution _selectedSolution;
