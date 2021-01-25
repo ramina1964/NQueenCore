@@ -1,4 +1,4 @@
-List of First 40 Unique Solution(s), Excluded Symmetrical Ones:
+List of First 50 Unique Solution(s), Excluded Symmetrical Ones:
 Sol. No. 1                   (1, 1), (2, 3), (3, 5), (4, 8), (5, 10), (6, 12), (7, 6), (8, 11), (9, 2), (10, 7), (11, 9), (12, 4)
 Sol. No. 2                   (1, 1), (2, 3), (3, 5), (4, 10), (5, 8), (6, 11), (7, 2), (8, 12), (9, 6), (10, 9), (11, 7), (12, 4)
 Sol. No. 3                   (1, 1), (2, 3), (3, 5), (4, 10), (5, 8), (6, 11), (7, 2), (8, 12), (9, 7), (10, 9), (11, 4), (12, 6)
@@ -52,8 +52,8 @@ Sol. No. 50                  (1, 1), (2, 4), (3, 9), (4, 3), (5, 8), (6, 10), (7
 
 
 Summary of Results:
-Date and Time                10/01/2021 19:23:13
+Date and Time                25/01/2021 12:18:59
 BoardSize                                     12
 No. of Solutions Included                  50
-Elapsed Time (s)                             0.3
+Elapsed Time (s)                             0.4
 

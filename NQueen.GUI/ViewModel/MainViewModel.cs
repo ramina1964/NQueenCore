@@ -175,9 +175,7 @@ namespace NQueen.GUI.ViewModel
             {
                 var isChanged = Set(ref _displayMode, value);
                 if (Solver != null || !isChanged)
-                {
-                    Solver.DisplayMode = value;
-                }
+                { Solver.DisplayMode = value; }
 
                 ValidationResult = _validation.Validate(this);
                 IsValid = ValidationResult.IsValid;
@@ -197,8 +195,7 @@ namespace NQueen.GUI.ViewModel
             get => _boardSizeText;
             set
             {
-                var isChanged = Set(ref _boardSizeText, value);
-                if (!isChanged)
+                if (!Set(ref _boardSizeText, value))
                 { return; }
 
                 ValidationResult = _validation.Validate(this);
@@ -206,7 +203,7 @@ namespace NQueen.GUI.ViewModel
                 if (!IsValid)
                 { IsIdle = false; }
 
-                if (IsValid)
+                else
                 {
                     IsIdle = true;
                     Set(ref _boardSize, sbyte.Parse(value));
@@ -229,11 +226,7 @@ namespace NQueen.GUI.ViewModel
         public bool IsValid
         {
             get => _isValid;
-            set
-            {
-                Set(ref _isValid, value);
-                RaisePropertyChanged(nameof(CanSimulate));
-            }
+            set => Set(ref _isValid, value);
         }
 
         public ISolver Solver
@@ -285,14 +278,8 @@ namespace NQueen.GUI.ViewModel
             get => _isSingleRunning;
             set
             {
-                var isChanged = Set(ref _isSingleRunning, value);
-                if (isChanged)
-                {
-                    UpdateButtonFunctionality();
-
-                    // Also set value of IsIdle Property and broadcast it, the last parameter below.
-                    Set(nameof(IsIdle), ref _isIdle, !value, true);
-                }
+                if (Set(ref _isSingleRunning, value))
+                { UpdateButtonFunctionality(); }
             }
         }
 
@@ -302,14 +289,8 @@ namespace NQueen.GUI.ViewModel
             get => _isMultipleRunning;
             set
             {
-                var isChanged = Set(ref _isMultipleRunning, value);
-                if (isChanged)
-                {
-                    UpdateButtonFunctionality();
-
-                    // Also set value of IsIdle Property and broadcast it, the last parameter below.
-                    Set(nameof(IsIdle), ref _isIdle, !value, true);
-                }
+                if (Set(ref _isMultipleRunning, value))
+                { UpdateButtonFunctionality(); }
             }
         }
 
@@ -319,8 +300,7 @@ namespace NQueen.GUI.ViewModel
             get => _isIdle;
             set
             {
-                var isChanged = Set(ref _isIdle, value);
-                if (isChanged)
+                if (Set(ref _isIdle, value))
                 { UpdateButtonFunctionality(); }
             }
         }
@@ -402,9 +382,7 @@ namespace NQueen.GUI.ViewModel
                 { IsSingleRunning = true; }
 
                 else
-                {
-                    IsMultipleRunning = true;
-                }
+                { IsMultipleRunning = true; }
 
                 IsIdle = false;
                 return;
@@ -415,9 +393,7 @@ namespace NQueen.GUI.ViewModel
             { IsSingleRunning = false; }
 
             else
-            {
-                IsMultipleRunning = false;
-            }
+            { IsMultipleRunning = false; }
 
             IsIdle = true;
         }
@@ -478,7 +454,7 @@ namespace NQueen.GUI.ViewModel
             IsIdle = true;
         }
 
-        private bool CanSave() => !IsSingleRunning && !IsMultipleRunning && SimulationResults?.NoOfSolutions > 0;
+        private bool CanSave() => !IsSingleRunning && !IsMultipleRunning && IsIdle;
         #endregion PrivateMethods
 
         #region PrivateFields
