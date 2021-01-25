@@ -132,8 +132,7 @@
 
 					<TextBox Style="{StaticResource TextBoxNumericalStyle}" Grid.Row="0" Grid.Column="1" Margin= "5, 2"
 							 Text="{Binding BoardSizeText, UpdateSourceTrigger=LostFocus, Mode=TwoWay,
-									ValidatesOnDataErrors=True, ValidatesOnExceptions=True}"
-							 IsEnabled="{Binding IsIdle}" />
+									ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
 
 					<Label Style="{StaticResource LabelStyle}" Grid.Row="1" Grid.Column="0" Content="Solution Mode" Margin="5, 2"
 						   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
