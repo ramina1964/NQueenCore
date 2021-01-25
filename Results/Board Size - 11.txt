@@ -1,0 +1,10 @@
+Solution:
+Sol. No. 1                   (1, 1), (2, 3), (3, 5), (4, 7), (5, 9), (6, 11), (7, 2), (8, 4), (9, 6), (10, 8), (11, 10)
+
+
+Summary of Results:
+Date and Time                25/01/2021 19:09:51
+BoardSize                                     11
+No. of Unique Solutions                        1
+Elapsed Time (s)                               0
+
