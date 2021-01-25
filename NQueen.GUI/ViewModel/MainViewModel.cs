@@ -160,11 +160,13 @@ namespace NQueen.GUI.ViewModel
                 if (!IsValid)
                 {
                     IsIdle = false;
+                    IsSimulating = false;
                     IsOutputReady = false;
                     return;
                 }
 
                 IsIdle = true;
+                IsSimulating = false;
                 UpdateGui();
             }
         }
@@ -184,6 +186,7 @@ namespace NQueen.GUI.ViewModel
                 if (IsValid)
                 {
                     IsIdle = true;
+                    IsSimulating = false;
                     IsOutputReady = false;
                     IsVisualized = DisplayMode.Visualize == value;
                     RaisePropertyChanged(nameof(BoardSizeText));
@@ -203,11 +206,15 @@ namespace NQueen.GUI.ViewModel
                 ValidationResult = _validation.Validate(this);
                 IsValid = ValidationResult.IsValid;
                 if (!IsValid)
-                { IsIdle = false; }
+                {
+                    IsIdle = false;
+                    IsSimulating = false;
+                }
 
                 else
                 {
                     IsIdle = true;
+                    IsSimulating = false;
                     IsOutputReady = false;
                     Set(ref _boardSize, sbyte.Parse(value));
                     RaisePropertyChanged(nameof(BoardSize));
@@ -264,8 +271,7 @@ namespace NQueen.GUI.ViewModel
             Chessboard.CreateSquares(BoardSize, new List<SquareViewModel>());
 
             IsIdle = true;
-            IsSingleRunning = false;
-            IsMultipleRunning = false;
+            IsSimulating = false;
             SolutionMode = SolutionMode.Unique;
             DisplayMode = DisplayMode.Hide;
         }
@@ -276,29 +282,18 @@ namespace NQueen.GUI.ViewModel
             set => Set(ref _elapsedTime, value);
         }
 
-        // Returns true if a SingleSolution is running.
-        public bool IsSingleRunning
+        // Returns true if a simulation is running, false otherwise.
+        public bool IsSimulating
         {
-            get => _isSingleRunning;
+            get => _isSimulating;
             set
             {
-                if (Set(ref _isSingleRunning, value))
+                if (Set(ref _isSimulating, value))
                 { UpdateButtonFunctionality(); }
             }
         }
 
-        // Returns true if UniqueSolutions or AllSolutions is running.
-        public bool IsMultipleRunning
-        {
-            get => _isMultipleRunning;
-            set
-            {
-                if (Set(ref _isMultipleRunning, value))
-                { UpdateButtonFunctionality(); }
-            }
-        }
 
-        // Returns false if a simulation is running, otherwise true.
         public bool IsIdle
         {
             get => _isIdle;
@@ -331,8 +326,8 @@ namespace NQueen.GUI.ViewModel
 
             Solver = solver;
             BoardSize = Solver.BoardSize;
-            IsSingleRunning = false;
-            IsMultipleRunning = false;
+            IsIdle = true;
+            IsSimulating = false;
             IsOutputReady = false;
 
             ObservableSolutions = Solver.ObservableSolutions;
@@ -389,33 +384,6 @@ namespace NQueen.GUI.ViewModel
             SelectedSolution = sol;
         }
 
-        //private void UpdateSummary()
-        //{
-        //    // Before simulation
-        //    if (IsSingleRunning || IsMultipleRunning)
-        //    {
-        //        // After Simulation
-        //        if (SolutionMode == SolutionMode.Single)
-        //        { IsSingleRunning = false; }
-
-        //        else
-        //        { IsMultipleRunning = false; }
-
-        //        IsIdle = true;
-        //    }
-        //    else
-        //    {
-        //        if (SolutionMode == SolutionMode.Single)
-        //        { IsSingleRunning = true; }
-
-        //        else
-        //        { IsMultipleRunning = true; }
-
-        //        IsIdle = false;
-        //        return;
-        //    }
-        //}
-
         private void ExtractCorrectNoOfSols()
         {
             var sols = SimulationResults
@@ -438,9 +406,9 @@ namespace NQueen.GUI.ViewModel
         private async void SimulateAsync()
         {
             IsIdle = false;
+            IsSimulating = true;
             IsOutputReady = false;
 
-            //UpdateSummary();
             UpdateGui();
             ProgressVisibility = Visibility.Visible;
             SimulationResults = await Solver
@@ -448,20 +416,20 @@ namespace NQueen.GUI.ViewModel
 
             ProgressVisibility = Visibility.Hidden;
             ExtractCorrectNoOfSols();
-            //UpdateSummary();
             NoOfSolutions = $"{SimulationResults.NoOfSolutions,0:N0}";
             ElapsedTimeInSec = $"{SimulationResults.ElapsedTimeInSec,0:N1}";
             SelectedSolution = ObservableSolutions.FirstOrDefault();
 
-            IsOutputReady = true;
             IsIdle = true;
+            IsSimulating = false;
+            IsOutputReady = true;
         }
 
         private bool CanSimulate() => IsValid && IsIdle;
 
         private void Cancel() => Solver.CancelSolver = true;
 
-        private bool CanCancel() => !IsIdle;
+        private bool CanCancel() => IsSimulating;
 
         private void Save()
         {
@@ -472,7 +440,7 @@ namespace NQueen.GUI.ViewModel
             IsIdle = true;
         }
 
-        private bool CanSave() => !IsSingleRunning && !IsMultipleRunning && IsOutputReady;
+        private bool CanSave() => IsIdle && IsOutputReady;
         #endregion PrivateMethods
 
         #region PrivateFields
@@ -492,10 +460,9 @@ namespace NQueen.GUI.ViewModel
         private sbyte _boardSize;
         private bool _isVisualized;
         private bool _isValid;
+        private bool _isSimulating;
         private bool _isIdle;
         private bool _isOutputReady;
-        private bool _isSingleRunning;
-        private bool _isMultipleRunning;
         private ISolver _solver;
         private Solution _selectedSolution;
         private string _solutionTitle;
