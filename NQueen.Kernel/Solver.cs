@@ -138,7 +138,7 @@ namespace NQueen.Kernel
                 return false;
             }
 
-            QueenList[colNo] = LocateQueen(colNo);
+            QueenList[colNo] = PlaceQueen(colNo);
             if (QueenList[colNo] == -1)
             { return false; }
 
@@ -176,8 +176,8 @@ namespace NQueen.Kernel
             { Solutions.Add(solution); }
         }
 
-        // Locate Queen
-        private sbyte LocateQueen(sbyte colNo)
+        // Return the first available row for the queen in column "colNo", -1 if impossible.
+        private sbyte PlaceQueen(sbyte colNo)
         {
             for (sbyte pos = (sbyte)(QueenList[colNo] + 1); pos < BoardSize; pos++)
             {

@@ -21,31 +21,32 @@ namespace NQueen.Shared
         }
         #endregion Constructor
 
-        internal ObservableCollection<Solution> Solutions { get; }
+        public ObservableCollection<Solution> Solutions { get; }
 
-        internal double ElapsedTimeInSec { get; set; }
+        public double ElapsedTimeInSec { get; set; }
 
-        internal int NoOfSolutions { get; }
+        public int NoOfSolutions { get; }
 
-        internal int MaxNoOfSolutionsInOutput { get; }
+        public int MaxNoOfSolutionsInOutput { get; }
 
-        internal int BoardSize { get; set; }
+        public int BoardSize { get; set; }
 
-        internal int NoOfSolutionsInOutput { get; }
+        public int NoOfSolutionsInOutput { get; }
 
-        internal static StringBuilder FormatSingleSolution(Solution solution) =>
+        public static StringBuilder FormatSingleSolution(Solution solution) =>
             new StringBuilder().Append($"{solution.Details}");
 
         public string Write2File(SolutionMode solutionMode)
         {
             var dir = new DirectoryInfo(Environment.CurrentDirectory).Parent.Parent.Parent.Parent;
-            var fileName = $"Board Size - {BoardSize}" + ".txt";
+            var fileName = $"Size - {BoardSize}.txt";
             var subFolder = Path.Combine(dir.FullName, "Results");
             var filePath = Path.Combine(subFolder, fileName);
 
-            var _ = Directory.Exists(subFolder)
-                ? new DirectoryInfo(subFolder)
-                : Directory.CreateDirectory(subFolder);
+            var _ =
+                    Directory.Exists(subFolder)
+                    ? new DirectoryInfo(subFolder)
+                    : Directory.CreateDirectory(subFolder);
 
             File.WriteAllText(filePath, PrintFinalResults(solutionMode));
             return filePath;
@@ -76,7 +77,8 @@ namespace NQueen.Shared
             const int decimalPlaces = 2;
             const int placeHolderInt = 20;
 
-            var sb = new StringBuilder().AppendLine()
+            var sb =
+                new StringBuilder().AppendLine()
                 .AppendLine("Summary of Results:")
                 .AppendLine($"{"Date and Time",placeHolderText}{DateTime.Now,placeHolderInt}");
 

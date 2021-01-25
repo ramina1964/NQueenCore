@@ -44,9 +44,7 @@ namespace NQueen.GUI.ViewModel
             {
                 var results = _validation?.Validate(this);
                 if (results == null || !results.Errors.Any())
-                {
-                    return string.Empty;
-                }
+                { return string.Empty; }
 
                 var errors = string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage).ToArray());
                 return errors;
@@ -68,7 +66,7 @@ namespace NQueen.GUI.ViewModel
             {
                 if (Set(ref _progressValue, value))
                 {
-                    ProgressLabel = _progressValue.ToString() + " %";
+                    ProgressLabel = $"{_progressValue} %";
                     RaisePropertyChanged(nameof(ProgressLabel));
                 }
             }
@@ -382,7 +380,7 @@ namespace NQueen.GUI.ViewModel
             IsOutputReady = true;
             BusyIndicatorVisibility = Visibility.Hidden;
             ProgressVisibility = Visibility.Hidden;
-            
+
             switch (simulationStatus)
             {
                 case SimulationStatus.Started:
