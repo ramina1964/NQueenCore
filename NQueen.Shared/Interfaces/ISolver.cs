@@ -11,6 +11,8 @@ namespace NQueen.Shared.Interfaces
 
     public interface ISolver
     {
+        sbyte BoardSize { get; set; }
+
         int DelayInMilliseconds { get; set; }
 
         bool CancelSolver { get; set; }

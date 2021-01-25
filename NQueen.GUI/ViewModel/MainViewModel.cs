@@ -18,7 +18,7 @@ namespace NQueen.GUI.ViewModel
 {
     public sealed class MainViewModel : ViewModelBase, IDataErrorInfo
     {
-        public MainViewModel(Solver solver)
+        public MainViewModel(ISolver solver)
         {
             Initialize(solver);
             Solver.QueenPlaced += OnQueenPlaced;
@@ -237,7 +237,7 @@ namespace NQueen.GUI.ViewModel
             }
         }
 
-        public Solver Solver
+        public ISolver Solver
         {
             get => _solver;
             set => Set(ref _solver, value);
@@ -329,7 +329,7 @@ namespace NQueen.GUI.ViewModel
         #endregion PublicProperties
 
         #region PrivateMethods
-        private void Initialize(Solver solver)
+        private void Initialize(ISolver solver)
         {
             _validation = new InputViewModel { CascadeMode = CascadeMode.Stop };
             SimulateCommand = new RelayCommand(SimulateAsync, CanSimulate);
@@ -502,7 +502,7 @@ namespace NQueen.GUI.ViewModel
         private bool _isIdle;
         private bool _isSingleRunning;
         private bool _isMultipleRunning;
-        private Solver _solver;
+        private ISolver _solver;
         private Solution _selectedSolution;
         private string _solutionTitle;
         #endregion PrivateFields

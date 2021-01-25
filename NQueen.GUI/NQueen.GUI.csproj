@@ -9,6 +9,7 @@
   <ItemGroup>
     <None Remove="Images\WhiteQueen.png" />
   </ItemGroup>
+  
   <ItemGroup>
     <PackageReference Include="MvvmLight" Version="5.4.1.1" />
     <PackageReference Include="FluentValidation" Version="9.4.0" />
@@ -17,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\NQueen.Kernel\NQueen.Kernel.csproj" />
   </ItemGroup>
+  
   <ItemGroup>
     <Resource Include="Images\WhiteQueen.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
