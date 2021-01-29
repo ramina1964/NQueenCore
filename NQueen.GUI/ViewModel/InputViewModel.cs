@@ -10,30 +10,28 @@ namespace NQueen.GUI.ViewModel
 
         private void ValidationRules()
         {
-            _ = RuleFor(q => q.BoardSizeText)
+            _ = RuleFor(vm => vm.BoardSizeText)
                 .NotNull().NotEmpty()
-                .WithMessage(q => Utility.ValueNullOrWhiteSpaceMsg)
-
+                .WithMessage(_ => Utility.ValueNullOrWhiteSpaceMsg)
                 .Must(bst => sbyte.TryParse(bst, out sbyte value))
-                .WithMessage(q => Utility.InvalidSByteError)
-
+                .WithMessage(_ => Utility.InvalidSByteError)
                 .Must(bst => sbyte.Parse(bst) >= Utility.MinBoardSize)
-                .WithMessage(q => Utility.SizeTooSmallMsg);
+                .WithMessage(_ => Utility.SizeTooSmallMsg);
 
-            _ = RuleFor(q => q.BoardSizeText)
+            _ = RuleFor(vm => vm.BoardSizeText)
                 .Must(bst => sbyte.TryParse(bst, out sbyte result) && result <= Utility.MaxBoardSizeForSingleSolution)
-                .When(q => q.SolutionMode == SolutionMode.Single)
-                .WithMessage(q => Utility.SizeTooLargeForSingleSolutionMsg);
+                .When(vm => vm.SolutionMode == SolutionMode.Single)
+                .WithMessage(_ => Utility.SizeTooLargeForSingleSolutionMsg);
 
-            _ = RuleFor(q => q.BoardSizeText)
+            _ = RuleFor(vm => vm.BoardSizeText)
                 .Must(bst => sbyte.TryParse(bst, out sbyte result) && result <= Utility.MaxBoardSizeForUniqueSolutions)
-                .When(q => q.SolutionMode == SolutionMode.Unique)
-                .WithMessage(q => Utility.SizeTooLargeForUniqueSolutionsMsg);
+                .When(vm => vm.SolutionMode == SolutionMode.Unique)
+                .WithMessage(_ => Utility.SizeTooLargeForUniqueSolutionsMsg);
 
-            _ = RuleFor(q => q.BoardSizeText)
+            _ = RuleFor(vm => vm.BoardSizeText)
                 .Must(bst => sbyte.TryParse(bst, out sbyte result) && result <= Utility.MaxBoardSizeForAllSolutions)
-                .When(q => q.SolutionMode == SolutionMode.All)
-                .WithMessage(q => Utility.SizeTooLargeForAllSolutionsMsg);
+                .When(vm => vm.SolutionMode == SolutionMode.All)
+                .WithMessage(_ => Utility.SizeTooLargeForAllSolutionsMsg);
         }
     }
 }

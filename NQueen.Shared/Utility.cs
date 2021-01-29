@@ -16,11 +16,11 @@ namespace NQueen.Shared
         public const sbyte MaxBoardSizeForUniqueSolutions = 17;
         public const sbyte MaxBoardSizeForAllSolutions = 16;
 
-        public static string InvalidSByteError => $"Board size must be a valid sbyte.";
+        public static string InvalidSByteError => $"Board size must be a valid integer.";
 
         public static string NoSolutionMessage => $"No Solutions found. Try a larger board size!";
 
-        public static string ValueNullOrWhiteSpaceMsg => $"Board size can not be null, empty or contain solely spaces.";
+        public static string ValueNullOrWhiteSpaceMsg => $"Board size can not be null, empty or contain exclusively spaces.";
 
         public static string SizeTooSmallMsg => $"Board size must be greater than or equal to {MinBoardSize}.";
 

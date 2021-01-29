@@ -4,6 +4,7 @@
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"		
 		xmlns:view="clr-namespace:NQueen.GUI.View"
+		xmlns:s="clr-namespace:System;assembly=mscorlib"
 		xmlns:converter="clr-namespace:NQueen.GUI.Converter"
 		xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 		mc:Ignorable="d" FontSize="14"
@@ -131,9 +132,9 @@
 						   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
 						   HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
 
-					<TextBox Style="{StaticResource TextBoxNumericalStyle}" Grid.Row="0" Grid.Column="1" Margin= "5, 2"
-							 IsEnabled="{Binding IsInInputMode}" Text="{Binding BoardSizeText, UpdateSourceTrigger=LostFocus, Mode=TwoWay,
-									ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
+					<xctk:ValueRangeTextBox Style="{StaticResource TextBoxNumericalStyle}" Grid.Row="0" Grid.Column="1" Height="25" Margin= "5, 2"
+											ValueDataType="{x:Type s:Int32}" IsEnabled="{Binding IsInInputMode}"
+											Text="{Binding BoardSizeText, UpdateSourceTrigger=LostFocus, Mode=TwoWay, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
 
 					<Label Style="{StaticResource LabelStyle}" Grid.Row="1" Grid.Column="0" Content="Solution Mode" Margin="5, 2"
 						   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"

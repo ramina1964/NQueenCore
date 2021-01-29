@@ -30,11 +30,15 @@ namespace NQueen.GUI.ViewModel
         {
             get
             {
-                var firstOrDefault = _validation.Validate(this).Errors.FirstOrDefault(lol => lol.PropertyName == columnName);
-                if (firstOrDefault != null)
-                { return _validation != null ? firstOrDefault.ErrorMessage : ""; }
+                var firstOrDefault = _validation
+                    .Validate(this)
+                    .Errors
+                    .FirstOrDefault(item => item.PropertyName == columnName);
 
-                return string.Empty;
+                return firstOrDefault == null
+                    ? string.Empty : _validation != null
+                    ? firstOrDefault.ErrorMessage
+                    : string.Empty;
             }
         }
 
@@ -46,7 +50,10 @@ namespace NQueen.GUI.ViewModel
                 if (results == null || !results.Errors.Any())
                 { return string.Empty; }
 
-                var errors = string.Join(Environment.NewLine, results.Errors.Select(x => x.ErrorMessage).ToArray());
+                var errors = string.Join(Environment.NewLine, results.Errors
+                            .Select(x => x.ErrorMessage)
+                            .ToArray());
+
                 return errors;
             }
         }
