@@ -137,14 +137,14 @@
 
 					<Label Style="{StaticResource LabelStyle}" Grid.Row="1" Grid.Column="0" Content="Solution Mode" Margin="5, 2" />
 
-					<ComboBox Style="{StaticResource ComoboBoxStyle}" Grid.Row="1" Grid.Column="1" Margin="5, 2" Height="30"
-							  ItemsSource="{Binding EnumSolutionModes, Mode=TwoWay}"
+					<ComboBox Style="{StaticResource ComboBoxStyle}" Grid.Row="1" Grid.Column="1" Margin="5, 2" Height="30"
+							  ItemsSource="{Binding SolutionModeList, Mode=TwoWay}"
 							  SelectedItem="{Binding SolutionMode}" IsEnabled="{Binding IsInInputMode}" />
 
 					<Label Style="{StaticResource LabelStyle}" Grid.Row="2" Grid.Column="0" Content="Display Mode" Margin="5, 2" />
 
-					<ComboBox Style="{StaticResource ComoboBoxStyle}" Grid.Row="2" Grid.Column="1" x:Name="CmbDisplayMode" Height="30" Margin="5, 2"
-							  ItemsSource="{Binding EnumDisplayModes, Mode=TwoWay}" SelectedItem="{Binding DisplayMode}" IsEnabled="{Binding IsIdle}" />
+					<ComboBox Style="{StaticResource ComboBoxStyle}" Grid.Row="2" Grid.Column="1" x:Name="CmbDisplayMode" Height="30" Margin="5, 2"
+							  ItemsSource="{Binding DisplayModeList, Mode=TwoWay}" SelectedItem="{Binding DisplayMode}" IsEnabled="{Binding IsIdle}" />
 
 					<Label Style="{StaticResource LabelStyle}" Grid.Row="3" Grid.Column="0" Content="Delay" Margin="5, 2" />
 

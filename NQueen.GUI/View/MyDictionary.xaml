@@ -35,7 +35,7 @@
 		</Setter>
 	</Style>
 
-	<!-- ************************ Based on TextBox ************************ -->
+	<!-- ************************ Based on TextBox ************************ --> 
 	<Style x:Key="TextBoxStyle" TargetType="TextBox">
 		<Setter Property="Height" Value="30" />
 		<Setter Property="Width" Value="Auto" />
@@ -74,7 +74,7 @@
 	</Style>
 
 	<!-- *********************** Based on ComboBox ********************** -->
-	<Style x:Key="ComoboBoxStyle" TargetType="ComboBox">
+    <Style x:Key="ComboBoxStyle" TargetType="ComboBox">
 		<Setter Property="Height" Value="30" />
 		<Setter Property="Width" Value="Auto" />
 		<Setter Property="HorizontalAlignment" Value="Stretch" />

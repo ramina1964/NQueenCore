@@ -101,13 +101,13 @@ namespace NQueen.GUI.ViewModel
             set => Set(ref _busyIndicatorVisibility, value);
         }
 
-        public IEnumerable<SolutionMode> EnumSolutionModes
+        public IEnumerable<SolutionMode> SolutionModeList
         {
             get => Enum.GetValues(typeof(SolutionMode)).Cast<SolutionMode>();
             set => Set(ref _enumSolutionModes, value);
         }
 
-        public IEnumerable<DisplayMode> EnumDisplayModes
+        public IEnumerable<DisplayMode> DisplayModeList
         {
             get => Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
             set => Set(ref _enumDisplayModes, value);
