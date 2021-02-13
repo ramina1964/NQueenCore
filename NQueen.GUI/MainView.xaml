@@ -149,7 +149,7 @@
 					<Label Style="{StaticResource LabelStyle}" Grid.Row="3" Grid.Column="0" Content="Delay" Margin="5, 2" />
 
 					<Slider Style="{StaticResource SliderStyle}" Grid.Row="3" Grid.Column="1"  Height="25" Margin="5" Minimum="10" Maximum="3000"
-							Value="{Binding DelayInMilliseconds}" />
+							Value="{Binding DelayInMilliseconds}" IsEnabled="{Binding IsVisualized}" />
 				</Grid>
 			</GroupBox>
 			<!-- End of Input Panel -->
