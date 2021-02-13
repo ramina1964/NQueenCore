@@ -260,3 +260,4 @@ paket-files/
 __pycache__/
 *.pyc
 /Results/Board Size - 5.txt
+*.txt
